@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    , '1' => 'Admin Users, Edit Password'
+    , '2' => 'Inquiry Detail'
+    , '3' => 'Query, Pull Send'
+    , '101' => 'Panel list Registration'
+    , '102' => 'Panel list Forgot Password'
+    , '103' => 'Panel list, Edit Email Address'
+    , '104' => 'Panel list, Edit Password'
+    , '105' => 'Panel list Registration, Activation Re-Send'
+    , '106' => 'Panel list, Reward Request'
+    , '107' => 'Panel list, Reward Issued    
+    
+    
+    Old values were as below
+     , '1' => 'Register'
+        , '2' => 'Forgot Password'
+        , '3' => 'Edit Email Address (Panelist Email)'
+        , '8' => 'Edit Email Address (New Email)'
+        , '4' => 'Edit Password'
+        , '5' => 'Inquiry  Detail'
+        , '6' => 'Pull Send'
+        , '7' => 'Register Activation Resend');
+-->
+<root>
+    <useins> 
+        <usein>
+            <id>0</id>
+            <paradescription>First Name</paradescription>
+            <para>[[FIRST_NAME]]</para>
+        </usein>        
+        <usein>
+            <id>0</id>
+            <paradescription>Points</paradescription>
+            <para>[[POINTS]]</para>
+        </usein>
+        <usein>
+            <id>0</id>
+            <paradescription>Contact Name</paradescription>
+            <para>[[CONTACT_NAME]]</para>
+        </usein>
+        <usein>
+            <id>0</id>
+            <paradescription>Surevey Name</paradescription>
+            <para>[[SURVEY_NAME]]</para>
+        </usein>
+        <usein>
+            <id>0</id>
+            <paradescription>LOI</paradescription>
+            <para>[[LOI]]</para>
+        </usein>
+        
+
+        <usein>
+            <id>2</id>
+            <paradescription>Contact name</paradescription>
+            <para>[[CONTACT_NAME]]</para>
+        </usein>
+        <usein>
+            <id>2</id>
+            <paradescription>Email Address</paradescription>
+            <para>[[EMAIL_ADDRESS]]</para>
+        </usein>
+        <usein>
+            <id>2</id>
+            <paradescription>Phone Number</paradescription>
+            <para>[[PHONE]]</para>
+        </usein>
+        <usein>
+            <id>2</id>
+            <paradescription>Comments</paradescription>
+            <para>[[COMMENTS]]</para>
+        </usein>        
+
+                        
+        <usein>
+            <id>101</id>
+            <paradescription>Email Address</paradescription>
+            <para>[[email]]</para>
+        </usein>        
+        <usein>
+            <id>101</id>
+            <paradescription>Password</paradescription>
+            <para>[[PASSWORD]]</para>
+        </usein>        
+        <usein>
+            <id>101</id>
+            <paradescription>Account Activation Link (href only)</paradescription>
+            <para>[[ACTIVATE_ACCOUNT_LINK]]</para>
+        </usein>        
+        <usein>
+            <id>101</id>
+            <paradescription>Contact Name</paradescription>
+            <para>[[full_name]]</para>
+        </usein>        
+        
+                
+        <usein>
+            <id>102</id>
+            <paradescription>Email Address</paradescription>
+            <para>[[email]]</para>
+        </usein>
+        <usein>
+            <id>102</id>
+            <paradescription>Activate Password Link</paradescription>
+            <para>[[ACTIVATE_PASSWORD_LINK]]</para>
+        </usein>
+        <usein>
+            <id>102</id>
+            <paradescription>Contact Name</paradescription>
+            <para>[[full_name]]</para>
+        </usein>
+        
+        
+        <usein>
+            <id>103</id>
+            <paradescription>Contact Name</paradescription>
+            <para>[[full_name]]</para>
+        </usein>
+        <usein>
+            <id>103</id>
+            <paradescription>Email Address</paradescription>
+            <para>[[email]]</para>
+        </usein>
+        <usein>
+            <id>103</id>
+            <paradescription>Email activation Link</paradescription>
+            <para>[[ACTIVATE_EMAIL_LINK]]</para>
+        </usein>
+        
+        <usein>
+            <id>104</id>
+            <paradescription>Contact name</paradescription>
+            <para>[[full_name]]</para>
+        </usein>
+        <usein>
+            <id>104</id>
+            <paradescription>Password</paradescription>
+            <para>[[PASSWORD]]</para>
+        </usein>
+        <usein>
+            <id>104</id>
+            <paradescription>Confirm Password Link</paradescription>
+            <para>[[CONFIRM_PASSWORD_LINK]]</para>
+        </usein>
+        
+
+        <usein>
+            <id>3</id>
+            <paradescription>Contact name</paradescription>
+            <para>[[full_name]]</para>
+        </usein>
+        <usein>
+            <id>3</id>
+            <paradescription>Survey Name</paradescription>
+            <para>[[SURVEY_NAME]]</para>
+        </usein>
+        <usein>
+            <id>3</id>
+            <paradescription>Survey Link (href only)</paradescription>
+            <para>[[project_url]]</para>
+        </usein>
+        <usein>
+            <id>3</id>
+            <paradescription>Points</paradescription>
+            <para>[[points]]</para>
+        </usein>
+        <usein>
+            <id>3</id>
+            <paradescription>LOI</paradescription>
+            <para>[[expected_los]]</para>
+        </usein>
+        <usein>
+            <id>3</id>
+            <paradescription>Survey Link (href only)</paradescription>
+            <para>[[project_url]]</para>
+        </usein>
+        
+        
+        <usein>
+            <id>105</id>
+            <paradescription>Email Address</paradescription>
+            <para>[[email]]</para>
+        </usein>
+        <usein>
+            <id>105</id>
+            <paradescription>Password</paradescription>
+            <para>[[PASSWORD]]</para>
+        </usein>        
+        <usein>
+            <id>105</id>
+            <paradescription>Account Activation Link (href only)</paradescription>
+            <para>[[ACTIVATE_ACCOUNT_LINK]]</para>
+        </usein>        
+        <usein>
+            <id>105</id>
+            <paradescription>Contact Name</paradescription>
+            <para>[[full_name]]</para>
+        </usein>        
+        
+        
+        <usein>
+            <id>8</id>
+            <paradescription>Contact Name</paradescription>
+            <para>[[CONTACT_NAME]]</para>
+        </usein>        
+        <usein>
+            <id>8</id>
+            <paradescription>Email Address</paradescription>
+            <para>[[EMAIL_ADDRESS]]</para>
+        </usein>
+        <usein>
+            <id>8</id>
+            <paradescription>Activate New Email Link (href only)</paradescription>
+            <para>[[ACTIVATE_EMAIL_LINK]]</para>
+        </usein>             
+        
+    </useins>
+</root>

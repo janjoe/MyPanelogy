@@ -1,0 +1,28 @@
+@import url(http://fonts.googleapis.com/css?family=Rambla:400,400italic|Tauri|Patrick+Hand+SC|Sniglet|Exo|Allerta|Buda:300|Nova+Square|Balthazar|Roboto|Ruluko);
+font-family: 'Rambla', sans-serif;
+font-family: 'Tauri', sans-serif;
+font-family: 'Patrick Hand SC', cursive;
+font-family: 'Sniglet', cursive;
+font-family: 'Exo', sans-serif;
+font-family: 'Allerta', sans-serif;
+font-family: 'Buda', cursive;
+font-family: 'Nova Square', cursive;
+font-family: 'Balthazar', serif;
+font-family: 'Roboto', sans-serif;
+font-family: 'Ruluko', sans-serif;
+
+html{overflow-y:scroll;font-family:Tauri;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;-webkit-font-smoothing:antialiased}
+body,ul,ul li,li{font-family: Roboto; font-size: 10pt; color: white !important;}
+h1, h2, h3, h4, h5, h6{font-family: Exo; letter-spacing:3px;}
+a{color: white}
+h1{font-size: 16pt; font-weight: bold;}
+h2{font-size: 16pt;}
+
+h3{font-size: 14pt; font-weight: bold;}
+h4{font-size: 14pt;}
+
+h5{font-size: 12pt; font-weight: bold;}
+h6{font-size: 12pt;}
+
+p, ul li{font-size: 10pt;}
+
