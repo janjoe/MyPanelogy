@@ -11,6 +11,15 @@ return array(
             'jquery-1.10.2.min.js'
         )
     ),
+    'ckeditor' => array(
+        'baseUrl' => 'third_party/ckeditor/',
+        'js' => array(
+            'ckeditor.js'
+        ),
+		'css' => array(
+			'content.css'
+		)
+    ),	
     'jqgrid' => array(
         'baseUrl' => 'third_party/jqgrid/',
         'js' => array(
