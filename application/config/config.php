@@ -36,10 +36,10 @@ return array(
     ),
     'components' => array(
         'db' => array(
-            'connectionString' => 'mysql:host=survey-office.ckdgatj8pnbb.us-west-2.rds.amazonaws.com;dbname=survey_office_2;',
+            'connectionString' => 'mysql:host=localhost;dbname=survey_office_2;',
             'emulatePrepare' => true,
-            'username' => 'so_master',
-            'password' => 'surv3y0ff1c3',
+            'username' => 'forge',
+            'password' => 'K7tIhXRRrZZiZCPClUB8',
             'charset' => 'utf8',
             'tablePrefix' => 'lime_',
         ),
