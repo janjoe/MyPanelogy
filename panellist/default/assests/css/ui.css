@@ -1,0 +1,44 @@
+/* 
+    Created on : Apr 2, 2014, 4:06:10 PM
+    Author     : tarak gandhi
+*/
+.w50_per{
+    width:50%
+}
+
+fieldset {
+    border: 3px solid #4C82C4;
+    background: white;
+    color:black;
+    position: relative;
+}
+
+fieldset legend {
+    width:300px;
+    height:40px;
+    background: #4C82C4;
+    color: #fff;
+    font-size: 13px;
+    box-shadow: 0 0 0 5px white;
+    padding:3px;
+    margin-left: 10px;
+    position:absolute;
+    top:-25px;
+    left:10px;
+}
+
+text, textarea, input, label, select{
+    font-family: Segio,Verdana;
+    font-size: 10pt;
+    color: black;
+    height: 35px;
+    padding:5px;
+    margin: 5px;
+    border: 1px solid gray;
+    border-radius: 3px;
+}
+/* text,  input,select {width:250px;} */
+text:focus, textarea:focus, input:focus, select:focus {border: 2px solid green; background-color: #f8f8f8;}
+label{border: none;}
+
+p, ul li{font-size: 10pt;}
