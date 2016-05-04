@@ -1,7 +1,5 @@
 <?php
 
-use \..\..\phpbrake\src\Airbrake;
-
 /*
  * ---------------------------------------------------------------
  * SYSTEM FOLDER NAME
@@ -158,6 +156,10 @@ if (isset($aSettings['config']['debug'])) {
 
 if (version_compare(PHP_VERSION, '5.3.0', '<'))
     die('This script can only be run on PHP version 5.3.0 or later! Your version: ' . PHP_VERSION . '<br />');
+
+require_once "../../phpbrake/src/Notifier.php";
+require_once "../../phpbrake/src/Instance.php";
+require_once "../../phpbrake/src/ErrorHandler.php";
 
 // Create new Notifier instance.
 $notifier = new Airbrake\Notifier(array(
