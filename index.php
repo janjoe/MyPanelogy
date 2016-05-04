@@ -161,6 +161,8 @@ require_once "../../phpbrake/src/Notifier.php";
 require_once "../../phpbrake/src/Instance.php";
 require_once "../../phpbrake/src/ErrorHandler.php";
 
+require_once "../../phpbrake/src/Errors/Notice.php";
+
 // Create new Notifier instance.
 $notifier = new Airbrake\Notifier(array(
     'projectId' => 123619, // FIX ME
