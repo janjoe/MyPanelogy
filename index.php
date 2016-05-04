@@ -1,5 +1,7 @@
 <?php
 
+use ..\..\phpbrake\src\Airbrake;
+
 /*
  * ---------------------------------------------------------------
  * SYSTEM FOLDER NAME
