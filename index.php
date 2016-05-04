@@ -157,11 +157,19 @@ if (isset($aSettings['config']['debug'])) {
 if (version_compare(PHP_VERSION, '5.3.0', '<'))
     die('This script can only be run on PHP version 5.3.0 or later! Your version: ' . PHP_VERSION . '<br />');
 
-require_once "../../phpbrake/src/Notifier.php";
-require_once "../../phpbrake/src/Instance.php";
-require_once "../../phpbrake/src/ErrorHandler.php";
+foreach (scandir(dirname("../../phpbrake/src")) as $filename) {
+    $path = dirname("../../phpbrake/src") . '/' . $filename;
+    if (is_file($path)) {
+        require_once $path;
+    }
+}
 
-require_once "../../phpbrake/src/Errors/Notice.php";
+foreach (scandir(dirname("../../phpbrake/src/Errors")) as $filename) {
+    $path = dirname("../../phpbrake/src/Errors") . '/' . $filename;
+    if (is_file($path)) {
+        require_once $path;
+    }
+}
 
 // Create new Notifier instance.
 $notifier = new Airbrake\Notifier(array(
