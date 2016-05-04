@@ -157,6 +157,19 @@ if (isset($aSettings['config']['debug'])) {
 if (version_compare(PHP_VERSION, '5.3.0', '<'))
     die('This script can only be run on PHP version 5.3.0 or later! Your version: ' . PHP_VERSION . '<br />');
 
+// Create new Notifier instance.
+$notifier = new Airbrake\Notifier(array(
+    'projectId' => 123619, // FIX ME
+    'projectKey' => '467e7a8f2cac12cb0365e51c3a9803cc', // FIX ME
+));
+
+// Set global notifier instance.
+Airbrake\Instance::set($notifier);
+
+// Register error and exception handlers.
+$handler = new Airbrake\ErrorHandler($notifier);
+$handler->register();
+
 ini_set ('output_buffering', true);
 ob_start();
 /*

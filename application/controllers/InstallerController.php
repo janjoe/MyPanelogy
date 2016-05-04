@@ -1062,12 +1062,12 @@ class InstallerController extends CController {
             ."\t\t"   . ""                                          . "\n"
 
             /** @todo Uncomment after implementing the error controller */
-            /*
+            
             ."\t\t"   . "'errorHandler' => array("                  . "\n"
-            ."\t\t\t" . "'errorAction' => 'error',"                 . "\n"
+            ."\t\t\t" . "'errorAction' => 'customError/error',"                 . "\n"
             ."\t\t"   . "),"                                        . "\n"
             ."\t\t"   . ""                                          . "\n"
-            */
+            
 
             ."\t\t"   . "'urlManager' => array("                    . "\n"
             ."\t\t\t" . "'urlFormat' => '{$sURLFormat}',"           . "\n"
