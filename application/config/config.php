@@ -57,7 +57,7 @@ return array(
         ),
 
         'errorHandler' => array(
-          'errorAction' => 'error/error',
+          'errorAction' => 'customError/error',
           ),
     ),
     // Use the following config variable to set modified optional settings copied from config-defaults.php
