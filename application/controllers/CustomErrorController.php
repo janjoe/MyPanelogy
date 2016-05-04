@@ -5,7 +5,7 @@ class CustomErrorController extends CErrorHandler {
 	public function actionError()
 	{
 	    if($error=Yii::app()->errorHandler->error) {
-	        // $this->render('error', $error);
+	        $this->render('error', $error);
 
 	        Airbrake\Instance::notify($error);
 	    }
