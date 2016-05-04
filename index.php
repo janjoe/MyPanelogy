@@ -1,6 +1,6 @@
 <?php
 
-use "..\..\phpbrake\src\Airbrake";
+use \..\..\phpbrake\src\Airbrake;
 
 /*
  * ---------------------------------------------------------------
