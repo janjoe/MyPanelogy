@@ -39,7 +39,7 @@ return array(
             'connectionString' => 'mysql:host=localhost;dbname=survey_office_2;',
             'emulatePrepare' => true,
             'username' => 'forge',
-            'password' => 'K7tIhXRRrZZiZCPClUB8',
+            'password' => 'lsmcnQ6W7LVLhuYSkJp6',
             'charset' => 'utf8',
             'tablePrefix' => 'lime_',
         ),
