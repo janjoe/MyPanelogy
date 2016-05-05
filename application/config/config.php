@@ -55,10 +55,6 @@ return array(
             'rules' => require('routes.php'),
             'showScriptName' => true,
         ),
-
-        // 'errorHandler' => array(
-        //   'errorAction' => 'error/error',
-        //   ),
     ),
     // Use the following config variable to set modified optional settings copied from config-defaults.php
     'config' => array(
