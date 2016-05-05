@@ -4,6 +4,6 @@
     </div>
     <div style='float:right;'>
         <a href='http://survey.braininfotech.com/limesurvey' target="_blank">
-            <img alt='SurveyOffice' width="100" title='SurveyOffice' src='<?php echo Yii::app()->getConfig('adminimageurl'); ?>prod-logo.png'/></a>
+            <img alt='SurveyOffice' width="100" title='SurveyOffice' src='<?php echo Yii::app()->getConfig('adminimageurl'); ?>Logo.png'/></a>
     </div>
 </div>

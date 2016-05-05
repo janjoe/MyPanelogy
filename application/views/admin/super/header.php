@@ -35,6 +35,6 @@
         <div class='wrapper'>
             <?php $this->widget('ext.FlashMessage.FlashMessage'); ?>
             <div class='maintitle'>
-                <img src="<?php echo $baseurl; ?>styles/prod-logo.png" style="width: 20%" alt="SurveyOffice" title="GoWebSuravey" />
-                <img src="<?php echo $baseurl; ?>styles/prod-logo.png" style="width: 20%; float: right" alt="Survey Office" title="Survey Office" />
+                <img src="<?php echo $baseurl; ?>styles/Logo.png" style="width: 20%" alt="SurveyOffice" title="GoWebSuravey" />
+                <!-- <img src="<?php echo $baseurl; ?>styles/prod-logo.png" style="width: 20%; float: right" alt="Survey Office" title="Survey Office" /> -->
             </div>
