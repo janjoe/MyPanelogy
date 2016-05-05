@@ -152,6 +152,29 @@ class LSYii_Application extends CWebApplication
 		Yii::import('application.helpers.ClassFactory');
 		ClassFactory::registerClass('Token_', 'Token');
 		ClassFactory::registerClass('Response_', 'Response');
+
+        require_once "../../phpbrake/src/Notifier.php";
+        require_once "../../phpbrake/src/Instance.php";
+        require_once "../../phpbrake/src/ErrorHandler.php";
+
+        require_once "../../phpbrake/src/Errors/Base.php";
+        require_once "../../phpbrake/src/Errors/Error.php";
+        require_once "../../phpbrake/src/Errors/Fatal.php";
+        require_once "../../phpbrake/src/Errors/Notice.php";
+        require_once "../../phpbrake/src/Errors/Warning.php";
+
+        // Create new Notifier instance.
+        $notifier = new Airbrake\Notifier(array(
+            'projectId' => 123619, // FIX ME
+            'projectKey' => '467e7a8f2cac12cb0365e51c3a9803cc', // FIX ME
+        ));
+
+        // Set global notifier instance.
+        Airbrake\Instance::set($notifier);
+
+        // Register error and exception handlers.
+        $handler = new Airbrake\ErrorHandler($notifier);
+        $handler->register();
 	}
     /**
      * This method handles initialization of the plugin manager
