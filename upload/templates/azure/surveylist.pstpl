@@ -1,0 +1,258 @@
+<div class="sb-slide" id="sb-site">
+    <!-- SLIDER MAIN -->
+    <div class="sliderfull">
+        <div> <img src="{TEMPLATEURL}images/slider-1.jpg"/>
+            <div class="slidercaption">
+                <div class="container">
+                    <div class="sliderleft">
+                        <h1> Easy as <span>join</span>,
+                            complete <span>surveys</span> and
+                            get <span>rewarded</span> for
+                            your <span>opinions!</span> </h1>
+                    </div>
+                    <div class="sliderright">
+                        <form action="registration-form.php" name="join_frm1" id="join_frm1" method="POST" onsubmit="return firstFormValidation()">
+                            <div class="signuptitle">
+                                <h4>register here for <span>free!</span></h4>
+                            </div>
+                            <div class="join-now">
+                                <div class="inputdiv">
+                                    <input type="text" name="fname" id="fname" placeholder="First name">
+                                    <p id="f_name_error" class="error" style="display:none;"></p>
+                                </div>
+                                <div class="inputdiv">
+                                    <input type="text" name="lname" id="lname" placeholder="Last name">
+                                    <p id="l_name_error" class="error" style="display:none;"></p>
+                                </div>
+                                <div class="inputdiv">
+                                    <input type="text" name="email" id="email" placeholder="Email name">
+                                    <p id="email_error" class="error" style="display:none;"></p>
+                                </div>
+                                <div class="inputdiv">
+                                    <input type="password" name="passwd" id="passwd" placeholder="Password">
+                                    <p id="passwd_error" class="error" style="display:none;"></p>
+                                </div>
+                                <div class="inputcheck">
+                                    <input type="checkbox" name="check_agree" id="check_agree" >
+                                    <label id="check_agree_error">I agree to the Member Agreement and Privacy Policy</label>
+                                    <input type="checkbox" name="check_age" id="check_age" >
+                                    <label >I am over 18 years of age</label>
+                                    <p id="check_age_error" class="error" style="display:none;"></P>
+                                </div>
+                                <div class="inputfull">
+                                    <input type="submit" value="Join NOW!">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div> <img src="{TEMPLATEURL}images/slider-1.jpg"/>
+            <div class="slidercaption">
+                <div class="container">
+                    <div class="sliderleft">
+                        <h1> Easy as <span>join</span>,
+                            complete <span>surveys</span> and
+                            get <span>rewarded</span> for
+                            your <span>opinions!</span> </h1>
+                    </div>
+                    <div class="sliderright">
+                        <form action="registration-form.php" name="join_frm2" id="join_frm2" method="POST" onsubmit="return secondFormValidation()">
+                            <div class="signuptitle">
+                                <h4>register here for <span>free!</span></h4>
+                            </div>
+                            <div class="join-now">
+                                <div class="inputdiv">
+                                    <input type="text" name="fname2" id="fname2" placeholder="First name">
+                                    <p id="f_name_error2" class="error" style="display:none;"></p>
+                                </div>
+                                <div class="inputdiv">
+                                    <input type="text" name="lname2" id="lname2" placeholder="Last name">
+                                    <p id="l_name_error2" class="error" style="display:none;"></p>
+                                </div>
+                                <div class="inputdiv">
+                                    <input type="text" name="email2" id="email2" placeholder="Email name">
+                                    <p id="email_error2" class="error" style="display:none;"></p>
+                                </div>
+                                <div class="inputdiv">
+                                    <input type="password" name="passwd2" id="passwd2" placeholder="Password">
+                                    <p id="passwd_error2" class="error" style="display:none;"></p>
+                                </div>
+                                <div class="inputcheck">
+                                    <input type="checkbox" name="check_agree2" id="check_agree2" >
+                                    <label id="check_agree_error2">I agree to the Member Agreement and Privacy Policy</label>
+                                    <input type="checkbox" name="check_age2" id="check_age2" >
+                                    <label >I am over 18 years of age</label>
+                                    <p id="check_age_error2" class="error" style="display:none;"></P>
+                                </div>
+                                <div class="inputfull">
+                                    <input type="submit" value="Join NOW!">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div> <img src="{TEMPLATEURL}images/slider-1.jpg"/>
+            <div class="slidercaption">
+                <div class="container">
+                    <div class="sliderleft">
+                        <h1> Easy as <span>join</span>,
+                            complete <span>surveys</span> and
+                            get <span>rewarded</span> for
+                            your <span>opinions!</span> </h1>
+                    </div>
+                    <div class="sliderright">
+                        <form action="registration-form.php" name="join_frm3" id="join_frm3" method="POST" onsubmit="return thirdFormValidation()">
+                            <div class="signuptitle">
+                                <h4>register here for <span>free!</span></h4>
+                            </div>
+                            <div class="join-now">
+                                <div class="inputdiv">
+                                    <input type="text" name="fname3" id="fname3" placeholder="First name">
+                                    <p id="f_name_error3" class="error" style="display:none;"></p>
+                                </div>
+                                <div class="inputdiv">
+                                    <input type="text" name="lname3" id="lname3" placeholder="Last name">
+                                    <p id="l_name_error3" class="error" style="display:none;"></p>
+                                </div>
+                                <div class="inputdiv">
+                                    <input type="text" name="email3" id="email3" placeholder="Email name">
+                                    <p id="email_error3" class="error" style="display:none;"></p>
+                                </div>
+                                <div class="inputdiv">
+                                    <input type="password" name="passwd3" id="passwd3" placeholder="Password">
+                                    <p id="passwd_error3" class="error" style="display:none;"></p>
+                                </div>
+                                <div class="inputcheck">
+                                    <input type="checkbox" name="check_agree3" id="check_agree3" >
+                                    <label id="check_agree_error3">I agree to the Member Agreement and Privacy Policy</label>
+                                    <input type="checkbox" name="check_age3" id="check_age3" >
+                                    <label >I am over 18 years of age</label>
+                                    <p id="check_age_error3" class="error" style="display:none;"></P>
+                                </div>
+                                <div class="inputfull">
+                                    <input type="submit" value="Join NOW!">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- SLIDER MAIN -->
+    <div class="middlecontent">
+        <div class="container">
+            <div class="mobilereg">
+                <form action="registration-form.php" name="join_frm4" id="join_frm4" method="POST" onsubmit="return fourthFormValidation()">
+                    <div class="signuptitle">
+                        <h4>register here for <span>free!</span></h4>
+                    </div>
+                    <div class="join-now">
+                        <div class="inputdiv">
+                            <input type="text" name="fname4" id="fname4" placeholder="First name">
+                            <p id="f_name_error4" class="error" style="display:none;"></p>
+                        </div>
+                        <div class="inputdiv">
+                            <input type="text" name="lname4" id="lname4" placeholder="Last name">
+                            <p id="l_name_error4" class="error" style="display:none;"></p>
+                        </div>
+                        <div class="inputdiv">
+                            <input type="text" name="email4" id="email4" placeholder="Email name">
+                            <p id="email_error4" class="error" style="display:none;"></p>
+                        </div>
+                        <div class="inputdiv">
+                            <input type="password" name="passwd4" id="passwd4" placeholder="Password">
+                            <p id="passwd_error4" class="error" style="display:none;"></p>
+                        </div>
+                        <div class="inputcheck">
+                            <input type="checkbox" name="check_agree4" id="check_agree4" >
+                            <label id="check_agree_error4">I agree to the Member Agreement and Privacy Policy</label>
+                            <input type="checkbox" name="check_age4" id="check_age4" >
+                            <label >I am over 18 years of age</label>
+                            <p id="check_age_error4" class="error" style="display:none;"></P>
+                        </div>
+                        <div class="inputfull">
+                            <input type="submit" value="Join NOW!">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <h2>How it works</h2>
+            <div class="linemain">
+                <div class="linebg">
+                    <div class="howitworksjoin">
+                        <div class="roundshape oneleft">1</div>
+                        <div class="howitworkleft"><img src="{TEMPLATEURL}images/jon-now-pic.png"></div>
+                        <div class="howitworkright pad-col-top">
+                            <h3>Join Now</h3>
+                            <p>Complete your simple registration. Always free to join and provide valuable anonymous feedback. Cancel anytime.</p>
+                            <a href="#">Click here</a> </div>
+                        <div class="clr"></div>
+                    </div>
+                    <div class="howitworksurvey">
+                        <div class="roundshape tworight">2</div>
+                        <div class="howitworkright"> <img src="{TEMPLATEURL}images/completed-survey.png"> </div>
+                        <div class="howitworkleft pad-col-top-70">
+                            <h3>completed surveys</h3>
+                            <p>Survey invitations will be sent to your email inbox. Each validated survey you qualify for and successfully complete earns you points to redeem. </p>
+                        </div>
+                        <div class="clr"></div>
+                    </div>
+                    <div class="howitworkrewards">
+                        <div class="roundshape threeleft">3</div>
+                        <div class="howitworkleft"><img src="{TEMPLATEURL}images/rewards-pic.png"></div>
+                        <div class="howitworkright pad-col-top-80">
+                            <h3>Redeem Your Rewards </h3>
+                            <p>Use your points and get paid via PayPal! We will shortly be adding more reward options.</p>
+                        </div>
+                        <div class="clr"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="testimonial">
+        <div class="container">
+            <h3>Testimonials</h3>
+            <div class="testimonialslider">
+                <div>
+                    <div class="usericon">
+                        <img src="{TEMPLATEURL}images/testimonial-user-icon.png" alt="Testimonial user">
+                    </div>
+                    <div class="testimonialcontent">
+                        <p>Ellie is a Chief Financial Officer for a large global firm (Based in the UK) which operates in more than 10 countries across the world. She has worked in the field of finance for the past 15 years, and specializes in providing expertise with client and partner financial negotiations. Ellie finds value in providing feedback to financial topics via online surveys and feels that it helps her keep a pulse on the industry challenges and opportunities as a whole.
+                        </p>
+                        <p><strong>Ellie</strong> - Greater London, UK </p>
+                    </div>
+                    <div class="clr"></div>
+                </div>
+                <div>
+                    <div class="usericon">
+                        <img src="{TEMPLATEURL}images/testimonial-user-icon.png" alt="Testimonial user">
+                    </div>
+                    <div class="testimonialcontent">
+                        <p>Ellie is a Chief Financial Officer for a large global firm (Based in the UK) which operates in more than 10 countries across the world. She has worked in the field of finance for the past 15 years, and specializes in providing expertise with client and partner financial negotiations. Ellie finds value in providing feedback to financial topics via online surveys and feels that it helps her keep a pulse on the industry challenges and opportunities as a whole.
+                        </p>
+                        <p><strong>Ellie</strong> - Greater London, UK </p>
+                    </div>
+                    <div class="clr"></div>
+                </div>
+                <div>
+                    <div class="usericon">
+                        <img src="{TEMPLATEURL}images/testimonial-user-icon.png" alt="Testimonial user">
+                    </div>
+                    <div class="testimonialcontent">
+                        <p>Ellie is a Chief Financial Officer for a large global firm (Based in the UK) which operates in more than 10 countries across the world. She has worked in the field of finance for the past 15 years, and specializes in providing expertise with client and partner financial negotiations. Ellie finds value in providing feedback to financial topics via online surveys and feels that it helps her keep a pulse on the industry challenges and opportunities as a whole.
+                        </p>
+                        <p><strong>Ellie</strong> - Greater London, UK </p>
+                    </div>
+                    <div class="clr"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
