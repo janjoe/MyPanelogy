@@ -1,7 +1,11 @@
-<?php echo CHtml::form(array('pl/authentication/sa/login'), 'post', array('id' => 'loginform', 'name' => 'loginform')); ?>
-<section class="container w100_per cen">
-    <div class="box w45_per hauto effect7">
-        <h3>Enter Login Details</h3>
+    <div class="header-main">
+        <div class="container">
+            <h3>Enter Login Details</h3>
+        </div>
+    </div>
+    <div class="innerpadtop">
+        <div class="container">
+   <?php echo CHtml::form(array('pl/authentication/sa/login'), 'post', array('id' => 'loginform', 'name' => 'loginform')); ?>
         <p>
             <input type="hidden" value="Authdb" name="authMethod" id="authMethod">
             <label for="user">Email Address</label>
@@ -16,6 +20,7 @@
             <!--            <a href="forgotpassword">Forgot your password?</a><br>-->
             <a href="<?php echo CController::createUrl('pl/authentication/sa/forgotpassword'); ?>">Forgot your password?</a><br>
         </p>
-    </div>
-</section>
 <?php echo CHtml::endForm(); ?>
+            <div class="clr"></div>
+        </div>
+    </div>

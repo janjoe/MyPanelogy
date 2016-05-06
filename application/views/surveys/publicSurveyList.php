@@ -1,4 +1,12 @@
 <?php
+function _file_get_contents ($file){
+    ob_start(); // start output buffer
+
+    include $file;
+    $template = ob_get_contents(); // get contents of buffer
+    ob_end_clean();
+    return $template;
+}
 
 $list = '';
 foreach ($publicSurveys as $survey) {
@@ -68,16 +76,16 @@ if ($upara == 'resetdatabase') {
     exit;
 }
 
-echo templatereplace(file_get_contents(getTemplatePath(Yii::app()->getConfig("defaulttemplate")) . "/startpage.pstpl"), array(), $data, 'survey[' . __LINE__ . ']');
+echo templatereplace(_file_get_contents(getTemplatePath(Yii::app()->getConfig("defaulttemplate")) . "/startpage.pstpl"), array(), $data, 'survey[' . __LINE__ . ']');
 //echo templatereplace(file_get_contents(getTemplatePath(Yii::app()->getConfig("defaulttemplate")) . "/surveylist.pstpl"), array(), $data, 'survey[' . __LINE__ . ']');
 if (Yii::app()->getConfig("defaulttemplate") == 'gws') {
     $newPath = "application.views.admin.cms";
     $newPath = YiiBase::getPathOfAlias($newPath);
     $filepath = $newPath . '/template/default.tpl.php';
-    echo templatereplace(file_get_contents($filepath), array(), $data, 'survey[' . __LINE__ . ']');
+    echo templatereplace(_file_get_contents($filepath), array(), $data, 'survey[' . __LINE__ . ']');
 } else {
-    echo templatereplace(file_get_contents(getTemplatePath(Yii::app()->getConfig("defaulttemplate")) . "/surveylist.pstpl"), array(), $data, 'survey[' . __LINE__ . ']');
+    echo templatereplace(_file_get_contents(getTemplatePath(Yii::app()->getConfig("defaulttemplate")) . "/surveylist.pstpl"), array(), $data, 'survey[' . __LINE__ . ']');
 }
-echo templatereplace(file_get_contents(getTemplatePath(Yii::app()->getConfig("defaulttemplate")) . "/endpage.pstpl"), array(), $data, 'survey[' . __LINE__ . ']');
+echo templatereplace(_file_get_contents(getTemplatePath(Yii::app()->getConfig("defaulttemplate")) . "/endpage.pstpl"), array(), $data, 'survey[' . __LINE__ . ']');
 doFooter();
 ?>

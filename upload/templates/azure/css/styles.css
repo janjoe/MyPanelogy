@@ -461,6 +461,21 @@ button, input[type="button"]:hover, input[type="reset"]:hover, input[type="submi
 .logo img {
 	vertical-align: top;
 }
+
+.logo-inner {
+	float: left;
+	margin: 0px;
+	padding: 0px;
+	-webkit-transition: all 0.4s ease;
+	transition: all 0.4s ease;
+}
+.logo-inner a {
+	display: inline-block;
+	vertical-align: top;
+}
+.logo-inner img {
+	vertical-align: top;
+}
 /* navigaion */
 .navigation {
 	float: right;
@@ -775,6 +790,14 @@ button, input[type="button"]:hover, input[type="reset"]:hover, input[type="submi
 	display: inline-block;
 	padding: 40px 0px;
 	background: #000;
+}
+
+.footer-inner {
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+    padding: 40px 0px;
+    background: #000;
 }
 .social {
 	display: inline-block;

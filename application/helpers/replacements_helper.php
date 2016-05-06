@@ -727,7 +727,7 @@ function getMenuList() {
     $data = CHtml::listData($result, 'page_id', 'page_name');
     $html = "";
     foreach ($data as $key => $value) {
-        $html .= '<a class="nav-btn" href="' . Yii::app()->getBaseUrl(true) . '/index.php?pagename=' . $value . '" title="' . $value . '">' . $value . '</a>';
+        $html .= '<li><a class="nav-btn" href="' . Yii::app()->getBaseUrl(true) . '/index.php?pagename=' . $value . '" title="' . $value . '">' . $value . '</a></li>';
     }
     return $html;
 }

@@ -16,27 +16,30 @@
   <div class="md-modal md-effect-16" id="modal-16">
     	<div class="md-content">
 		<a class="md-close"><img src="{TEMPLATEURL}images/close-icon.png"></a>
-        <form action="" name="join" id="join" method="post">
+            <?php echo CHtml::form(array('pl/authentication/sa/login'), 'post', array('id' => 'loginform', 'name' => 'loginform')); ?>
             <div class="signuptitle">
-              <h4>Member <span>Login</span></h4>
+                <h4>Member <span>Login</span></h4>
             </div>
             <div class="loginpopup">
-              <div class="inputlogin">
-                <input type="text" placeholder="User name">
-              </div>
-              <div class="inputlogin">
-                <input type="password" placeholder="Password">
-              </div>
-              <div class="remembercheck">
-              <input type="checkbox" name="check">
-              <label>Remember Password</label>
-              </div>
-              <div class="forgetpass">
-              <a href="#">Forget Password</a>
-              </div>
-                <input type="submit" value="Login">
+                <div class="inputlogin">
+                    <input name="email" id="email" type="email" placeholder="Email Address">
+                </div>
+                <div class="inputlogin">
+                    <input name="password" id="password" type="password" placeholder="Password">
+                </div>
+                <div class="remembercheck">
+                    <input type="checkbox" name="check">
+                    <label>Remember Password</label>
+                </div>
+                <div class="forgetpass">
+                    <a href="<?php echo Yii::app()->createUrl('pl/authentication/sa/forgotpassword'); ?>">Forgot your password?</a>
+                </div>
+                <input type="submit" name="login_submit" value="Login">
             </div>
-          </form>
+
+                <input type="hidden" value="Authdb" name="authMethod" id="authMethod">
+                <input type="hidden" name="action" value="login">
+            <?php echo CHtml::endForm(); ?>
 		</div>
   </div>
 <div class="md-overlay"></div>

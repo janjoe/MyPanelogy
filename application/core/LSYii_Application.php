@@ -153,7 +153,7 @@ class LSYii_Application extends CWebApplication
 		ClassFactory::registerClass('Token_', 'Token');
 		ClassFactory::registerClass('Response_', 'Response');
 
-        require_once "../../phpbrake/src/Notifier.php";
+/*        require_once "../../phpbrake/src/Notifier.php";
         require_once "../../phpbrake/src/Instance.php";
         require_once "../../phpbrake/src/ErrorHandler.php";
 
@@ -174,7 +174,7 @@ class LSYii_Application extends CWebApplication
 
         // Register error and exception handlers.
         $handler = new Airbrake\ErrorHandler($notifier);
-        $handler->register();
+        $handler->register();*/
 	}
     /**
      * This method handles initialization of the plugin manager
