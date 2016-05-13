@@ -877,7 +877,7 @@ button, input[type="button"]:hover, input[type="reset"]:hover, input[type="submi
 	margin-bottom:40px;
 	}	
 .regfrm{
-	width:60%;
+	width:100%;
 	float:left;
 	margin-bottom:40px;
 	}
@@ -887,6 +887,14 @@ button, input[type="button"]:hover, input[type="reset"]:hover, input[type="submi
 	padding:0px 15px 15px 0px;
 	vertical-align:top;
 	}
+	
+.reginputDB{
+	display:inline-block;
+    width: 50%;
+	padding:0px 15px 15px 0px;
+	vertical-align:top;
+	}
+	
 .regfrm h4{
 	margin-bottom:25px;
 	font-weight:300;

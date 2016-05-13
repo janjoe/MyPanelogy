@@ -4254,7 +4254,7 @@
         */
 
         static function ProcessString($string, $questionNum=NULL, $replacementFields=array(), $debug=false, $numRecursionLevels=1, $whichPrettyPrintIteration=1, $noReplacements=false, $timeit=true, $staticReplacement=false)
-        {
+        {	//echo '<pre>ee';print_r($replacementFields);exit;
             $now = microtime(true);
             $LEM =& LimeExpressionManager::singleton();
 
@@ -4289,7 +4289,7 @@
             if ($timeit) {
                 $LEM->runtimeTimings[] = array(__METHOD__,(microtime(true) - $now));
             }
-
+//echo '<pre>ee';print_r($result);exit;
             return $result;
         }
 

@@ -9,7 +9,7 @@
         <div class="footerlink">
         	<ul>
             	<li><a href="#">Azure</a><span>|</span></li>
-                <li><a href="">Member agreement </a><span>|</span></li>
+                <li><a href="index.php?pagename=Member Agreement">Member agreement </a><span>|</span></li>
                 <li><a href="index.php?pagename=Privacy Policy">Privacy Policy</a></li>
             </ul>
             <p>© 2016. All Rights Reserved By Azure</p>
@@ -26,5 +26,19 @@
 <script src="{TEMPLATEURL}js/classie.js"></script>
 <script src="{TEMPLATEURL}js/modalEffects.js"></script>
 <script src="{TEMPLATEURL}js/smk-accordion.js"></script>
-<!--script src="js/formValidation.js"></script-->
+<script src="{TEMPLATEURL}js/formValidation.js"></script>
+<?php //echo '<pre>';print_r($_SESSION['userData']);?>
+<script>
+$( document ).ready(function() {
+	var token =$('meta[name="YII_CSRF_TOKEN"]').attr('content');
+	$('#register_token').val(token);
+	
+	$('#fname').val('<?php echo $_SESSION['userData']['fname']?>');
+	$('#lname').val('<?php echo $_SESSION['userData']['lname']?>');
+	$('#email_address').val('<?php echo $_SESSION['userData']['email_address']?>');
+	//$('#pwd').val('<?php echo $_SESSION['userData']['pwd']?>');
+	
+});
+</script>  
+
 </body>

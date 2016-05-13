@@ -8,10 +8,10 @@ class myclass
 {
 	function myclass()
   	{	
-		$user = "";
-		$pass = "";
-		$server = "";
-		$dbase = "";
+		$user = "root";
+		$pass = "12345678";
+		$server = "localhost";
+		$dbase = "survey_office_2";
 	 	  	
 	   	$conn = mysql_connect($server,$user,$pass);
 	   	if(!$conn)

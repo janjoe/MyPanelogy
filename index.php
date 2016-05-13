@@ -10,7 +10,7 @@
  * as this file.
  *
  */
-$system_path = "../../yii/framework";
+$system_path = "yii/framework";
 
 /*
  * ---------------------------------------------------------------
@@ -153,9 +153,36 @@ if (isset($aSettings['config']['debug'])) {
 } else {
     error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED); // Not needed if user don't remove his 'debug'=>0, for application/config/config.php (Installation is OK with E_ALL)
 }
+//
+/*define('YII_DEBUG', true);
+error_reporting(E_ALL);*/
+//
 
 if (version_compare(PHP_VERSION, '5.3.0', '<'))
     die('This script can only be run on PHP version 5.3.0 or later! Your version: ' . PHP_VERSION . '<br />');
+
+require_once "phpbrake/src/Notifier.php";
+require_once "phpbrake/src/Instance.php";
+require_once "phpbrake/src/ErrorHandler.php";
+
+require_once "phpbrake/src/Errors/Base.php";
+require_once "phpbrake/src/Errors/Error.php";
+require_once "phpbrake/src/Errors/Fatal.php";
+require_once "phpbrake/src/Errors/Notice.php";
+require_once "phpbrake/src/Errors/Warning.php";
+
+// Create new Notifier instance.
+$notifier = new Airbrake\Notifier(array(
+    'projectId' => 123619, // FIX ME
+    'projectKey' => '467e7a8f2cac12cb0365e51c3a9803cc', // FIX ME
+));
+
+// Set global notifier instance.
+Airbrake\Instance::set($notifier);
+
+// Register error and exception handlers.
+$handler = new Airbrake\ErrorHandler($notifier);
+$handler->register();
 
 ini_set ('output_buffering', true);
 ob_start();
@@ -167,6 +194,7 @@ ob_start();
  * And away we go...
  *
  */
+ 
 require_once BASEPATH . 'yii' . EXT;
 require_once APPPATH . 'core/LSYii_Application' . EXT;
 

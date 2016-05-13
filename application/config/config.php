@@ -35,14 +35,28 @@ return array(
         ),
     ),
     'components' => array(
-        'db' => array(
-            'connectionString' => 'mysql:host=localhost;dbname=survey_office_2;',
+       
+          
+         'db' => array(
+            'connectionString' => 'mysql:host=survey-office.ckdgatj8pnbb.us-west-2.rds.amazonaws.com;dbname=survey_office_2;',
             'emulatePrepare' => true,
-            'username' => 'forge',
-            'password' => 'lsmcnQ6W7LVLhuYSkJp6',
+            'username' => 'so_master',
+            'password' => 'surv3y0ff1c3',
             'charset' => 'utf8',
             'tablePrefix' => 'lime_',
         ),
+        
+      
+        /*
+        'db' => array(
+            'connectionString' => 'mysql:host=localhost;dbname=survey_office_2;',
+            'emulatePrepare' => true,
+            'username' => 'root',
+            'password' => '12345678',
+            'charset' => 'utf8',
+            'tablePrefix' => 'lime_',
+        ),*/
+        
         // Uncomment the following line if you need table-based sessions
         // 'session' => array (
         // 'class' => 'system.web.CDbHttpSession',
@@ -62,7 +76,7 @@ return array(
         // then please check your error-logs - either in your hosting provider admin panel or in some /logs directory
         // on your webspace.
         // LimeSurvey developers: Set this to 2 to additionally display STRICT PHP error messages and get full access to standard templates
-        'debug' => 1,
+        'debug' => 0,
         'debugsql' => 2 // Set this to 1 to enanble sql logging, only active when debug = 2
     )
 );

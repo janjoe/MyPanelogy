@@ -630,6 +630,7 @@ EOD;
     $coreReplacements['URL'] = $_linkreplace;
     $coreReplacements['WELCOME'] = (isset($thissurvey['welcome']) ? $thissurvey['welcome'] : '');
     $coreReplacements['PANEL_LIST_ADD_FORM'] = getPanelListAddForm();
+    $coreReplacements['PANEL_LIST_ADD_FORM_NEW'] = getPanelListAddFormNew();
     $coreReplacements['menu'] = getMenuList();
     $coreReplacements['content'] = (isset($_REQUEST['pagename']) ? getPageContent($_REQUEST['pagename']) : getPageContent('home'));
     $coreReplacements['php'] = getphpcode();
@@ -642,7 +643,7 @@ EOD;
 
     // Now do all of the replacements - In rare cases, need to do 3 deep recursion, that that is default
     $line = LimeExpressionManager::ProcessString($line, $questionNum, $doTheseReplacements, false, 3, 1, false, true, $bStaticReplacement);
-
+	//echo '<pre>';print_r($doTheseReplacements);exit;
     return $line;
 }
 
@@ -720,6 +721,55 @@ function getPanelListAddForm() {
     return $html;
 }
 
+function getPanelListAddFormNew() {
+    $testNEW = '<script>
+        function Validationnew(){
+        
+        
+			var x = $("#email_address").val();
+			var atpos = x.indexOf("@");
+			var dotpos = x.lastIndexOf(".");
+
+        
+            if($("#fname").val()==""){
+                alert("First name can not be empty.");
+                $("#fname").focus();
+                return false;
+            }
+            
+            if($("#lname").val()==""){
+                alert("Last name can not be empty.");
+                $("#lname").focus();
+                return false;
+            }
+            
+            if($("#email_address").val()==""){
+                alert("Email address can not be empty.");
+                $("#email_address").focus();
+                return false;
+            }
+            
+            if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length) {
+				alert("Email address is not valid.");
+				return false;
+			}
+            
+            if($("#pwd").val()==""){
+                alert("Password can not be empty.");
+                $("#pwd").focus();
+                return false;
+            }
+ 
+        }
+        </script>';
+
+  
+    $html = $testNEW . Question(get_question_categoryid('Registration'), '');
+    
+   
+    return $html;
+}
+
 //added by Gaurang on 03/04/2014
 function getMenuList() {
     $sql = "SELECT * FROM {{cms_page_master}} WHERE IsActive = 1 AND showinmenu=1";
@@ -751,12 +801,21 @@ $this->widget("application.extensions.Brain.BrainPopupContentWidget", array(
     return $html;
 }
 
-function getPageContent($pagename) {
+function getPageContent($pagename) {//echo 'tthere';exit;
     $LaN = Yii::app()->lang->langcode;
     $sql = "SELECT page_content FROM {{cms_page_master}} pm LEFT JOIN {{cms_page_content}} pc ON pc.page_id = pm.page_id
             WHERE page_name = '$pagename' AND pc.language_code = '$LaN'";
+            
+           /*$sql = " SELECT page_content
+FROM lime_cms_page_master pm
+LEFT JOIN lime_cms_page_content pc ON pc.page_id = pm.page_id
+WHERE page_name = 'FAQ555'
+AND pc.language_code = 'en'
+LIMIT 0 , 30";*/
     $result = Yii::app()->db->createCommand($sql)->queryRow();
     $html = '';
+    
+    //echo $result["page_content"];exit;
     return $result["page_content"];
 }
 

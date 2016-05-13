@@ -25,10 +25,10 @@ return array(
 	'name' => 'TheOpinionRoom',
 	'components' => array(
 		'db' => array(
-			'connectionString' => 'mysql:host=localhost;dbname=surveynew',
+			'connectionString' => 'mysql:host=localhost;dbname=survey_office_2',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => 'RJH',
+			'password' => '12345678',
 			'charset' => 'utf8',
 			'tablePrefix' => 'brn_',
 		),

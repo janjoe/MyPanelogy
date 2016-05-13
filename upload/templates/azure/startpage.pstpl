@@ -1,16 +1,18 @@
-                                                <!doctype html>
+<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>Azure</title>
 <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<meta name="YII_CSRF_TOKEN" content="<?php echo Yii::app()->request->csrfToken?>">
 <link rel="stylesheet" type="text/css" href="{TEMPLATEURL}css/styles.css">
 <link rel="stylesheet" type="text/css" href="{TEMPLATEURL}css/slick.css">
 <link rel="stylesheet" type="text/css" href="{TEMPLATEURL}css/slick-theme.css">
 <link rel="stylesheet" type="text/css" href="{TEMPLATEURL}css/popup.css">
 <link rel="stylesheet" type="text/css" href="{TEMPLATEURL}css/slidebars.css">
 <link rel="stylesheet" type="text/css" href="{TEMPLATEURL}css/slidebars-theme.css">
-<link rel="stylesheet" type="text/css" href="{TEMPLATEURL}css/smk-accordion.css">
+<script src="https://use.typekit.net/yaq8hpl.js"></script>
+<script>try{Typekit.load({ async: true });}catch(e){}</script>
 </head>
 <body>
   <div class="md-modal md-effect-16" id="modal-16">
@@ -56,8 +58,7 @@
           {menu}
         <li><a href="#" class="signup md-trigger" data-modal="modal-16">Sign in</a></li>
         <li>
-        <!--<a href="registration-form.html" class="join-now">Join Now</a>-->
-        <a href="#" class="join-now">Join Now</a>
+        <a href="<?php echo Yii::app()->baseUrl;?>?pagename=JOIN NOW" class="join-now">Join Now</a>
         </li>
       </ul>
     </div>
@@ -70,4 +71,4 @@
 		</div>
 		<div class="mobilelogin"><a href="#" class="signup md-trigger" data-modal="modal-16"><img src="{TEMPLATEURL}images/sine-in-icn.png"></a></div>
   </div>
-</div>                                    
+</div>                                  

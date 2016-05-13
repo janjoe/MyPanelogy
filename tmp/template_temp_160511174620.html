@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+
+
+                                                <!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="/panelops/styles-public/lime-progress.css" />
+<title>Azure</title>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<link rel="stylesheet" type="text/css" href="/panelops/upload/templates/azure/css/styles.css">
+<link rel="stylesheet" type="text/css" href="/panelops/upload/templates/azure/css/slick.css">
+<link rel="stylesheet" type="text/css" href="/panelops/upload/templates/azure/css/slick-theme.css">
+<link rel="stylesheet" type="text/css" href="/panelops/upload/templates/azure/css/popup.css">
+<link rel="stylesheet" type="text/css" href="/panelops/upload/templates/azure/css/slidebars.css">
+<link rel="stylesheet" type="text/css" href="/panelops/upload/templates/azure/css/slidebars-theme.css">
+<link rel="stylesheet" type="text/css" href="/panelops/upload/templates/azure/css/smk-accordion.css">
+</head>
+<body>
+  <div class="md-modal md-effect-16" id="modal-16">
+    	<div class="md-content">
+		<a class="md-close"><img src="/panelops/upload/templates/azure/images/close-icon.png"></a>
+            <?php echo CHtml::form(array('pl/authentication/sa/login'), 'post', array('id' => 'loginform', 'name' => 'loginform')); ?>
+            <div class="signuptitle">
+                <h4>Member <span>Login</span></h4>
+            </div>
+            <div class="loginpopup">
+                <div class="inputlogin">
+                    <input name="email" id="email" type="email" placeholder="Email Address">
+                </div>
+                <div class="inputlogin">
+                    <input name="password" id="password" type="password" placeholder="Password">
+                </div>
+                <div class="remembercheck">
+                    <input type="checkbox" name="check">
+                    <label>Remember Password</label>
+                </div>
+                <div class="forgetpass">
+                    <a href="<?php echo Yii::app()->createUrl('pl/authentication/sa/forgotpassword'); ?>">Forgot your password?</a>
+                </div>
+                <input type="submit" name="login_submit" value="Login">
+            </div>
+
+                <input type="hidden" value="Authdb" name="authMethod" id="authMethod">
+                <input type="hidden" name="action" value="login">
+            <?php echo CHtml::endForm(); ?>
+		</div>
+  </div>
+<div class="md-overlay"></div>
+<div class="sb-slidebar sb-right">
+  <ul class="sb-menu">
+    <li><a class="nav-btn" href="http://localhost/panelops/index.php?pagename=Home" title="Home">Home</a></li><li><a class="nav-btn" href="http://localhost/panelops/index.php?pagename=About us" title="About us">About us</a></li><li><a class="nav-btn" href="http://localhost/panelops/index.php?pagename=FAQ" title="FAQ">FAQ</a></li><li><a class="nav-btn" href="http://localhost/panelops/index.php?pagename=Contact" title="Contact">Contact</a></li>
+  </ul>
+</div>
+<div class="header sb-slide">
+  <div class="container">
+    <div class="logo"><a href="<?php echo Yii::app()->baseUrl;?>"><img src="/panelops/upload/templates/azure/images/logo.png"></a></div>
+    <div class="navigation">
+      <ul>
+          <li><a class="nav-btn" href="http://localhost/panelops/index.php?pagename=Home" title="Home">Home</a></li><li><a class="nav-btn" href="http://localhost/panelops/index.php?pagename=About us" title="About us">About us</a></li><li><a class="nav-btn" href="http://localhost/panelops/index.php?pagename=FAQ" title="FAQ">FAQ</a></li><li><a class="nav-btn" href="http://localhost/panelops/index.php?pagename=Contact" title="Contact">Contact</a></li>
+        <li><a href="#" class="signup md-trigger" data-modal="modal-16">Sign in</a></li>
+        <li>
+        <!--<a href="registration-form.html" class="join-now">Join Now</a>-->
+        <a href="#" class="join-now">Join Now</a>
+        </li>
+      </ul>
+    </div>
+     <div class="hamburger">
+              <div class="sb-toggle-right">
+              <div class="navicon-line"></div>
+              <div class="navicon-line"></div>
+              <div class="navicon-line"></div>
+            </div>
+		</div>
+		<div class="mobilelogin"><a href="#" class="signup md-trigger" data-modal="modal-16"><img src="/panelops/upload/templates/azure/images/sine-in-icn.png"></a></div>
+  </div>
+</div>                                    
+
+
+            
+<table class="navigator-table">
+    <tr>
+        <td class="save-all">
+            <button type="submit" id="saveallbtn" value="saveall" name="saveall" class="saveall submit button" disabled="disabled">Resume later</button>
+        </td>
+        <td class="submit-buttons">
+            <link rel="stylesheet" type="text/css" href="/panelops/styles-public/lime-progress.css" />
+<button id="movenextbtn" name="move2" value="Next" accesskey="n" type="submit" class="submit">Next</button>
+
+        </td>
+        <td class="clear-all">
+            
+        </td>
+    </tr>
+</table>
+<div class="footer">
+	<div class="container">
+    	<div class="social">
+        	<a href="#"><img src="/panelops/upload/templates/azure/images/facebook.png" alt="facebook"></a>
+            <a href="#"><img src="/panelops/upload/templates/azure/images/twitter.png" alt="twitter"></a>
+            <a href="#"><img src="/panelops/upload/templates/azure/images/google.png" alt="google"></a>
+            <a href="#"><img src="/panelops/upload/templates/azure/images/linkedin.png" alt="linkedin"></a>
+        </div>
+        <div class="footerlink">
+        	<ul>
+            	<li><a href="#">Azure</a><span>|</span></li>
+                <li><a href="">Member agreement </a><span>|</span></li>
+                <li><a href="index.php?pagename=Privacy Policy">Privacy Policy</a></li>
+            </ul>
+            <p>© 2016. All Rights Reserved By Azure</p>
+        </div>
+    </div>
+</div>
+
+<script src="/panelops/upload/templates/azure/js/jquery.1.11.2.js"></script>
+<script src="/panelops/upload/templates/azure/js/modernizer.js"></script>
+<script src="/panelops/upload/templates/azure/js/function.js"></script>
+<script src="/panelops/upload/templates/azure/js/slick.js"></script>
+<script src="/panelops/upload/templates/azure/js/slidebars.js"></script>
+<script src="/panelops/upload/templates/azure/js/slidebars-theme.js"></script>
+<script src="/panelops/upload/templates/azure/js/classie.js"></script>
+<script src="/panelops/upload/templates/azure/js/modalEffects.js"></script>
+<script src="/panelops/upload/templates/azure/js/smk-accordion.js"></script>
+<!--script src="js/formValidation.js"></script-->
+</body>
+</html>

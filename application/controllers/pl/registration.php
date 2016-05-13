@@ -12,8 +12,21 @@ class Registration extends PL_Common_Action {
             $sa = $_GET['sa'];
         else
             $sa = '';
+            
+        
+            
+		if(!empty($_POST) && $_POST['first_step_register']=='1'){
+			
+			$_SESSION['userData']['fname'] = $_POST['fname'];
+			$_SESSION['userData']['lname'] = $_POST['lname'];
+			$_SESSION['userData']['email_address'] = $_POST['email_address'];
+			//$_SESSION['userData']['pwd'] = $_POST['pwd'];
 
-        if ($sa == 'save') {
+			$this->getController()->redirect(array('/' . '?pagename=JOIN NOW'));
+			
+		}
+        else if ($sa == 'save') {
+
             if (!is_null(App()->getRequest()->getPost('signup'))) {
                 $this->DoRegistration();
             } else {
@@ -23,7 +36,8 @@ class Registration extends PL_Common_Action {
                     $clang->gT("No valid data passed to registration.")
                 );
                 App()->user->setFlash('registrationError', $asMessage);
-                $this->_redirectToIndex();
+                //$this->_redirectToIndex();
+                $this->getController()->redirect(array('/' . '?pagename=JOIN NOW'));
             }
         } else {
             $asMessage = array(
@@ -32,8 +46,12 @@ class Registration extends PL_Common_Action {
             );
             App()->user->setFlash('registrationError', $asmessage);
             $this->_niceExit($redata, __LINE__, null, $asMessage);
-            $this->_redirectToIndex();
+            //$this->_redirectToIndex();
+            $this->getController()->redirect(array('/' . '?pagename=JOIN NOW'));
         }
+        
+        
+        
     }
 
     function activate() {
