@@ -53,10 +53,11 @@ hr{
 .footer {
     text-align: center;
     margin: 0 auto;
-    padding-top:0.4em;
+    padding:10px;
     border-top: 1px solid #eee;
     width:98%;
     clear: both;
+    box-sizing: border-box;
 }
 
 .push {
@@ -1924,3 +1925,5 @@ table.InfoForm tr.even td {
     background: none repeat scroll 0% 0% #FFF;
     padding: 5px;
 }
+#gbox_displaysurveys {min-height:400px;}
+#loginform  {min-height:480px;}

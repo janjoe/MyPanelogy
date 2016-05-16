@@ -1,0 +1,111 @@
+<div class="site-content">
+    <div class="site-header">
+		<div class="site-wrapper clear">
+			<div class="primary-nav">
+				{{menu}}</div>
+			<div class="popupbox visually-hidden" id="popupbox">
+				<a class="close">x</a>
+				<form action="/app/login.asp" id="login_form" method="post" name="login">
+					<label for="username">Email:</label> <input id="username" name="username" required="" type="text" /> <label for="loginpassword">Password:</label> <input id="loginpassword" name="password" required="" type="password" /> <input name="submit" type="submit" value="Log-in" />&nbsp;</form>
+				<a class="forgot" href="#">Forgotten your password?</a></div>
+			<div class="popupbox visually-hidden" id="popupbox-forgot">
+				<a class="close">x</a>
+				<form action="/app/emaillogin.asp" method="post" name="login">
+					<label for="email">Your e-mail:</label> <input id="email" name="email" required="" type="text" /> <input name="submit" type="submit" value="Send Reminder" />&nbsp;</form>
+				<a class="forgot_login" href="#">Return to login</a></div>
+		</div>
+	</div>
+	<div class="site-wrapper clear">
+		<h1 class="headline">
+			Join our survey panel-list team and - <span class="headline-note">earn from home</span></h1>
+		<div class="hero">
+			<div class="hero-img">
+				{{content}}</div>
+			<div class="signupbox">
+				<h2 class="signup-heading">
+					Free instant signup</h2>
+				<form action="app/register2.asp" autocomplete="off" class="register-form" id="register-form" method="post">
+					<label for="name">Full Name</label>
+					<div class="inputfield">
+						<input autocomplete="off" id="name" name="fname" pattern="[a-zA-Z ]{2,35}" required="" type="text" /></div>
+					<label for="email-address">Email Address</label>
+					<div class="inputfield">
+						<input autocomplete="off" id="email-address" name="email" required="" type="email" /></div>
+					<label for="password">Password <small> - Minimum of 8 characters</small></label>
+					<div class="inputfield">
+						<input autocomplete="off" id="password" name="password" pattern=".{8,}" required="" type="password" /></div>
+					<input class="cta-btn" id="signup" type="submit" value="Create Account &amp; Get Started" />&nbsp;</form>
+				<div class="about">
+					<p class="small-text">
+						<em>By signing up, you agree to all our terms and conditions. Our opportunity is totally free. Everything you need to do is to take surveys and polls. </em></p>
+				</div>
+			</div>
+		</div>
+		<br />
+		<div class="features">
+			<div class="features-holder">
+				<div class="section left">
+					<h3>
+						Enter Your Title - <span>01</span></h3>
+					<ul class="feature-list">
+						<li>
+							Text - 01</li>
+						<li>
+							Text - 02</li>
+						<li>
+							Text - 03</li>
+						<li>
+							Text - 04</li>
+						<li>
+							Text - 05</li>
+					</ul>
+				</div>
+				<div class="section middle">
+					<h3>
+						Enter Your Title - <span>02</span></h3>
+					<ul>
+						<li>
+							Text - 01</li>
+						<li>
+							Text - 02</li>
+						<li>
+							Text - 03</li>
+						<li>
+							Text - 04</li>
+						<li>
+							Text - 05</li>
+					</ul>
+				</div>
+				<div class="section right">
+					<h3>
+						Enter Your Title - <span>03</span></h3>
+					<ul>
+						<li>
+							Text - 01</li>
+						<li>
+							Text - 02</li>
+						<li>
+							Text - 03</li>
+						<li>
+							Text - 04</li>
+						<li>
+							Text - 05</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="blurb">
+			<p>
+				Go Web Survey is a free site, which allows survey panel-list to reigster to our site and start earning by doing on-line surveys and poll takings. To satisfy the companies quality Go Web Survey has decided some policies which are been jotted in our terms and conditions and the member should agree for the same.</p>
+		</div>
+	</div>
+	<div class="site-footer">
+		<div class="site-wrapper clear">
+			<a class="site-logo" href="/">Survey Office</a>
+			<div class="primary-nav">
+				{{menu}}</div>
+		</div>
+	</div>
+</div>
+<p>
+	&nbsp;</p>

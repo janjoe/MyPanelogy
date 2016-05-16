@@ -42,12 +42,15 @@ form,fieldset{
 	width:100%;
 }
 .footer {
-	height:1%;
+	height:auto;
 	overflow:hidden;
-	padding:30px 10px 30px 10px;
+	padding:10px 10px;
 	background:url(../images/bg-controls.png);
-        position: relative;
-        bottom: 0;
+	position: relative;
+	bottom: 0;
+	display: table;
+width: 100%;
+box-sizing: border-box;
 }
 
 .c1 {margin:0 0 0 77px;}
@@ -214,12 +217,12 @@ form,fieldset{
 }
 .logo {
 	background:url(../images/logo-only.png) no-repeat 0 0;
-	width:36px;
-	height:44px;
+	width:57px;
+	height:67px;
 	overflow:hidden;
 	text-indent:-9999px;
 	display:block;
-	margin:0 auto 23px;
+	margin:0 auto 2px;
 	position:relative;
 	left:1px;
 }

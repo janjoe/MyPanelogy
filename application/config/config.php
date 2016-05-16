@@ -35,7 +35,7 @@ return array(
         ),
     ),
     'components' => array(
-       
+        
           
          'db' => array(
             'connectionString' => 'mysql:host=survey-office.ckdgatj8pnbb.us-west-2.rds.amazonaws.com;dbname=survey_office_2;',
@@ -46,7 +46,7 @@ return array(
             'tablePrefix' => 'lime_',
         ),
         
-      
+        
         /*
         'db' => array(
             'connectionString' => 'mysql:host=localhost;dbname=survey_office_2;',

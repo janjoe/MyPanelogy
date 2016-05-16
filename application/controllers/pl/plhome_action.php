@@ -44,6 +44,9 @@ class PLHome_Action extends PL_Common_Action {
      * @return void
      */
     public function index() {
+		
+		//echo 'i m here now';exit;
+		
         $clang = $this->getController()->lang;
         App()->getClientScript()->registerPackage('jqgrid');
 //        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('styleurl') . "jquery.dataTables.css");

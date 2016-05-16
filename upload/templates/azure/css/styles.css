@@ -461,21 +461,6 @@ button, input[type="button"]:hover, input[type="reset"]:hover, input[type="submi
 .logo img {
 	vertical-align: top;
 }
-
-.logo-inner {
-	float: left;
-	margin: 0px;
-	padding: 0px;
-	-webkit-transition: all 0.4s ease;
-	transition: all 0.4s ease;
-}
-.logo-inner a {
-	display: inline-block;
-	vertical-align: top;
-}
-.logo-inner img {
-	vertical-align: top;
-}
 /* navigaion */
 .navigation {
 	float: right;
@@ -548,7 +533,7 @@ button, input[type="button"]:hover, input[type="reset"]:hover, input[type="submi
 }
 .sliderright {
 	float: right;
-	width: 33%;
+	width: 35%;
 }
 .signuptitle {
 	padding: 18px 18px 16px;
@@ -791,14 +776,6 @@ button, input[type="button"]:hover, input[type="reset"]:hover, input[type="submi
 	padding: 40px 0px;
 	background: #000;
 }
-
-.footer-inner {
-    width: 100%;
-    text-align: center;
-    display: inline-block;
-    padding: 40px 0px;
-    background: #000;
-}
 .social {
 	display: inline-block;
 	margin-bottom: 15px;
@@ -852,6 +829,17 @@ button, input[type="button"]:hover, input[type="reset"]:hover, input[type="submi
 	width: 49%;
 	float: right;
 }
+.content-side-new {
+	width: 45%;
+	float: left;
+	text-align:justify;
+}
+.content-side-new2 {
+	width: 45%;
+	float: right;
+	text-align:justify;
+}
+
 .page-content p {
 	margin-bottom: 20px;
 	font-size: 16px;
@@ -867,6 +855,22 @@ button, input[type="button"]:hover, input[type="reset"]:hover, input[type="submi
 .page-content p a {
 	color: #1d88c7;
 }
+.page-content p i {
+	color: #1d88c7;
+}
+.page-content h5
+{
+	margin-bottom: 10px;
+	color:#1d88c7;	
+}
+.p-font
+{
+	font-size: 20px;
+}	
+.acc_active p a
+{
+	color:#1d88c7;	
+}
 /* register form */
 .innerpadtop{
 	padding:50px 0px 75px;
@@ -877,7 +881,7 @@ button, input[type="button"]:hover, input[type="reset"]:hover, input[type="submi
 	margin-bottom:40px;
 	}	
 .regfrm{
-	width:100%;
+	width:60%;
 	float:left;
 	margin-bottom:40px;
 	}
@@ -887,14 +891,6 @@ button, input[type="button"]:hover, input[type="reset"]:hover, input[type="submi
 	padding:0px 15px 15px 0px;
 	vertical-align:top;
 	}
-	
-.reginputDB{
-	display:inline-block;
-    width: 50%;
-	padding:0px 15px 15px 0px;
-	vertical-align:top;
-	}
-	
 .regfrm h4{
 	margin-bottom:25px;
 	font-weight:300;
@@ -1143,6 +1139,11 @@ h2{
 .content-side1,.content-side2{
 		width:100%;	
 		}
+		.content-side-new, .content-side-new2
+		{
+				width:100%;	
+	
+		}
 .regfrm	{
 	width:100%;
 	}
@@ -1265,4 +1266,42 @@ h2{
 	top:10%;	
 	}
 
-	}	
+}	
+	
+/***** 13-05-2016 *******/
+
+.navigation ul li a {
+    color: #000;
+    display: inline-block;
+    font-size: 14px;
+    padding: 5px 20px;
+    text-transform: uppercase;
+}
+.header-main h3 {
+    color: #FFF;
+    font-size:24px;
+    margin-bottom: 0px;
+}
+
+.innerpadtop input[type="text"], .innerpadtop input[type="password"], .innerpadtop input[type="email"], .innerpadtop input[type="search"], .innerpadtop textarea, .innerpadtop select {	
+    background: #FFF none repeat scroll 0% 0%;
+    padding: 18px 10px;
+    color: #333;
+    border: 1px solid #DDD;
+    width: 300px;
+    display: block;
+}
+
+#usergroupform {}
+#usergroupform #agrre_error {
+    vertical-align: middle;
+}
+#usergroupform .regfrm {
+    width: 100%;
+}
+.regfrm .reginput input[type="text"], .regfrm .reginput input[type="password"], .regfrm .reginput input[type="email"], .regfrm .reginput input[type="search"], .regfrm .reginput textarea, .regfrm .reginput select{
+    width: 100%;
+}
+.qTitle {
+	margin: 10px 0;
+}

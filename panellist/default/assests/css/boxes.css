@@ -23,7 +23,7 @@
     margin:40px auto;
     display:inline-block;
 }
-.box h3 {border-bottom: 1px solid #d6d6d6; color:#7a7a7a;background: url(../images/bg-controls.png);}
+.box h3 {border-bottom: 1px solid #d6d6d6; color:#7a7a7a;background: url(../images/bg-controls.png); padding-left: 15px;}
 .box h3:before {
     content: "";
     height: 10px;

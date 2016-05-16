@@ -1,0 +1,183 @@
+<div class="site-content">
+    <div class="site-header">
+        <div class="site-wrapper clear">
+            <a alt="Logo" class="site-logo" href="/">Logo</a>
+            <div class="primary-nav">
+                <?php
+$this->widget("application.extensions.Brain.BrainPopupContentWidget", array(
+    "popup_box_id" => "popup_box",
+    "popup_link_id" => "popup_link",
+    "popup_on_load" => "false",
+    "popup_title" => "These is the popup title...",
+    "height" => "300px;",
+    "width" => "600px;",
+));
+?>
+                <a class="nav-btn" href="index.php?pagename=home" title="home">home</a><a class="nav-btn" href="index.php?pagename=test" title="test">test</a> <a class="nav-btn nav-cta login" href="#" id="popup_link">Log In</a></div>
+            <div class="popupbox visually-hidden" id="popup_box">
+                <a class="close">x</a>
+                <form action="/app/login.asp" id="login_form" method="post" name="login">
+                    <label for="username">Email:</label> <input id="username" name="username" required="" type="text" /> <label for="loginpassword">Password:</label> <input id="loginpassword" name="password" required="" type="password" /> <input name="submit" type="submit" value="Log-in" /> </form>
+                <a class="forgot" href="#">Forgotten your password?</a></div>
+            <div class="popupbox visually-hidden" id="popupbox-forgot">
+                <a class="close">x</a>
+                <form action="/app/emaillogin.asp" method="post" name="login">
+                    <label for="email">Your e-mail:</label> <input id="email" name="email" required="" type="text" /> <input name="submit" type="submit" value="Send Reminder" /> </form>
+                <a class="forgot_login" href="#">Return to login</a></div>
+        </div>
+    </div>
+    <div class="site-wrapper clear">
+        <h1 class="headline">
+            Join our survey panel-list team and - <span class="headline-note">earn from home</span></h1>
+        <div class="hero" style="min-height: 900px;">
+            <div class="hero-img">
+                </div>
+            <div class="signupbox" style="height:auto;min-height: 900px;">
+                <form id="usergroupform" action="/survey/index.php/usergroups/sa/addss" method="post">
+<div style="display:none"><input type="hidden" value="0b830c6f3c70883cf9beb13f4c81f9f596e6d1ea" name="YII_CSRF_TOKEN" /></div><table style="width: 100%; margin: 0px auto">
+        <tr>
+            <td style="text-align: left;padding-left: 4%;">Email Address</td>
+        </tr>
+        <tr>
+            <td>
+                <input type="email" placeholder="Email Address" name="email_address" required="required" />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: left;padding-left: 4%;">ReEmail Address</td>
+        </tr>
+        <tr>
+            <td>
+                <input type="email" placeholder="Re-Enter Email Address" name="remail_address" required="required" />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: left;padding-left: 4%;">Password</td>
+        </tr>
+        <tr>
+            <td>
+                <input type="password" placeholder="Password"  name="pwd" required="required" />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: left;padding-left: 4%;">First Name</td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" placeholder="First Name"  name="fname" required="required" />
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: left;padding-left: 4%;">Last Name</td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" placeholder="Last Name"  name="lname" required="required" />
+            </td>
+        </tr><tr>
+            <td style="text-align: left;padding-left: 4%;">Gender</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;padding-left: 4%;"><input type="radio" name="1" id="Male" required="required" />Male<input type="radio" name="1" id="Female" required="required" />Female</td>
+        </tr><tr>
+            <td style="text-align: left;padding-left: 4%;">Date of Birth</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;padding-left: 4%;">
+                <input type="text" name="6" id="6" required="required" />
+            </td>
+        </tr><tr>
+            <td style="text-align: left;padding-left: 4%;">Zip/Postal Code</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;padding-left: 4%;">
+                <input type="text" name="2" id="2" required="required" />
+            </td>
+        </tr><tr>
+            <td style="text-align: left;padding-left: 4%;">Approximately how many employees work for your company (all locations)?</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;padding-left: 4%;"><select name="3" id="3" required="required">
+                <option value="">Please Provide Answer</option><option value="4">2 - 5 employees</option><option value="5">6 - 9 employees</option><option value="6">10 - 49 employees</option><option value="7">50 - 99 employees</option><option value="8">100 - 249 employees</option><option value="9">250 - 499 employees</option><option value="10">500 - 999 employees</option></select></td>
+        </tr><tr>
+            <td style="text-align: left;padding-left: 4%;">Which best describes your company's primary industry?</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;padding-left: 4%;"><select name="4" id="4" required="required">
+                <option value="">Please Provide Answer</option><option value="11">IT</option><option value="12">Accounting</option><option value="13">Advertising</option></select></td>
+        </tr><tr>
+            <td style="text-align: left;padding-left: 4%;">Which best describes your title or position?</td>
+        </tr>
+        <tr>
+            <td style="text-align: left;padding-left: 4%;"><select name="5" id="5" required="required">
+                <option value="">Please Provide Answer</option><option value="14">Business Owner</option><option value="15">Partner / Principle</option><option value="16">President</option><option value="17">C-Level Executive (CEO, CIO, etc.)</option><option value="18">Senior Vice President</option></select></td>
+        </tr></table><input id="signup" type="submit" class="cta-btn" value="Sign Up" /></div>
+        </div>
+        <br />
+        <div class="features">
+            <div class="features-holder">
+                <div class="section left">
+                    <h3>
+                        Enter Your Title - <span>01</span></h3>
+                    <ul class="feature-list">
+                        <li>
+                            Text - 01</li>
+                        <li>
+                            Text - 02</li>
+                        <li>
+                            Text - 03</li>
+                        <li>
+                            Text - 04</li>
+                        <li>
+                            Text - 05</li>
+                    </ul>
+                </div>
+                <div class="section middle">
+                    <h3>
+                        Enter Your Title - <span>01</span></h3>
+                    <ul class="feature-list">
+                        <li>
+                            Text - 01</li>
+                        <li>
+                            Text - 02</li>
+                        <li>
+                            Text - 03</li>
+                        <li>
+                            Text - 04</li>
+                        <li>
+                            Text - 05</li>
+                    </ul>
+                </div>
+                <div class="section right">
+                    <h3>
+                        Enter Your Title - <span>01</span></h3>
+                    <ul class="feature-list">
+                        <li>
+                            Text - 01</li>
+                        <li>
+                            Text - 02</li>
+                        <li>
+                            Text - 03</li>
+                        <li>
+                            Text - 04</li>
+                        <li>
+                            Text - 05</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="blurb">
+            <p>
+                Go Web Survey is a free site, which allows survey panel-list to reigster to our site and start earning by doing on-line surveys and poll takings. To satisfy the companies quality Go Web Survey has decided some policies which are been jotted in our terms and conditions and the member should agree for the same.</p>
+        </div>
+    </div>
+    <div class="site-footer">
+        <div class="site-wrapper clear">
+            <a class="site-logo" href="/">Survey Office</a>
+            <div class="primary-nav">
+                <a class="nav-btn footer-btn" href="index.php?pagename=About us" title="About Us">About Us</a> <a class="nav-btn footer-btn" href="index.php?pagename=Privacy policy" title="Privacy policy">Privacy policy</a> <a class="nav-btn footer-btn" href="index.php?pagename=Term" title="Term">Terms & Conditions</a></div>
+        </div>
+    </div>
+</div>
+<p>
+     </p>

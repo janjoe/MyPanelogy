@@ -28,7 +28,8 @@ fieldset legend {
 }
 
 text, textarea, input, label, select{
-    font-family: Segio,Verdana;
+    /*font-family: Segio,Verdana;*/
+    font-family:"Lucida Sans Unicode","Lucida Grande",sans-serif;
     font-size: 10pt;
     color: black;
     height: 35px;

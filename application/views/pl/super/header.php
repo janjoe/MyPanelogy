@@ -5,24 +5,15 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <?php
         $themepath = Yii::app()->getConfig("plstyleurl") . Yii::app()->getConfig("pltheme") . "/assests/";
-        $templatepath = $baseurl . '/upload/templates/azure/';
         ?>
         <?php echo $datepickerlang; ?>
         <title><?php echo $sitename; ?></title>
-
-        <meta charset="utf-8">
-        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-        <link rel="stylesheet" type="text/css" href="<?php echo $templatepath; ?>css/styles.css">
-        <link rel="stylesheet" type="text/css" href="<?php echo $templatepath; ?>css/slick.css">
-        <link rel="stylesheet" type="text/css" href="<?php echo $templatepath; ?>css/slick-theme.css">
-        <link rel="stylesheet" type="text/css" href="<?php echo $templatepath; ?>css/popup.css">
-        <link rel="stylesheet" type="text/css" href="<?php echo $templatepath; ?>css/slidebars.css">
-        <link rel="stylesheet" type="text/css" href="<?php echo $templatepath; ?>css/slidebars-theme.css">
-        <link rel="stylesheet" type="text/css" href="<?php echo $templatepath; ?>css/smk-accordion.css">
+        <link rel="shortcut icon" href="<?php echo $baseurl; ?>styles/favicon.png" type="image/png" />
+        <link rel="icon" href="<?php echo $baseurl; ?>styles/favicon.png" type="image/png" />
         <link rel="stylesheet" href="<?php echo $themepath; ?>css/all.css" type="text/css" />
         <link rel="stylesheet" href="<?php echo $themepath; ?>css/ie.css" type="text/css" />
         <link rel="stylesheet" href="<?php echo $themepath; ?>css/ui.css" type="text/css" />
-        <!-- <link rel="stylesheet" href="<?php echo $themepath; ?>css/boxes.css" type="text/css" /> -->
+        <link rel="stylesheet" href="<?php echo $themepath; ?>css/boxes.css" type="text/css" />
         <?php echo $firebug ?>
         <?php $this->widget('ext.LimeScript.LimeScript'); ?>
         <?php $this->widget('ext.LimeDebug.LimeDebug'); ?>
@@ -46,8 +37,8 @@
                 });
             });
         </script>
-        </head>
-        <body>
+    </head>
+    <body>
         <?php if (isset($formatdata)) { ?>
             <script type='text/javascript'>
                 var userdateformat='<?php echo $formatdata['jsdate']; ?>';
@@ -56,67 +47,69 @@
         <?php } ?>
 
         <?php $this->widget('ext.FlashMessage.FlashMessage'); ?>
+<!-- <div class='maintitle'><img src="<?php echo $baseurl; ?>styles/prod-logo.png" style="width: 20%" alt="SurveyOffice" title="GoWebSuravey" /></div> -->
+        <div id='wrapper'>
+            <div id="content">
+                <div class="c1">
 
-        <div class="sb-slidebar sb-right">
-            <ul class="sb-menu">
-                {menu}
-            </ul>
-        </div>
-        <div class="header sb-slide">
-            <div class="container">
-                <div class="logo-inner"><a href="<?echo $baseurl; ?>"><img src="<?php echo $templatepath; ?>images/logo.png"></a></div>
-                <div class="navigation">
-                    <?php
-                    if (Yii::app()->session['plid']) {
-                    $ok = 0;
-                    $plans_list = array();
-                    $sql = "SELECT * FROM {{panellist_answer}} WHERE panellist_id = '" . $_SESSION['plid'] . "'";
-                    $pl_answer = Yii::app()->db->createCommand($sql)->query()->readAll();
-                    foreach ($pl_answer as $key => $value) {
-                        foreach ($value as $ky => $val) {
-                            $plans_list[$ky] = $val;
-                        }
-                    }
-                    $quelist = Question(get_question_categoryid('Registration'), '', false, true);
-                    foreach ($quelist as $key => $value) {
-                        if ($plans_list['question_id_' . $key] == '') {
-                            $ok = 1;
-                            break;
-                        }
-                    }
-                    $quelist = Question(get_question_categoryid('Profile'), '', false, true);
-                    foreach ($quelist as $key => $value) {
-                        if ($plans_list['question_id_' . $key] == '') {
-                            $ok = 1;
-                            break;
-                        }
-                    }
-                    if ($ok == 1) {
-                        $sty = 'visibility: hidden;';
-                    } else {
-                        $sty = '';
-                    }
-                    $sts_test = getGlobalSetting('project_status_test');
-                    $sts_run = getGlobalSetting('project_status_run');
-                    $date = date('Y-m-d');
-                    $sql = "SELECT COUNT(*) AS cnt FROM {{panellist_project}} pp 
+                    <div class="controls">
+
+                        <?php
+                        if (Yii::app()->session['plid']) {
+                            $ok = 0;
+                            $plans_list = array();
+                            $sql = "SELECT * FROM {{panellist_answer}} WHERE panellist_id = '" . $_SESSION['plid'] . "'";
+                            $pl_answer = Yii::app()->db->createCommand($sql)->query()->readAll();
+                            foreach ($pl_answer as $key => $value) {
+                                foreach ($value as $ky => $val) {
+                                    $plans_list[$ky] = $val;
+                                }
+                            }
+                            $quelist = Question(get_question_categoryid('Registration'), '', false, true);
+                            foreach ($quelist as $key => $value) {
+                                if ($plans_list['question_id_' . $key] == '') {
+                                    $ok = 1;
+                                    break;
+                                }
+                            }
+                            $quelist = Question(get_question_categoryid('Profile'), '', false, true);
+                            foreach ($quelist as $key => $value) {
+                                if ($plans_list['question_id_' . $key] == '') {
+                                    $ok = 1;
+                                    break;
+                                }
+                            }
+                            if ($ok == 1) {
+                                $sty = 'visibility: hidden;';
+                            } else {
+                                $sty = '';
+                            }
+                            $sts_test = getGlobalSetting('project_status_test');
+                            $sts_run = getGlobalSetting('project_status_run');
+                            $date = date('Y-m-d');
+                            $sql = "SELECT COUNT(*) AS cnt FROM {{panellist_project}} pp 
                                     LEFT JOIN {{project_master}} pm ON pp.project_id = pm.project_id
                                     WHERE (project_status_id = '$sts_test' OR project_status_id = '$sts_run') 
                                     AND trueup IS NULL AND panellist_id = '" . $_SESSION['plid'] . "' AND STATUS = 'A'";
-                    $uresult = Yii::app()->db->createCommand($sql)->queryRow();
+                            $uresult = Yii::app()->db->createCommand($sql)->queryRow();
+                            
 
+                            //$total_survey = count(availablesurvey(Yii::app()->session['plid']));
+                            $total_survey = $uresult['cnt'];
+                            $total_message = count(messagePanellist($_SESSION['plid'], 'Unread'));
+                            ?>
+                            <nav class="links" style="<?php echo $sty; ?>">
+                                <ul>
+                                    <li><a href="<?php echo CController::createUrl('pl/home/sa/asurveys') ?>" title="Available Survey" class="ico3">Surveys <span class="num"><?php echo $total_survey; ?></span></a></li>
+                                    <li><a href="<?php echo CController::createUrl('pl/home/sa/messsage') ?>" class="ico1">Inbox <span class="num"><?php echo $total_message; ?></span></a></li>
+                                </ul>
+                            </nav>
 
-                    //$total_survey = count(availablesurvey(Yii::app()->session['plid']));
-                    $total_survey = $uresult['cnt'];
-                    $total_message = count(messagePanellist($_SESSION['plid'], 'Unread'));
-                    ?>
-                    <nav class="links" style="<?php echo $sty; ?>">
-                        <ul>
-                            <li><a href="<?php echo CController::createUrl('pl/home/sa/asurveys') ?>" title="Available Survey" class="ico3">Surveys <span class="num"><?php echo $total_survey; ?></span></a></li>
-                            <li><a href="<?php echo CController::createUrl('pl/home/sa/messsage') ?>" class="ico1">Inbox <span class="num"><?php echo $total_message; ?></span></a></li>
-                        </ul>
-                    </nav>
-                        <div class="profile-box">
+                            <div style="width:27%;float: left; margin-left: 10%; text-align: center">
+                                <img src="<?php echo $baseurl; ?>styles/prod-logo.png"></img>
+                            </div>
+
+                            <div class="profile-box">
                                 <span class="profile">
                                     <div style="position: relative; min-height: 37px;">
                                         <a href="#" class="section">
@@ -135,25 +128,11 @@
                                         </ul>
                                     </div>
                                 </span>
-                            <a href="<?php echo $this->createUrl("pl/authentication/sa/logout"); ?>" class="btn-on">On</a>
-                        </div>
-
-                    <?php } ?>
-                </div>
-                <div class="hamburger">
-                    <div class="sb-toggle-right">
-                        <div class="navicon-line"></div>
-                        <div class="navicon-line"></div>
-                        <div class="navicon-line"></div>
+                                <a href="<?php echo $this->createUrl("pl/authentication/sa/logout"); ?>" class="btn-on">On</a>
+                            </div>
+                            <?php
+                        }
+                        ?>
                     </div>
-                </div>
-                <div class="mobilelogin"><a href="#" class="signup md-trigger" data-modal="modal-16"><img src="<?php echo $templatepath; ?>images/sine-in-icn.png"></a></div>
-            </div>
-        </div>
-
-        <div class="sb-slide" id="sb-site">
-            <div class="innercontent">
-
-
 
 

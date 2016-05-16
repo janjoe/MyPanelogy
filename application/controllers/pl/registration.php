@@ -15,7 +15,7 @@ class Registration extends PL_Common_Action {
             
         
             
-		if(!empty($_POST) && $_POST['first_step_register']=='1'){
+		if(!empty($_POST) && @$_POST['first_step_register']=='1'){
 			
 			$_SESSION['userData']['fname'] = $_POST['fname'];
 			$_SESSION['userData']['lname'] = $_POST['lname'];
@@ -28,7 +28,11 @@ class Registration extends PL_Common_Action {
         else if ($sa == 'save') {
 
             if (!is_null(App()->getRequest()->getPost('signup'))) {
+				
                 $this->DoRegistration();
+                
+                unset($_SESSION['userData']['fname']);
+                
             } else {
                 $aData = array();
                 $asMessage = array(
@@ -61,6 +65,9 @@ class Registration extends PL_Common_Action {
         $aData['display'] = false;
         $code = $code_id[1];
         $panellist_id = $code_id[0];
+        
+        //echo '<pre>';print_r($code_id);exit;
+        
         if ($code != '' && $panellist_id != '') {
             if ($code == '') {
                 $aData['Error'] = true;
@@ -275,8 +282,8 @@ class Registration extends PL_Common_Action {
             if (!in_array($_SERVER['REMOTE_ADDR'], $whitelist)) {
                 $send = get_SendEmail::model()->SendEmailByTemplate($email_address, EMAIL_POINT_PL_Registration, $NewPanellist, array('pwd' => "$pwd", 'activation_link' => "$activation_link"));
             } else {
-                echo $send = get_SendEmail::model()->SendEmailByTemplate($email_address, EMAIL_POINT_PL_Registration, $NewPanellist, array('pwd' => "$pwd", 'activation_link' => "$activation_link"));
-                exit;
+                $send = get_SendEmail::model()->SendEmailByTemplate($email_address, EMAIL_POINT_PL_Registration, $NewPanellist, array('pwd' => "$pwd", 'activation_link' => "$activation_link"));
+                //exit;
             }
             //$send = get_SendEmail::model()->SendEmailByTemplate($email_address, EMAIL_POINT_PL_Registration, $NewPanellist, array('pwd' => "$pwd", 'activation_link' => "$activation_link"));
             if (!$send) {

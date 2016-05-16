@@ -53,9 +53,14 @@ class get_SendEmail extends LSActiveRecord {
     }
 
     function SendEmailByTemplate($ToEmailID, $Email_Point, $ID = 0, array $parm=null) {
+		
+		//echo $ToEmailID;exit;
+		
+		
+		
         //$ar = Get_template::model()->getEmailContent($Email_Point, $panel_listID);
         $ar = $this->getEmailContent($Email_Point, $ID);
-        //echo '<pre>' . print_r($ar).'</pre>';
+        //echo '<pre>' . print_r($ar).'</pre>';exit;
         //$to = $this->GetToEmailID($Email_Point, $ToEmailID);
         $to = $ToEmailID;
         $from = $this->GetFromEmailID();
@@ -65,12 +70,28 @@ class get_SendEmail extends LSActiveRecord {
             '127.0.0.1',
             '::1'
         );
-
+        
+        
+        ///////////////
+        $body = $this->ReplaceBodyVariables($ar['BODY'], $Email_Point, $ID, $parm);
+		//////////////////
+		
+		/*
         if (!in_array($_SERVER['REMOTE_ADDR'], $whitelist)) {
             $body = $this->ReplaceBodyVariables($ar['BODY'], $Email_Point, $ID, $parm);
         } else {
-            return $body = $this->ReplaceBodyVariables($ar['BODY'], $Email_Point, $ID, $parm);
+			
+			//echo '44';exit;
+			
+            $body = $this->ReplaceBodyVariables($ar['BODY'], $Email_Point, $ID, $parm);
+            
+            //print_r($body);exit;
+            
+            return $body;
         }
+        * */
+        
+        
         //exit('body-' . $body . '<br>subject-' . $subject . '<br>to-' . $to . '<br>from-' . $from . '<br>sitename-' . Yii::app()->getConfig("sitename") . '<br>true-' . true . '<br>siteadminbounce-' . Yii::app()->getConfig("siteadminbounce"));
         $sent = SendEmailMessage($body, $subject, $to, $from, Yii::app()->getConfig("sitename"), true, Yii::app()->getConfig("siteadminbounce"));
         return $sent;
@@ -80,6 +101,9 @@ class get_SendEmail extends LSActiveRecord {
         $newPath = "application.views.admin.get";
         $newPath = YiiBase::getPathOfAlias($newPath);
         $xml = simplexml_load_file($newPath . '/emailparameter.xml') or die("Error: Cannot create object");
+        
+     //echo '<pre>';print_r($xml);exit;
+        
         switch ($Email_Point) {
             case EMAIL_POINT_Admin_Edit_Password:
                 $content = '';
@@ -117,8 +141,15 @@ class get_SendEmail extends LSActiveRecord {
                 break;
 
             case EMAIL_POINT_PL_Registration:case EMAIL_POINT_PL_RegistrationReSend:
+            
+            
+            
+            
                 $sql = "SELECT * FROM {{view_panel_list_master}} WHERE panel_list_id = '$ID'";
                 $result = Yii::app()->db->createCommand($sql)->queryRow();
+                
+                //echo '<pre>';print_r($result);exit;
+                
                 $test = '';
                 foreach ($xml->children() as $root) {
                     foreach ($root->children() as $usein => $data) {
@@ -133,6 +164,9 @@ class get_SendEmail extends LSActiveRecord {
                 $pwd = $parm['pwd'];
                 $content = str_replace('[[PASSWORD]]', $pwd, $content);
                 $content = str_replace('[[ACTIVATE_ACCOUNT_LINK]]', $parm['activation_link'], $content);
+                
+               //echo $content;exit;
+                
                 break;
             case EMAIL_POINT_PL_ForgotPassword:
                 $sql = "SELECT * FROM {{view_panel_list_master}} WHERE panel_list_id = '$ID'";
@@ -196,6 +230,7 @@ class get_SendEmail extends LSActiveRecord {
                 break;
         }
         $content = str_replace('&#39', "'", $content);
+
         return $content;
     }
 

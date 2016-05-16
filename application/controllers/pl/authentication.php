@@ -27,6 +27,7 @@ class Authentication extends PL_Common_Action {
     }
 
     public function DoLogin() {
+		
         $clang = $this->getController()->lang;
         $user = $_POST['email'];
         $pass = $_POST['password'];

@@ -764,7 +764,7 @@ function getPanelListAddFormNew() {
         </script>';
 
   
-    $html = $testNEW . Question(get_question_categoryid('Registration'), '');
+    $html = '<div class="inputDB">' . $testNEW . Question(get_question_categoryid('Registration'), '') . '</div>';
     
    
     return $html;

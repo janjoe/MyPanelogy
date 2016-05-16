@@ -1,5 +1,7 @@
 <?php
 
+include ("mail_sending.php");
+
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 /*
@@ -1375,6 +1377,9 @@ function get_answer($answer_id, $que_id) {
 
 function CreateUi($que_id, $que_title, $que_fieldtype, $style) {
     $html = '';
+    
+    $que_title = '<div class="qTitle">'.$que_title.'</div>';
+    
     $sql = "SELECT * FROM {{profile_answer}} WHERE question_id = '$que_id' AND IsActive = 1 ORDER BY sorder";
     $que_ans = Yii::app()->db->createCommand($sql)->query()->readAll();
     if ($que_fieldtype == 'Text') {
@@ -5189,6 +5194,12 @@ function javascriptEscape($str, $strip_tags=false, $htmldecode=false) {
  * @return bool If successful returns true
  */
 function SendEmailMessage($body, $subject, $to, $from, $sitename, $ishtml=false, $bouncemail=null, $attachments=null, $customheaders="") {
+	$mail = new mailSending();
+	//echo 'NAFEES=' . $body;exit;
+	$mail->send_mail($to,'User',$subject,$body,$from, $sitename);
+	//echo '11NAFEES110000000000000';exit;
+	
+	return 1;
 
     $findme = 'gmail.com';
     $pos = strpos($to, $findme);
