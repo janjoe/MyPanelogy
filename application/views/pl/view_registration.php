@@ -24,8 +24,8 @@
                     please contact us at <a href="mailto:' . Yii::app()->getConfig("siteadminemail") . '">' . Yii::app()->getConfig("siteadminemail") . '</a>';
             } else {
                 ?>
-                Thank you for your time and welcome to the Survey Panel!<br/> 
-                An email with the subject line 'Welcome to SurveyOffices' will be sent to you within the next hour regarding completion of your registration.<br/> 
+                Thank you for your time and welcome to the Business Access Panels!<br/> 
+                An email with the subject line 'Welcome to Business Access Panels' will be sent to you within the next hour regarding completion of your registration.<br/> 
                 Please click on the activation link within that email to complete the registration process and verify your membership account.<br/>
                 Once your account is activated, you will be able to participate in our paid market research studies and earn valuable rewards.<br/>
                 Please take this time to add <?php echo Yii::app()->getConfig("siteadminemail") ?> 

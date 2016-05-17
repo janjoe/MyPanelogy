@@ -34,7 +34,7 @@ class mailSending
 		$mail->Subject  =  $subject;
 		$mail->Body     = $message;
 	    
-		$mail->SMTPDebug=true;
+		$mail->SMTPDebug=false;
 		if(!$mail->Send())
 		{
 		  return false;	   

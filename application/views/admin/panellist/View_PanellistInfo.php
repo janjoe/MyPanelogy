@@ -3,13 +3,17 @@
 //echo $panel_list_id;
 $pl_query = "SELECT * FROM {{view_panel_list_master}} WHERE panel_list_id = '" . $panel_list_id . "'";
 $dr = Yii::app()->db->createCommand($pl_query)->query()->readAll();
+
+//echo '<pre>';print_r($dr);exit;
+
 $i = 0;
 for ($i = 0; $i < count($dr); $i++) {
     $row = $dr[$i];
     $sql = "SELECT * FROM {{panellist_answer}} WHERE panellist_id = '" . $panel_list_id . "'";
     $result = Yii::app()->db->createCommand($sql)->query();
     $count = $result->rowCount;
-    if ($count > 0) {
+    //if ($count > 0) {
+    if (1) {
         print_pl_view_data($row);
     }
     $row++;

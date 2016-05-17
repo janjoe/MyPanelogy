@@ -94,6 +94,7 @@ class Authentication extends PL_Common_Action {
      * Forgot Password screen
      */
     public function forgotpassword() {
+		
         $this->_redirectIfLoggedIn();
 
         if (!Yii::app()->request->getPost('action')) {
@@ -125,8 +126,7 @@ class Authentication extends PL_Common_Action {
                 if (!in_array($_SERVER['REMOTE_ADDR'], $whitelist)) {
                     $send = get_SendEmail::model()->SendEmailByTemplate($sEmailAddr, EMAIL_POINT_PL_ForgotPassword, $Panellist_id, array('activation_link' => "$activation_link"));
                 } else {
-                    echo $send = get_SendEmail::model()->SendEmailByTemplate($sEmailAddr, EMAIL_POINT_PL_ForgotPassword, $Panellist_id, array('activation_link' => "$activation_link"));
-                    exit;
+                    $send = get_SendEmail::model()->SendEmailByTemplate($sEmailAddr, EMAIL_POINT_PL_ForgotPassword, $Panellist_id, array('activation_link' => "$activation_link"));
                 }
                 //$send = get_SendEmail::model()->SendEmailByTemplate($sEmailAddr, EMAIL_POINT_PL_ForgotPassword, $Panellist_id, array('activation_link' => "$activation_link"));
                 if (!$send) {
