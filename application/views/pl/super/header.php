@@ -106,7 +106,9 @@
                             </nav>
 
                             <div style="width:27%;float: left; margin-left: 10%; text-align: center">
+                                <a href='<?php echo $this->createUrl('/pl/home'); ?>'>
                                 <img src="<?php echo $baseurl; ?>styles/prod-logo.png"></img>
+                                </a>
                             </div>
 
                             <div class="profile-box">

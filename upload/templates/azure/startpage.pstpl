@@ -5,6 +5,7 @@
 <title>Business Access Panels</title>
 <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 <meta name="YII_CSRF_TOKEN" content="<?php echo Yii::app()->request->csrfToken?>">
+<link rel="shortcut icon" href="/styles/favicon.png" type="image/x-icon" />
 <link rel="stylesheet" type="text/css" href="{TEMPLATEURL}css/styles.css">
 <link rel="stylesheet" type="text/css" href="{TEMPLATEURL}css/slick.css">
 <link rel="stylesheet" type="text/css" href="{TEMPLATEURL}css/slick-theme.css">
@@ -34,7 +35,7 @@
                     <label>Remember Password</label>
                 </div>
                 <div class="forgetpass">
-                    <a href="<?php echo Yii::app()->createUrl('pl/authentication/sa/forgotpassword'); ?>">Forgot your password?</a>
+                    <a href="<?php echo Yii::app()->createUrl('/?pagename=Forgot Password'); ?>">Forgot your password?</a>
                 </div>
                 <input type="submit" name="login_submit" value="Login">
             </div>

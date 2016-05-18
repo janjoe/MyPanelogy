@@ -36,7 +36,7 @@ $( document ).ready(function() {
 	$('#fname').val('<?php echo $_SESSION['userData']['fname']?>');
 	$('#lname').val('<?php echo $_SESSION['userData']['lname']?>');
 	$('#email_address').val('<?php echo $_SESSION['userData']['email_address']?>');
-	//$('#pwd').val('<?php echo $_SESSION['userData']['pwd']?>');
+	$('#pwd').val('<?php echo $_SESSION['userData']['pwd']?>');
 	
 });
 </script>  

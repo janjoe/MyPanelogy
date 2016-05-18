@@ -74,7 +74,9 @@
             <p>
             <table class="InfoForm" style="width: 95%; margin: 0px auto;">
                 <?php
+                
                 $odd = FALSE;
+                
                 $quelist = Question(get_question_categoryid('Profile'), '', false, true);
                 $quetype = Question(get_question_categoryid('Profile'), '', true, false);
                 foreach ($quelist as $key => $value) {
@@ -84,7 +86,7 @@
                         $cls = 'class="even"';
                     }
                     echo '<tr ' . $cls . '>
-                        <td>' . $value .'=>'.$key. '</td>';
+                        <td>' . $value . '</td>';
                     if ($quetype[$key] == 'Text') {
                         echo '<td><input type="text" name="' . $key . '" value="' . $plans_list['question_id_' . $key] . '" /></td>';
                     } elseif ($quetype[$key] == 'DOB') {

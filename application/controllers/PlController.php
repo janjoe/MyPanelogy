@@ -134,13 +134,13 @@ class PlController extends LSYii_Controller {
 
             //App()->user->setReturnUrl(App()->request->requestUri);
 
-            $this->redirect(array('/pl/authentication/sa/login'));
+            $this->redirect(array('/?pagename=Login'));
         }
         elseif (!empty($this->pnl_id) && $action != "remotecontrol") {
             if (Yii::app()->session['session_hash'] != hash('sha256', getGlobalSetting('SessionName') . Yii::app()->session['pluser'] . Yii::app()->session['plid'])) {
                 Yii::app()->session->clear();
                 Yii::app()->session->close();
-                $this->redirect(array('/pl/authentication/sa/login'));
+                $this->redirect(array('/?pagename=Login'));
             }
         }
 

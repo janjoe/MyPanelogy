@@ -28,6 +28,7 @@ if (!defined('BASEPATH'))
 
 
 return array(
+'timeZone' => 'America/New_York',
     'modules' => array(
         'gii' => array(
             'class' => 'system.gii.GiiModule',
@@ -38,13 +39,13 @@ return array(
         
           
          'db' => array(
-            'connectionString' => 'mysql:host=survey-office.ckdgatj8pnbb.us-west-2.rds.amazonaws.com;dbname=survey_office_2;',
-            'emulatePrepare' => true,
-            'username' => 'so_master',
-            'password' => 'surv3y0ff1c3',
-            'charset' => 'utf8',
-            'tablePrefix' => 'lime_',
-        ),
+           'connectionString' => 'mysql:host=localhost;dbname=panelogy;',
+           'emulatePrepare' => true,
+           'username' => 'panelogy',
+           'password' => 'lsmcnQ6W7LVLhuYSkJp6',
+           'charset' => 'utf8',
+           'tablePrefix' => 'lime_',
+       ),
         
         
         /*

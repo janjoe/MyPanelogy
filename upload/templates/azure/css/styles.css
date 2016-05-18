@@ -464,7 +464,7 @@ button, input[type="button"]:hover, input[type="reset"]:hover, input[type="submi
 /* navigaion */
 .navigation {
 	float: right;
-	margin-top: 15px;
+	margin-top: 5px;
 }
 .navigation ul {
 	width: 100%;
@@ -520,9 +520,10 @@ button, input[type="button"]:hover, input[type="reset"]:hover, input[type="submi
 .slidercaption h1 {
 	font-weight: 300;
 	color: #fff;
-	font-size:40px;
+	font-size:37px;
 	text-align: left;
-	margin: 75px 0px
+	margin: 75px 0px;
+	line-height: 44px;
 }
 .slidercaption h1 span {
 	font-weight: 700;
@@ -804,7 +805,7 @@ button, input[type="button"]:hover, input[type="reset"]:hover, input[type="submi
 /* about us */
 .innercontent {
 	width: 100%;
-  	margin: 84px 0px 0px 0px;
+  	margin: 66px 0px 0px 0px;
 }
 .header-main {
 	background-color: #1d88c7;
@@ -873,7 +874,7 @@ button, input[type="button"]:hover, input[type="reset"]:hover, input[type="submi
 }
 /* register form */
 .innerpadtop{
-	padding:50px 0px 75px;
+	padding:45px 0px 45px;
 	width:100%;
 	display:inline-block;
 	}
@@ -987,7 +988,7 @@ p.error,label.error{
 	top:18%;
 	}
 .sliderleft{
-	width:48%;
+	width:50%;
 	}	
 }
 @media screen and (max-width: 1170px) {
@@ -1304,4 +1305,25 @@ h2{
 }
 .qTitle {
 	margin: 10px 0;
+}
+.LoginNew {
+	margin: auto;
+	width:40%;
+}
+.LoginNew .loginFld{
+	width:100%;
+	margin: 0 0 20px 0;
+}
+
+.LoginNew input[type="text"], .LoginNew input[type="password"], .LoginNew input[type="email"]{
+    background: #FFF none repeat scroll 0% 0%;
+    padding: 12px 10px;
+    color: #333;
+    border: 1px solid #DDD;
+    width: 100%;
+    display: block;
+}
+
+.clear {
+	clear:both;
 }

@@ -35,6 +35,8 @@
         <div class='wrapper'>
             <?php $this->widget('ext.FlashMessage.FlashMessage'); ?>
             <div class='maintitle'>
-                <img src="<?php echo $baseurl; ?>styles/Logo.png" alt="Business Access Panels" title="Business Access Panels" />
+				<a href='<?php echo $this->createUrl('/admin/index'); ?>'>
+                <img src="<?php echo $baseurl; ?>styles/Logo.png" alt="Panelogy" title="Panelogy" />
+                </a>
                 <!-- <img src="<?php echo $baseurl; ?>styles/prod-logo.png" style="width: 20%; float: right" alt="Survey Office" title="Survey Office" /> -->
             </div>

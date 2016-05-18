@@ -94,7 +94,7 @@ class Usergroups extends Survey_Common_Action {
         } else {
             $where = array('and', 'a.ugid =' . $ugid, 'uid =' . Yii::app()->session['loginID']);
             $join = array('where' => "{{user_in_groups}} AS b", 'on' => 'a.ugid = b.ugid');
-            $result = UserGroup::model()->join(array('a.ugid', 'a.name', 'a.owner_id', 'b.uid'), "{{user_groups}} AS a", $where, $join, 'name');
+            $result = Usergroup::model()->join(array('a.ugid', 'a.name', 'a.owner_id', 'b.uid'), "{{user_groups}} AS a", $where, $join, 'name');
 
             $crow = $result;
             $aData['ugid'] = $ugid;
@@ -118,9 +118,9 @@ class Usergroups extends Survey_Common_Action {
         if (Permission::model()->hasGlobalPermission('usergroups', 'delete')) {
 
             if (!empty($ugid) && ($ugid > -1)) {
-                $result = UserGroup::model()->requestEditGroup($ugid, Yii::app()->session["loginID"]);
+                $result = Usergroup::model()->requestEditGroup($ugid, Yii::app()->session["loginID"]);
                 if ($result->count() > 0) {  // OK - AR count
-                    $delquery_result = UserGroup::model()->deleteGroup($ugid, Yii::app()->session["loginID"]);
+                    $delquery_result = Usergroup::model()->deleteGroup($ugid, Yii::app()->session["loginID"]);
 
                     if ($delquery_result) { //Checked)
                         list($aViewUrls, $aData) = $this->index(false, array("type" => "success", "message" => $clang->gT("Success!")));
@@ -151,10 +151,10 @@ class Usergroups extends Survey_Common_Action {
                 if (isset($db_group_name) && strlen($db_group_name) > 0) {
                     if (strlen($db_group_name) > 21) {
                         list($aViewUrls, $aData) = $this->index(false, array("type" => "warning", "message" => $clang->gT("Failed to add group! Group name length more than 20 characters.")));
-                    } elseif (UserGroup::model()->find("name=:groupName", array(':groupName' => $db_group_name))) {
+                    } elseif (Usergroup::model()->find("name=:groupName", array(':groupName' => $db_group_name))) {
                         list($aViewUrls, $aData) = $this->index(false, array("type" => "warning", "message" => $clang->gT("Failed to add group! Group already exists.")));
                     } else {
-                        $ugid = UserGroup::model()->addGroup($db_group_name, $db_group_description);
+                        $ugid = Usergroup::model()->addGroup($db_group_name, $db_group_description);
                         Yii::app()->session['flashmessage'] = $clang->gT("User group successfully added!");
                         list($aViewUrls, $aData) = $this->index($ugid, true);
                     }
@@ -186,7 +186,7 @@ class Usergroups extends Survey_Common_Action {
 
                 $db_name = $_POST['name'];
                 $db_description = $_POST['description'];
-                if (UserGroup::model()->updateGroup($db_name, $db_description, $ugid)) {
+                if (Usergroup::model()->updateGroup($db_name, $db_description, $ugid)) {
                     Yii::app()->session['flashmessage'] = $clang->gT("User group successfully saved!");
                     $aData['ugid'] = $ugid;
                     $this->getController()->redirect(array('admin/usergroups/sa/view/ugid/' . $ugid));
@@ -195,7 +195,7 @@ class Usergroups extends Survey_Common_Action {
                     $this->getController()->redirect(array('admin/usergroups/sa/edit/ugid/' . $ugid));
                 }
             } else {
-                $result = UserGroup::model()->requestEditGroup($ugid, Yii::app()->session['loginID']);
+                $result = Usergroup::model()->requestEditGroup($ugid, Yii::app()->session['loginID']);
                 $aData['esrow'] = $result;
                 $aData['ugid'] = $result->ugid;
                 $aViewUrls = 'editUserGroup_view';
@@ -230,7 +230,7 @@ class Usergroups extends Survey_Common_Action {
             if ($ugid) {
                 $ugid = sanitize_int($ugid);
                 $aData["usergroupid"] = $ugid;
-                $result = UserGroup::model()->requestViewGroup($ugid, Yii::app()->session["loginID"]);
+                $result = Usergroup::model()->requestViewGroup($ugid, Yii::app()->session["loginID"]);
                 $crow = $result[0];
                 if ($result) {
                     $aData["groupfound"] = true;
@@ -297,7 +297,7 @@ class Usergroups extends Survey_Common_Action {
         $clang = Yii::app()->lang;
         $uid = (int) Yii::app()->request->getPost('uid');
 
-        $group = UserGroup::model()->findByAttributes(array('ugid' => $ugid, 'owner_id' => Yii::app()->session['loginID']));
+        $group = Usergroup::model()->findByAttributes(array('ugid' => $ugid, 'owner_id' => Yii::app()->session['loginID']));
 
         if (empty($group)) {
             list($aViewUrls, $aData) = $this->index(0, array('type' => 'warning', 'message' => $clang->gT('Failed.') . '<br />' . $clang->gT('Group not found.')));

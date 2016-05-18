@@ -20,7 +20,7 @@ class Registration extends PL_Common_Action {
 			$_SESSION['userData']['fname'] = $_POST['fname'];
 			$_SESSION['userData']['lname'] = $_POST['lname'];
 			$_SESSION['userData']['email_address'] = $_POST['email_address'];
-			//$_SESSION['userData']['pwd'] = $_POST['pwd'];
+			$_SESSION['userData']['pwd'] = $_POST['pwd'];
 
 			$this->getController()->redirect(array('/' . '?pagename=JOIN NOW'));
 			

@@ -51,11 +51,13 @@ class Authentication extends PL_Common_Action {
                 $message .= '<br/>';
                 $message .= $clang->gT('Please contact support');
                 App()->user->setFlash('loginError', $message);
-                $this->getController()->redirect(array('/pl/authentication/sa/login'));
+                //$this->getController()->redirect(array('/pl/authentication/sa/login'));
+                $this->getController()->redirect(array('/' . '?pagename=Login'));
             } elseif ($sresult[0]['status'] == 'D') {
                 $message = $clang->gT('Your Account Is Disable By Administrator');
                 App()->user->setFlash('loginError', $message);
-                $this->getController()->redirect(array('/pl/authentication/sa/login'));
+                //$this->getController()->redirect(array('/pl/authentication/sa/login'));
+                $this->getController()->redirect(array('/' . '?pagename=Login'));
             } else {
                 $aData['Pending'] = true;
                 $aData['success'] = false;
@@ -65,7 +67,8 @@ class Authentication extends PL_Common_Action {
         } else {
             $message = $clang->gT('Incorrect username and/or password!');
             App()->user->setFlash('loginError', $message);
-            $this->getController()->redirect(array('/pl/authentication/sa/login'));
+            //$this->getController()->redirect(array('/pl/authentication/sa/login'));
+            $this->getController()->redirect(array('/' . '?pagename=Login'));
         }
     }
 
@@ -87,7 +90,8 @@ class Authentication extends PL_Common_Action {
         $event = new PluginEvent('afterLogout');
         App()->getPluginManager()->dispatchEvent($event, array($plugin));
 
-        $this->getController()->redirect(array('/pl/authentication/sa/login'));
+        //$this->getController()->redirect(array('/pl/authentication/sa/login'));
+        $this->getController()->redirect(array('/' . '?pagename=Login'));
     }
 
     /**
