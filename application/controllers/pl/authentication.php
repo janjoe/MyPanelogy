@@ -50,12 +50,14 @@ class Authentication extends PL_Common_Action {
                 $message = $clang->gT('Your Account Is canceled');
                 $message .= '<br/>';
                 $message .= $clang->gT('Please contact support');
-                App()->user->setFlash('loginError', $message);
+                $_SESSION['errorMSG'] = $message;
+                //App()->user->setFlash('loginError', $message);
                 //$this->getController()->redirect(array('/pl/authentication/sa/login'));
                 $this->getController()->redirect(array('/' . '?pagename=Login'));
             } elseif ($sresult[0]['status'] == 'D') {
                 $message = $clang->gT('Your Account Is Disable By Administrator');
-                App()->user->setFlash('loginError', $message);
+                //App()->user->setFlash('loginError', $message);
+                $_SESSION['errorMSG'] = $message;
                 //$this->getController()->redirect(array('/pl/authentication/sa/login'));
                 $this->getController()->redirect(array('/' . '?pagename=Login'));
             } else {
@@ -66,7 +68,8 @@ class Authentication extends PL_Common_Action {
             }
         } else {
             $message = $clang->gT('Incorrect username and/or password!');
-            App()->user->setFlash('loginError', $message);
+            $_SESSION['errorMSG'] = $message;
+            //App()->user->setFlash('loginError', $message);
             //$this->getController()->redirect(array('/pl/authentication/sa/login'));
             $this->getController()->redirect(array('/' . '?pagename=Login'));
         }

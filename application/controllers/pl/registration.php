@@ -165,8 +165,8 @@ class Registration extends PL_Common_Action {
                 $send = get_SendEmail::model()->SendEmailByTemplate($email_address, EMAIL_POINT_PL_EditPassword, $panellist_id, array('pwd' => "$pwd", 'password_link' => "$password_link"));
                 $aData['sendmailtrue'] = $send;
             } else {
-                echo $send = get_SendEmail::model()->SendEmailByTemplate($email_address, EMAIL_POINT_PL_EditPassword, $panellist_id, array('pwd' => "$pwd", 'password_link' => "$password_link"));
-                exit;
+                $send = get_SendEmail::model()->SendEmailByTemplate($email_address, EMAIL_POINT_PL_EditPassword, $panellist_id, array('pwd' => "$pwd", 'password_link' => "$password_link"));
+                //exit;
             }
         }
         $this->_renderWrappedTemplate('', 'view_change_password', $aData);
@@ -223,8 +223,7 @@ class Registration extends PL_Common_Action {
                         echo 'Error';
                     }
                 } else {
-                    echo $send = get_SendEmail::model()->SendEmailByTemplate($email_address, EMAIL_POINT_PL_EditEmail, $panellist_id, array('activate_email_link' => "$activate_email_link"));
-                    exit;
+                    $send = get_SendEmail::model()->SendEmailByTemplate($email_address, EMAIL_POINT_PL_EditEmail, $panellist_id, array('activate_email_link' => "$activate_email_link"));
                 }
             }
         }

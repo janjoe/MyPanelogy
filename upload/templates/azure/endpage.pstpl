@@ -27,7 +27,6 @@
 <script src="{TEMPLATEURL}js/modalEffects.js"></script>
 <script src="{TEMPLATEURL}js/smk-accordion.js"></script>
 <script src="{TEMPLATEURL}js/formValidation.js"></script>
-<?php //echo '<pre>';print_r($_SESSION['userData']);?>
 <script>
 $( document ).ready(function() {
 	var token =$('meta[name="YII_CSRF_TOKEN"]').attr('content');
@@ -38,7 +37,13 @@ $( document ).ready(function() {
 	$('#email_address').val('<?php echo $_SESSION['userData']['email_address']?>');
 	$('#pwd').val('<?php echo $_SESSION['userData']['pwd']?>');
 	
+	$('.errorMSG').html('<?php echo $_SESSION['errorMSG']; ?>');
+	<?php if(isset($_SESSION['errorMSG'])){
+	unset($_SESSION['errorMSG']);
+	}
+	?>
+	
+	
 });
 </script>  
-
 </body>

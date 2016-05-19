@@ -4,7 +4,7 @@
         <p>
             <?php echo $message; ?><br />
             <br/>
-            <a style="text-decoration: none" href='<?php echo $this->createUrl("/pl/authentication/sa/login"); ?>'>
+            <a style="text-decoration: none" href='<?php echo $this->createUrl("/?pagename=Login"); ?>'>
                 <input type="button" name="login_submit" value="<?php $clang->eT('Continue'); ?>">
             </a><br />
         </p>

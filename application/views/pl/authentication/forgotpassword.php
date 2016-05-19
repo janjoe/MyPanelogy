@@ -14,7 +14,7 @@
                     <input type="hidden" name="action" value="forgotpass" />
                     <br/>
                     <input type="submit" name="submit" value="Submit" role="button" aria-disabled="false">
-                    <a href="<?php echo $this->createUrl("/pl"); ?>"><?php $clang->eT('Main Login Screen'); ?></a>
+                    <a href="<?php echo $this->createUrl("/?pagename=Login"); ?>"><?php $clang->eT('Main Login Screen'); ?></a>
 
                 </p>
         <?php echo CHtml::endForm(); ?>

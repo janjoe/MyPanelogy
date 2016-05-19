@@ -16,9 +16,9 @@ status_to_define();
 
 function connectdb() {
     $server = "localhost";
-    $database = "surveynew";
-    $user_name = "root";
-    $password = "RJH";
+    $database = "panelogy";
+    $user_name = "panelogy";
+    $password = "lsmcnQ6W7LVLhuYSkJp6";
 
 //    $server = "173.192.169.228";
 //    $database = "bit_srv";

@@ -1327,3 +1327,4 @@ h2{
 .clear {
 	clear:both;
 }
+.errorMSG{padding: 5px 0px;color: red;}

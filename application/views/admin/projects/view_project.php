@@ -5,13 +5,24 @@
         $('#listproject').dataTable({"sPaginationType": "full_numbers","iDisplayLength": 25});
     } );
     
+    
+    function deleteThis(){
+		
+		if(confirm('Do you want to delete this project?')){
+			
+			return true;
+		}else{
+			return false;
+		}
+	}
+    
 </script>
 
 <table id="listproject" style="width:100%">
     <thead>
         <tr>
             <th><?php $clang->eT("Edit"); ?></th>
-<!--            <th><?php $clang->eT("Delete"); ?></th>-->
+ <th><?php $clang->eT("Delete"); ?></th>
             <th><?php $clang->eT("Project ID"); ?></th>
             <th><?php $clang->eT("Parent"); ?></th>
             <th><?php $clang->eT("Project Name"); ?></th>
@@ -39,13 +50,13 @@
                     <input type='hidden' name='project_id' value='<?php echo $usr['project_id']; ?>' />
                     </form>
                 </td>
-    <!--                <td  style="padding:3px;">
+                   <td  style="padding:3px;">
                 <?php echo CHtml::form(array('admin/project/sa/delproject'), 'post', array('onsubmit' => 'return confirm("' . $clang->gT("Are you sure you want to delete this entry?", "js") . '")')); ?>            
                     <input type='image' src='<?php echo $imageurl; ?>token_delete.png' alt='<?php $clang->eT("Delete this project"); ?>' />
                     <input type='hidden' name='action' value='delproject' />
                     <input type='hidden' name='project_id' value='<?php echo $usr['project_id']; ?>' />
                     </form>
-                </td>-->
+                </td>
                 <td><?php echo $usr['project_id']; ?></td>
                 <!--<td><?php echo $usr['parent_project_id']; ?></td>-->
                 <td>

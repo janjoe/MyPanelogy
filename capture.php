@@ -69,9 +69,9 @@ numErrored = total_errors
           echo "http://localhost:8080/ryan-horne/limesurvey205plus-build140302/capture.php?gid=".$gid;
           exit(); */
         DEFINE("ISCAPTURE", true);
-
-        require_once './application/config/config_masters.php';
         global $dblink;
+        require_once './application/config/config_masters.php';
+        $dblink = connectdb();
 
         //echo "<script>checkCookie()</script>";
         // Multi-langual script removed by Nilesh on 20/4/2014
@@ -143,12 +143,12 @@ numErrored = total_errors
             $ext = ( isset($_GET['ext'])) ? $_GET['ext'] : ""; //extension
             $referrer = '';
             $query = "SELECT * FROM $tbl_panellist_project WHERE status = 'A' and project_id = $proj_id and panellist_id =  $pl_id ";
-            $resPP = mysql_query($query) or die(mysql_error() . $query);
-            if (mysql_num_rows($resPP) > 0) {
+            $resPP = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
+            if (mysqli_num_rows($resPP) > 0) {
                 $query = "Update  $tbl_panellist_project set status = 'R' Where status = 'A' and project_id = $proj_id and panellist_id =  $pl_id ";
-                $reslt = mysql_query($query) or die(mysql_error() . $query);
+                $reslt = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
                 $query = "Update  $tbl_panellist_mst set no_redirected = no_redirected +1  Where  panel_list_id =  $pl_id ";
-                $reslt = mysql_query($query) or die(mysql_error() . $query);
+                $reslt = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
             }
         } else {
             $gid = ( isset($_GET['gid'])) ? $_GET['gid'] : "0";
@@ -192,15 +192,15 @@ numErrored = total_errors
                 , client_id, client_link, proj_total_completed, proj_total_redirected, proj_required_completes, proj_quotabuffer_completes as proj_quotabuffer_completes, sales_user_id, manager_user_id
                 ,AskOnRedirect, QuotaFull_URL
                 FROM ' . $view_ven_proj_mst . ' WHERE vendor_project_id = ' . $vp_id;
-        $resVendor = mysql_query($query) or die(mysql_error() . $query);
-        if (mysql_num_rows($resVendor) <= 0) {
-            mysql_close();
+        $resVendor = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
+        if (mysqli_num_rows($resVendor) <= 0) {
+            mysqli_close($dblink);
             exit('<h1 class="wrn">No such project exists, or the parameters passed are in-correct !!!</h1>');
         } else {
             //cross verifying the url's project id and vendor master's project id
-            extract(mysql_fetch_assoc($resVendor));
+            extract(mysqli_fetch_assoc($resVendor));
             if ($proj_id <> $project_id) {
-                mysql_close();
+                mysqli_close();
                 exit('<h1 class="wrn">ERROR: S1 Parameters are not set properly, please check survey link.</h1>');
             }
         }
@@ -208,13 +208,13 @@ numErrored = total_errors
         //Checking projects status and vendors status whether they are in running or testing mode.
         //if ((($vendor_status_id <> "testing") AND ($vendor_status <> "running")) || (($project_status <> "testing") AND ($project_status <> "running"))) {
         if ((($vendor_status_id <> STATUS_PROJECT_TESTING ) AND ($vendor_status_id <> STATUS_PROJECT_RUNNING)) || (($project_status_id <> STATUS_PROJECT_TESTING) AND ($project_status_id <> STATUS_PROJECT_RUNNING))) {
-            mysql_close();
+            mysqli_close($dblink);
             exit('<h1 class="wrn">Project is not live now. Please check back later.</h1>');
         }
 
         //if passthru parameter is passed and ext parameter is not passed then stop and exit
         if (( strpos($client_link, "{{PASSTHRU}}", 0) > 0) && (!isset($_GET['ext']))) {
-            mysql_close();
+            mysqli_close($dblink);
             exit('<h1 class="wrn">ERROR: S2 Parameters are not set properly, please check survey link.</h1>');
         } else {
             $client_link = str_replace("{{PASSTHRU}}", $ext, $client_link);
@@ -225,10 +225,10 @@ numErrored = total_errors
         if ($project_status_id == STATUS_PROJECT_RUNNING) {
             //$query = 'SELECT ForeignID,ID, StartIP FROM panelistredirects WHERE  ClientRedirectID = ' . $ClientRedirectID . '  AND ( ForeignID="' . $proj_id . '" OR StartIP = "' . $_SERVER['REMOTE_ADDR'] . '" and status <> "Redirected")';
             $query = 'SELECT panellist_redirect_id, panellist_id, StartIP FROM ' . $view_pnl_red . ' WHERE project_id = ' . $project_id . ' AND (panellist_id = "' . $pl_id . '" OR StartIP = "' . $_SERVER['REMOTE_ADDR'] . '" and redirect_status_id <> ' . STATUS_REDIRECT_REDIRECTED . ' )';
-            $result = mysql_query($query) or die(mysql_error() . $query);
-            if ((mysql_num_rows($result) > 0) || ($pl_id == "0")) {
-                if (mysql_num_rows($result) > 0) {
-                    extract(mysql_fetch_assoc($result));
+            $result = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
+            if ((mysqli_num_rows($result) > 0) || ($pl_id == "0")) {
+                if (mysqli_num_rows($result) > 0) {
+                    extract(mysqli_fetch_assoc($result));
                     if (($project_id == $proj_id) && ($StartIP == $_SERVER['REMOTE_ADDR'])) {
                         $updstatus = "DupeIPID";
                     } else {
@@ -248,19 +248,19 @@ numErrored = total_errors
                     ( project_id, vendor_project_id, panellist_id, status, created_datetime, StartIP, panellist_redirect_id)
                     VALUES
                     (' . $project_id . ', ' . $vp_id . ', "' . $panellist_id . '",  "' . $updstatus . '" , NOW() ,"' . $_SERVER['REMOTE_ADDR'] . '",' . strval($panellist_redirect_id) . ')';
-                    $result = mysql_query($query) or die(mysql_error() . $query);
+                    $result = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
                     UpdateErrors($project_id, $vp_id);
-                    mysql_close();
+                    mysqli_close($dblink);
                     exit();
                 } //check only row count else error
             } //check row count and pid
         } else {
             //$query = 'SELECT ForeignID,ID FROM panelistredirects WHERE  ClientRedirectID = ' . $ClientRedirectID . '  AND ForeignID="' . $proj_id . '" and status <> "Redirected" ';
             $query = 'SELECT panellist_id, panellist_redirect_id FROM ' . $view_pnl_red . ' WHERE project_id = ' . $project_id . '  AND panellist_id = "' . $panellist_id . '" and redirect_status_id <> ' . STATUS_REDIRECT_REDIRECTED;
-            $result = mysql_query($query) or die(mysql_error() . $query);
-            if ((mysql_num_rows($result) > 0) || ($pl_id == "0")) {
-                if (mysql_num_rows($result) > 0) {
-                    extract(mysql_fetch_assoc($result));
+            $result = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
+            if ((mysqli_num_rows($result) > 0) || ($pl_id == "0")) {
+                if (mysqli_num_rows($result) > 0) {
+                    extract(mysqli_fetch_assoc($result));
                     echo '<h1 class="wrn">You have already taken this survey. Please look for our other opportunities.</h1>';
                     //            $query = 'INSERT INTO bloackedredirects
                     //                    ( ClientRedirectID, VendorRedirectID, ForeignID, Status, Created, StartIP, panelistredirectsID)
@@ -270,9 +270,9 @@ numErrored = total_errors
                         ( project_id, vendor_project_id, panellist_id, status, created_datetime, StartIP, panellist_redirect_id)
                         VALUES
                         (' . $project_id . ', ' . $vp_id . ', "' . $panellist_id . '",  "DupeID" , NOW() ,"' . $_SERVER['REMOTE_ADDR'] . '",' . $panellist_redirect_id . ')';
-                    $result = mysql_query($query) or die(mysql_error() . $query);
+                    $result = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
                     UpdateErrors($project_id, $vp_id);
-                    mysql_close();
+                    mysqli_close($dblink);
                     exit;
                 } //checking row count
             }
@@ -288,10 +288,10 @@ numErrored = total_errors
         //start change by gaurang 2014-05-27
         //Removed by Nilesh on Ask on REdirect Structure for now 22/4/14
         if (isset($_POST['ACT'])) {
-            $POSTEmail = mysql_real_escape_string(trim($_POST['Email']));
-            $POSTZip = mysql_real_escape_string(trim($_POST['Zip']));
-            $POSTAge = mysql_real_escape_string(trim($_POST['Age']));
-            $POSTGender = mysql_real_escape_string(trim($_POST['Gender']));
+            $POSTEmail = mysqli_real_escape_string(trim($_POST['Email']));
+            $POSTZip = mysqli_real_escape_string(trim($_POST['Zip']));
+            $POSTAge = mysqli_real_escape_string(trim($_POST['Age']));
+            $POSTGender = mysqli_real_escape_string(trim($_POST['Gender']));
             $DataOnRedirect.=$POSTEmail . ";";
             $DataOnRedirect.=$POSTZip . ";";
             $DataOnRedirect.=$POSTAge . ";";
@@ -441,7 +441,7 @@ numErrored = total_errors
             </div>
         </form>
         <?php
-        mysql_close();
+        mysqli_close($dblink);
         exit();
     }
 //End change by gaurang 2014-05-27
@@ -465,9 +465,9 @@ numErrored = total_errors
             ( project_id, vendor_project_id, panellist_id, status, created_datetime, StartIP, panellist_redirect_id)
             VALUES
             (' . $project_id . ', ' . $vp_id . ', "' . $panellist_id . '",  "Max-Re-direct" , NOW() ,"' . $_SERVER['REMOTE_ADDR'] . '",0)';
-        $result = mysql_query($query) or die(mysql_error($query));
+        $result = mysqli_query($dblink, $query) or die(mysql_error($query));
         UpdateErrors($project_id, $vp_id);
-        mysql_close();
+        mysqli_close($dblink);
         header('Refresh:5; URL=' . $QuotaFull_URL);
         exit();
     }
@@ -489,9 +489,9 @@ numErrored = total_errors
                     ( project_id, vendor_project_id, panellist_id, status, created_datetime, StartIP, panellist_redirect_id)
                     VALUES
                     (' . $project_id . ', ' . $vp_id . ', "' . $panellist_id . '",  "Max-Completes-Vendor" , NOW() ,"' . $_SERVER['REMOTE_ADDR'] . '",0)';
-        $result = mysql_query($query) or die(mysql_error() . $query);
+        $result = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
         UpdateErrors($project_id, $vp_id);
-        mysql_close();
+        mysqli_close($dblink);
         header('Refresh:5; URL=' . $QuotaFull_URL);
         exit();
     }
@@ -512,9 +512,9 @@ numErrored = total_errors
 			( project_id, vendor_project_id, panellist_id, status, created_datetime, StartIP, panellist_redirect_id)
 			VALUES
 			(' . $project_id . ', ' . $vp_id . ', "' . $panellist_id . '",  "Max-Completes-Survey" , NOW() ,"' . $_SERVER['REMOTE_ADDR'] . '",0)';
-        $result = mysql_query($query) or die(mysql_error() . $query);
+        $result = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
         UpdateErrors($project_id, $vp_id);
-        mysql_close();
+        mysqli_close($dblink);
         exit();
     }
 
@@ -540,10 +540,10 @@ numErrored = total_errors
 //Step 6. Checking for Client Codes 
     if ((strpos($client_link, "{{CLIENTKEY}}", 0) > 0)) {
         //$query2 = 'SELECT Code FROM clientcode WHERE status IS NULL AND ClientRedirectID = ' . $ClientRedirectID . ' ORDER BY ID ASC LIMIT 1 ';
-        $query2 = 'SELECT Code FROM ' . $tbl_cli_cd . ' WHERE status IS NULL AND project_id = ' . $project_id . ' ORDER BY id ASC LIMIT 1 ';
-        $result2 = mysql_query($query2) or die(mysql_error() . $query2);
+         $query2 = 'SELECT Code FROM ' . $tbl_cli_cd . ' WHERE status IS NULL AND project_id = ' . $project_id . ' ORDER BY id ASC LIMIT 1 ';
+        $result2 = mysqli_query($dblink, $query2) or die(mysqli_error() . $query2);
 
-        if (mysql_num_rows($result2) <= 0) {
+        if (mysqli_num_rows($result2) <= 0) {
             echo '<h1 class="wrn">The study is temporarily on hold, Please try again later.</h1>';
             $subject = "Client code over flow Project-" . $project_id;
             $body = "Client code out of stock for Project " . $project_id . " and no new panellist will be allowed to these survey.";
@@ -551,10 +551,10 @@ numErrored = total_errors
             //UpdateErrors($ClientRedirectID, $vp_id);
             SendMessage($subject, $body, $project_id, $sales_user_id, $manager_user_id);
             UpdateErrors($project_id, $vp_id);
-            mysql_close();
+            mysqli_close($dblink);
             exit();
         } else {
-            extract(mysql_fetch_assoc($result2));
+            extract(mysqli_fetch_assoc($result2));
             $client_link = str_replace("{{CLIENTKEY}}", $Code, $client_link);
 
             //ClientID	VendorID Referrer		
@@ -566,12 +566,12 @@ numErrored = total_errors
 			( project_id, vendor_project_id, panellist_id, foreign_misc, redirect_status_id, created_datetime, StartIP, client_code, client_id, vendor_id, referrer, DataOnRedirect)
 			VALUES
 			(' . $project_id . ', ' . $vp_id . ', "' . $panellist_id . '", "' . $ext . '",  ' . STATUS_REDIRECT_REDIRECTED . '  , NOW() ,"' . $_SERVER['REMOTE_ADDR'] . '","' . $Code . '", ' . $client_id . ', ' . $vendor_id . ', "' . $referrer . '" ,"' . $DataOnRedirect . '")';
-            $result = mysql_query($query) or die(mysql_error() . $query);
-            $lastid = mysql_insert_id();
+            $result = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
+            $lastid = mysqli_insert_id($dblink);
 
             //$query = 'UPDATE clientcode SET Status="Used", panelistredirectsID = ' . $lastid . ' WHERE Code="' . $Code . '" AND ClientRedirectID = ' . $ClientRedirectID;
             $query = 'UPDATE ' . $tbl_cli_cd . ' SET status="Used", panellist_redirect_id = ' . $lastid . ' WHERE Code="' . $Code . '" AND project_id = ' . $project_id;
-            $result = mysql_query($query) or die(mysql_error() . $query);
+            $result = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
         }
     } else {
 //        $query = 'INSERT INTO panelistredirects
@@ -582,8 +582,8 @@ numErrored = total_errors
 			( project_id, vendor_project_id, panellist_id, foreign_misc, redirect_status_id, created_datetime, StartIP, client_id, vendor_id, referrer, DataOnRedirect)
 			VALUES
 			(' . $project_id . ', ' . $vp_id . ', "' . $panellist_id . '", "' . $ext . '",  ' . STATUS_REDIRECT_REDIRECTED . ' , NOW() ,"' . $_SERVER['REMOTE_ADDR'] . '", ' . $client_id . ', ' . $vendor_id . ', "' . $referrer . '","' . $DataOnRedirect . '")';
-        $result = mysql_query($query) or die(mysql_error() . $query);
-        $lastid = mysql_insert_id();
+        $result = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
+        $lastid = mysqli_insert_id($dblink);
     }
 
 //updating counts
@@ -595,7 +595,7 @@ numErrored = total_errors
                 total_redirected = total_redirected + 1,
 		LastRedirected_DateTime = NOW()
 		WHERE project_id = ' . $project_id;
-    $result = mysql_query($query) or die(mysql_error() . $query);
+    $result = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
 
 //    $query = 'UPDATE vendor_redirects SET
 //				numRedirected = numRedirected + 1,
@@ -605,11 +605,11 @@ numErrored = total_errors
 		total_redirected = total_redirected + 1,
 		LastRedirected_DateTime = NOW()
 		WHERE vendor_project_id = ' . $vp_id;
-    $result = mysql_query($query) or die(mysql_error() . $query);
+    $result = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
 
     $query = 'SELECT NOW() as cDate '; //by trk FROM '.$view_proj_mst.' WHERE project_id = ' . $project_id;
-    $result = mysql_query($query) or die(mysql_error() . $query);
-    extract(mysql_fetch_assoc($result));
+    $result = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
+    extract(mysqli_fetch_assoc($result));
 
     echo "<script>setCookie('GWSID','" . $lastid . "', 30)</script>";
     echo "<script>setCookie('PROJECTID','" . $project_id . "', 30)</script>";
@@ -643,22 +643,22 @@ numErrored = total_errors
 
 //} //(isset($_GET['redirect']))
 //mysql_close($dblink);
-    mysql_close();
+    mysqli_close($dblink);
 
     function UpdateErrors($project_id, $vp_id) {
-        global $db, $tbl_proj_mst, $tbl_ven_proj_mst;
+        global $db, $tbl_proj_mst, $tbl_ven_proj_mst,$dblink;
         $query = 'UPDATE ' . $tbl_proj_mst . ' SET
                 total_errors = total_errors  + 1
                 WHERE project_id = ' . $project_id; // $ClientRedirectID;
         //pending sit with nilesh and finalize
-        $result = mysql_query($query) or die(mysql_error() . $query);
+        $result = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
 //    $query = 'UPDATE vendor_redirects SET
 //                            numErrored = numErrored + 1
 //                            WHERE vendor_redirects.ID = ' . $vp_id;
         $query = 'UPDATE ' . $tbl_ven_proj_mst . ' SET
                 total_errors = total_errors + 1
                 WHERE vendor_project_id = ' . $vp_id;
-        $result = mysql_query($query) or die(mysql_error() . $query);
+        $result = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
     }
 
 //pending sit with nilesh and finalize
@@ -666,9 +666,9 @@ numErrored = total_errors
         return true;
         global $db;
         $query = 'SELECT ID FROM messages WHERE Header = "' . $subject . '" AND receipID = ' . $sp . ' AND DATE_FORMAT(Created,"%Y-%m-%d") = DATE_FORMAT(Now(),"%Y-%m-%d") ';
-        $result = mysql_query($query) or die(mysql_error() . $query);
+        $result = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
 
-        if (mysql_num_rows($result) <= 0) {
+        if (mysqli_num_rows($result) <= 0) {
             $query = 'INSERT INTO messages
                             (Type,Header,Body, receipID, senderID, Created, isRead, ChainID )
                             VALUES
@@ -689,12 +689,12 @@ numErrored = total_errors
                             NOW(), 
                             0,
                             0)';
-            $result = mysql_query($query) or die(mysql_error() . $query);
+            $result = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
 
             //$query = 'SELECT Email FROM contacts_master WHERE ID IN (' . $sp . ',' . $pm . ')';
             $query = 'SELECT primary_emailid FROM contact_master WHERE contact_id IN (' . $sp . ',' . $pm . ')';
-            $result = mysql_query($query) or die(mysql_error() . $query);
-            while ($row = mysql_fetch_assoc($result)) {
+            $result = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
+            while ($row = mysqli_fetch_assoc($result)) {
                 if ($row['Email'] != "") {
                     $headers = "From: contact@survey-office.com";
                     mail($row['Email'], $subject, $body, $headers);

@@ -1,8 +1,7 @@
-<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>Business Access Panels</title>
+<title>Panelogy</title>
 <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 <meta name="YII_CSRF_TOKEN" content="<?php echo Yii::app()->request->csrfToken?>">
 <link rel="shortcut icon" href="/styles/favicon.png" type="image/x-icon" />
@@ -25,10 +24,10 @@
             </div>
             <div class="loginpopup">
                 <div class="inputlogin">
-                    <input name="email" id="email" type="email" placeholder="Email Address">
+                    <input name="email" id="email" type="email" placeholder="Email Address" required="required">
                 </div>
                 <div class="inputlogin">
-                    <input name="password" id="password" type="password" placeholder="Password">
+                    <input name="password" id="password" type="password" placeholder="Password" required="required">
                 </div>
                 <div class="remembercheck">
                     <input type="checkbox" name="check">
@@ -53,7 +52,7 @@
 </div>
 <div class="header sb-slide">
   <div class="container">
-    <div class="logo"><a href="<?php echo Yii::app()->request->getBaseUrl(true);?>"><img src="{TEMPLATEURL}images/logo.png"></a></div>
+    <div class="logo"><a href="<?php echo Yii::app()->baseUrl;?>"><img src="{TEMPLATEURL}images/logo.png"></a></div>
     <div class="navigation">
       <ul>
           {menu}

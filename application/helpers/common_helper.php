@@ -1,6 +1,6 @@
 <?php
 
-include ("mail_sending.php");
+require_once "class.phpmailer.php";
 
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
@@ -5193,10 +5193,75 @@ function javascriptEscape($str, $strip_tags=false, $htmldecode=false) {
  * @param mixed $attachment
  * @return bool If successful returns true
  */
+ 
+function send_mail($to,$toName,$subject,$message,$from, $fromName)
+	{
+		/**/
+		
+		$sql = "SELECT * FROM {{settings_global}}";
+		$globalSettings = Yii::app()->db->createCommand($sql)->queryAll();
+		
+		
+		$Host1 = $globalSettings[22]['stg_value'];
+		
+		list($h, $p) = explode(':', $Host1);
+		
+		$Host = $h;
+		$Port = $p;
+		
+		$Password = $globalSettings[23]['stg_value'];
+		$Username = $globalSettings[31]['stg_value'];
+		
+		
+		//echo ' Host= ' . $Host . ' Port= ' . $Port . ' Password= ' . $Password . ' Username= ' . $Username . '<br>';exit;
+		
+		$mail = new PHPMailer(); //create mailing object	
+		
+	   /* 
+	    $mail->Host = "smtp.sendgrid.net"; // SMTP servers
+		$mail->Port = 587;
+		$mail->SMTPAuth = true;     // turn on SMTP authentication
+		$mail->Username = "support@panelogy.com";  // SMTP username
+		$mail->Password = "F4sendGrid"; // SMTP password
+		*/
+		
+		
+		
+		$mail->Host = $Host; // SMTP servers
+		$mail->Port = $Port;
+		$mail->SMTPAuth = true;     // turn on SMTP authentication
+		$mail->Username = $Username;  // SMTP username
+		$mail->Password = $Password; // SMTP password
+		
+		
+		$mail->IsSMTP();                                   // send via SMTP
+		
+		$mail->From     = $from;
+		$mail->FromName = $fromName;		
+		$mail->AddAddress($to, $toName);
+		//$mail->AddReplyTo($from,$toName);
+		$mail->WordWrap = 50;     
+		
+		$mail->IsHTML(true);  // send as HTML
+		$mail->Subject  =  $subject;
+		$mail->Body     = $message;
+	    
+		$mail->SMTPDebug=false;
+		if(!$mail->Send())
+		{
+		  return false;	   
+		}
+		else
+		{
+			return true;
+		}
+						
+	}
+ 
 function SendEmailMessage($body, $subject, $to, $from, $sitename, $ishtml=false, $bouncemail=null, $attachments=null, $customheaders="") {
-	$mail = new mailSending();
+	//$mail = new mailSending();
 	//echo 'NAFEES=' . $body;exit;
-	$mail->send_mail($to,'User',$subject,$body,$from, $sitename);
+	send_mail($to, 'User', $subject, $body, $from, $sitename);
 	//echo '11NAFEES110000000000000';exit;
 	
 	return 1;

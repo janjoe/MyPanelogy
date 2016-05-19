@@ -520,18 +520,22 @@ class Projectaction extends Survey_Common_Action {
         }
         $action = Yii::app()->request->getPost("action");
         $aViewUrls = array();
-        $contact_id = (int) Yii::app()->request->getPost("contact_id");
-        if ($contact_id) {
-            if ($action == "delcontact") {
-                $dresult = Contact::model()->deletecontact($contact_id);
-                if ($dresult) {
-                    $dlt = "DELETE FROM {{map_company_n_types}} WHERE contact_id = " . $contact_id;
+        $project_id = (int) Yii::app()->request->getPost("project_id");
+        if ($project_id) {
+            if ($action == "delproject") {
+                    $dlt = "DELETE FROM {{project_master}} WHERE project_id = " . $project_id;
                     $result = Yii::app()->db->createCommand($dlt)->query();
-                    Yii::app()->setFlashMessage($clang->gT("Contact delete successfully"));
-                }
-            } else {
-                Yii::app()->setFlashMessage($clang->gT("Contact does not deleted"), 'error');
-            }
+                    
+                    
+                    $dlt = "DELETE FROM {{project_master_vendors}} WHERE project_id = " . $project_id;
+                    $result = Yii::app()->db->createCommand($dlt)->query();
+                    
+                    $dlt = "DELETE FROM {{messages}} WHERE chainid = " . $project_id;
+                    $result = Yii::app()->db->createCommand($dlt)->query();
+                    
+                    
+                    Yii::app()->setFlashMessage($clang->gT("Project deleted successfully"));
+            } 
             $this->getController()->redirect(array("admin/project/index"));
         } else {
             Yii::app()->setFlashMessage($clang->gT("Could not delete Contact. Contact was not supplied."), 'error');

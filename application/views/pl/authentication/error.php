@@ -3,9 +3,9 @@
         <h3>Recover your password</h3>
         <h5><?php echo $errormsg; ?></h5>
         <p>
-            <a href='<?php echo $this->createUrl("/pl/authentication/sa/login"); ?>'><?php $clang->eT("Try again"); ?></a>
+            <a href='<?php echo $this->createUrl("/?pagename=Login"); ?>'><?php $clang->eT("Try again"); ?></a>
             <br /> <br/>
-            <a href='<?php echo $this->createUrl("/pl/authentication/sa/forgotpassword"); ?>'><?php $clang->eT("Forgot your password?"); ?></a><br />
+            <a href='<?php echo $this->createUrl("/?pagename=Forgot Password"); ?>'><?php $clang->eT("Forgot your password?"); ?></a><br />
         </p>
     </div>
 </section>

@@ -57,9 +57,10 @@ numErrored = total_errors
           echo "http://localhost:8080/ryan-horne/limesurvey205plus-build140302/capture.php?gid=".$gid;
           exit(); */
         DEFINE("ISCAPTURE", true);
-
+		global $dblink;
         require_once './application/config/config_masters.php';
-        global $dblink;
+        $dblink = connectdb();
+        
 
         $tbl_panellist_project = $tblPrefix . 'panellist_project';
         $view_proj_mst = $tblPrefix . 'view_project_master';
@@ -139,8 +140,8 @@ numErrored = total_errors
 
                 //$query = "SELECT redirect_status_id, StartIP, project_id, vendor_project_id, panellist_id, foreign_misc, created_datetime, vendor_id  FROM $view_pnl_red WHERE panellist_redirect_id =" . $_COOKIE['GWSID']; //20/06/2014 Remove BY Hari
                 $query = "SELECT redirect_status_id, StartIP, project_id, vendor_project_id, panellist_id, foreign_misc, created_datetime, vendor_id , project_status  FROM $view_pnl_red WHERE panellist_redirect_id =" . $_COOKIE['GWSID']; //20/06/06/2014 Add By Hari
-                $result = mysql_query($query) or die(mysql_error());
-                extract(mysql_fetch_assoc($result));
+                $result = mysqli_query($dblink, $query) or die(mysqli_error());
+                extract(mysqli_fetch_assoc($result));
 
                 //Start If Condition Add By Hari
                 if ($project_status <> STATUS_PROJECT_TESTING) {
@@ -155,19 +156,19 @@ numErrored = total_errors
                             CompletedOn = NOW() 
                             WHERE panellist_redirect_id =' . $_COOKIE['GWSID'];
 
-                        $result = mysql_query($query) or die(mysql_error());
+                        $result = mysqli_query($dblink, $query) or die(mysqli_error());
 
                         //calculating and fetching LOS
                         $query = 'SELECT (TIME_TO_SEC(TIMEDIFF(CompletedOn, created_datetime))/60) as LOS FROM ' . $tbl_pnl_red . ' WHERE panellist_redirect_id =' . $_COOKIE['GWSID'];
-                        $result = mysql_query($query) or die(mysql_error());
-                        extract(mysql_fetch_assoc($result));
+                        $result = mysqli_query($dblink, $query) or die(mysqli_error());
+                        extract(mysqli_fetch_assoc($result));
 
                         $query = 'UPDATE ' . $tbl_pnl_red . ' 
                                 SET 
                                 LOS = ' . $LOS . '
                                 WHERE panellist_redirect_id =' . $_COOKIE['GWSID'];
 
-                        $result = mysql_query($query) or die(mysql_error());
+                        $result = mysqli_query($dblink, $query) or die(mysqli_error());
                         if ($_GET['st'] == "111") {
                             $query = 'UPDATE ' . $tbl_proj_mst . ' SET 
                                        ' . $incFieldC . ' = ' . $incFieldC . ' +1 , 
@@ -179,18 +180,18 @@ numErrored = total_errors
                                         WHERE project_id =' . $project_id;
                         }
 
-                        $result = mysql_query($query) or die(mysql_error());
+                        $result = mysqli_query($dblink, $query) or die(mysqli_error());
 
 
                         $query = 'UPDATE ' . $tbl_ven_proj_mst . ' SET 
                                     ' . $incFieldV . ' = ' . $incFieldV . ' +1
                                     WHERE vendor_project_id =' . $vendor_project_id;
-                        $result = mysql_query($query) or die(mysql_error());
+                        $result = mysqli_query($dblink, $query) or die(mysqli_error());
 
                         //check if internal company (own vendor) 
                         $sql = 'SELECT * FROM ' . $tblPrefix . 'settings_global WHERE stg_name like "Own_Panel"';
-                        $result = mysql_query($sql) or die(mysql_error());
-                        extract(mysql_fetch_assoc($result));
+                        $result = mysqli_query($dblink, $sql) or die(mysqli_error());
+                        extract(mysqli_fetch_assoc($result));
                         if ($vendor_id == $stg_value) {
 
                             $sql_update = 'update ' . $tblPrefix . 'panellist_project set 
@@ -199,18 +200,18 @@ numErrored = total_errors
                                 project_id  = "' . $_COOKIE['PROJECTID'] . '"
                                 and status = "R"';
 
-                            $result = mysql_query($sql_update) or die(mysql_error());
+                            $result = mysqli_query($dblink, $sql_update) or die(mysqli_error());
 
                             $query = "Update  $tbl_panellist_mst set 
                         $panellist_master_field = $panellist_master_field +1  Where  panel_list_id ='  $panellist_id '";
-                            $reslt = mysql_query($query) or die(mysql_error() . $query);
+                            $reslt = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
 
                             echo $message;
                         } else {
 
                             $query = 'SELECT ' . $Linktype . ' as EndLink FROM ' . $tbl_ven_proj_mst . ' WHERE vendor_project_id =' . $vendor_project_id;
-                            $result = mysql_query($query) or die(mysql_error());
-                            extract(mysql_fetch_assoc($result));
+                            $result = mysqli_query($dblink, $query) or die(mysqli_error());
+                            extract(mysqli_fetch_assoc($result));
 
                             //$EndLink = str_replace("{{FOREIGNID}}", $panellist_id, $EndLink);//18/06/2014 Remove
                             $EndLink = str_replace("{{panellist_id}}", $panellist_id, $EndLink); //18/062014 Add

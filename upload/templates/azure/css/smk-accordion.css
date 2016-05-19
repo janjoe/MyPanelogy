@@ -13,8 +13,8 @@
 .smk_accordion .accordion_in {
   position: relative;
   z-index: 10;
-  margin-top: -1px;
-  overflow: hidden;
+  margin-top: 1px;
+
 }
 .accordion_example{
   -moz-column-count:2;
