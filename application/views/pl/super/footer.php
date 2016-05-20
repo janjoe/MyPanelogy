@@ -12,5 +12,11 @@
             <img alt='Panelogy' width="100" title='Panelogy' src='<?php echo Yii::app()->getConfig('adminimageurl'); ?>prod-logo.png'/></a>
     </div>
 </div>
+
+<script src="<?php echo Yii::app()->baseUrl?>/upload/templates/azure/js/jquery.1.11.2.js"></script>
+<script src="<?php echo Yii::app()->baseUrl?>/upload/templates/azure/js/function.js"></script>
+<script src="<?php echo Yii::app()->baseUrl?>/upload/templates/azure/js/slick.js"></script>
+<script src="<?php echo Yii::app()->baseUrl?>/upload/templates/azure/js/smk-accordion.js"></script>
+
 </body>
 </html>

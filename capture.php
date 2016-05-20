@@ -200,7 +200,7 @@ numErrored = total_errors
             //cross verifying the url's project id and vendor master's project id
             extract(mysqli_fetch_assoc($resVendor));
             if ($proj_id <> $project_id) {
-                mysqli_close();
+                mysqli_close($dblink);
                 exit('<h1 class="wrn">ERROR: S1 Parameters are not set properly, please check survey link.</h1>');
             }
         }

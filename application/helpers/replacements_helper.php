@@ -776,8 +776,16 @@ function getMenuList() {
     $result = Yii::app()->db->createCommand($sql)->query()->readAll();
     $data = CHtml::listData($result, 'page_id', 'page_name');
     $html = "";
+    
+    $pageName = CHttpRequest::getParam('pagename');
+    
     foreach ($data as $key => $value) {
-        $html .= '<li><a class="nav-btn" href="' . Yii::app()->getBaseUrl(true) . '/index.php?pagename=' . $value . '" title="' . $value . '">' . $value . '</a></li>';
+		
+		$active = '';
+		if(($value==$pageName) || ($pageName=='' && $value=='Home'))
+		$active = ' active';
+		
+        $html .= '<li><a class="nav-btn'.$active.'" href="' . Yii::app()->getBaseUrl(true) . '/index.php?pagename=' . $value . '" title="' . $value . '">' . $value . '</a></li>';
     }
     return $html;
 }

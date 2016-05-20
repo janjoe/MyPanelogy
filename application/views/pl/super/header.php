@@ -11,9 +11,12 @@
         <link rel="shortcut icon" href="<?php echo $baseurl; ?>styles/favicon.png" type="image/png" />
         <link rel="icon" href="<?php echo $baseurl; ?>styles/favicon.png" type="image/png" />
         <link rel="stylesheet" href="<?php echo $themepath; ?>css/all.css" type="text/css" />
+        <link rel="stylesheet" href="<?php echo $themepath; ?>css/all.css" type="text/css" />
         <link rel="stylesheet" href="<?php echo $themepath; ?>css/ie.css" type="text/css" />
         <link rel="stylesheet" href="<?php echo $themepath; ?>css/ui.css" type="text/css" />
         <link rel="stylesheet" href="<?php echo $themepath; ?>css/boxes.css" type="text/css" />
+        <link rel="stylesheet" href="<?php echo Yii::app()->baseUrl?>/upload/templates/azure/css/smk-accordion.css" type="text/css" />
+        
         <?php echo $firebug ?>
         <?php $this->widget('ext.LimeScript.LimeScript'); ?>
         <?php $this->widget('ext.LimeDebug.LimeDebug'); ?>
@@ -39,7 +42,9 @@
         </script>
     </head>
     <body>
-        <?php if (isset($formatdata)) { ?>
+		
+        <?php
+         if (isset($formatdata)) { ?>
             <script type='text/javascript'>
                 var userdateformat='<?php echo $formatdata['jsdate']; ?>';
                 var userlanguage='<?php echo $pllang; ?>';

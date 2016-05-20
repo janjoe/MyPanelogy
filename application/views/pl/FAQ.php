@@ -6,7 +6,7 @@
             <tr>
                 <td>
                     <?php
-                    $sql = "select * from {{cms_page_master}} where page_name = 'FAQ'";
+                    $sql = "select * from {{cms_page_master}} where page_name = 'FAQ Inside'";
                     $uresult = Yii::app()->db->createCommand($sql)->query();
                     $count = $uresult->rowCount;
                     if ($count > 0) {
