@@ -161,7 +161,7 @@ error_reporting(E_ALL);*/
 if (version_compare(PHP_VERSION, '5.3.0', '<'))
     die('This script can only be run on PHP version 5.3.0 or later! Your version: ' . PHP_VERSION . '<br />');
 
-require_once "phpbrake/src/Notifier.php";
+/*require_once "phpbrake/src/Notifier.php";
 require_once "phpbrake/src/Instance.php";
 require_once "phpbrake/src/ErrorHandler.php";
 
@@ -182,7 +182,7 @@ Airbrake\Instance::set($notifier);
 
 // Register error and exception handlers.
 $handler = new Airbrake\ErrorHandler($notifier);
-$handler->register();
+$handler->register();*/
 
 ini_set ('output_buffering', true);
 ob_start();
