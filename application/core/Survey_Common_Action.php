@@ -280,6 +280,12 @@ class Survey_Common_Action extends CAction {
         if (!empty($aData['display']['menu_bars']['get'])) {
             $this->_getGroupBar(!empty($aData['ugid']) ? $aData['ugid'] : 0);
         }
+        if (!empty($aData['display']['menu_bars']['campaignsource_bars'])) {
+            $this->_campaignGroupBar(!empty($aData['ugid']) ? $aData['ugid'] : 0);
+        }
+         /*if (!empty($aData['display']['menu_bars']['sourcetype_bars'])) {
+            $this->_sourcetypeGroupBar(!empty($aData['ugid']) ? $aData['ugid'] : 0);
+        }*/
 
         // Load views
         foreach ($aViewUrls as $sViewKey => $viewUrl) {
@@ -884,6 +890,21 @@ class Survey_Common_Action extends CAction {
         $data['imageurl'] = Yii::app()->getConfig("adminimageurl"); // Don't came from rendertemplate ?
         $this->getController()->renderPartial('/admin/cms/cms/cmsbar_view', $data);
     }
+
+    function _campaignGroupBar($ugid = 0) {
+        $data['clang'] = Yii::app()->lang;
+        Yii::app()->loadHelper('database');
+        $data['addcontact'] = 'contact';
+        $data['imageurl'] = Yii::app()->getConfig("adminimageurl"); // Don't came from rendertemplate ?
+        $this->getController()->renderPartial('/admin/campaign/campaign/campaignsourcebar_view', $data);
+    }
+    /* function _sourcetypeGroupBar($ugid = 0) {
+        $data['clang'] = Yii::app()->lang;
+        Yii::app()->loadHelper('database');
+        $data['addcontact'] = 'contact';
+        $data['imageurl'] = Yii::app()->getConfig("adminimageurl"); // Don't came from rendertemplate ?
+        $this->getController()->renderPartial('/admin/campaign/campaign/campaignsourcebartype_view', $data);
+    }*/
 
     //trk
     function _getGroupBar($ugid = 0) {

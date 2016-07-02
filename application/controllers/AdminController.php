@@ -229,6 +229,7 @@ class AdminController extends LSYii_Controller {
             'contact_title' => 'contacttitleaction',
             'contact' => 'contactaction',
             'cms' => 'cmsaction',
+            'campaign' => 'campaignaction',
             'project' => 'projectaction',
             'template' => 'templateaction',
             'get' => 'get_action',

@@ -264,3 +264,4 @@ li.selected, .selected li {border: 3px solid black;}
 .help { background: #9FDAEE; border: 1px solid #2BB0D7;	}
 .info { background: #9FDAEE; border: 1px solid #2BB0D7;	}
 .warning { background: #FFFFAA; border: 1px solid #FFAD33; }
+table td, table th {text-align: center !important;}

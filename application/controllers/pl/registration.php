@@ -6,6 +6,7 @@ if (!defined('BASEPATH'))
 class Registration extends PL_Common_Action {
 
     public function index() {
+
         $this->_redirectIfLoggedIn();
         $clang = Yii::app()->lang;
         if (!empty($_GET['sa']))
@@ -13,9 +14,10 @@ class Registration extends PL_Common_Action {
         else
             $sa = '';
             
-        
+       
             
 		if(!empty($_POST) && @$_POST['first_step_register']=='1'){
+
 			
 			$_SESSION['userData']['fname'] = $_POST['fname'];
 			$_SESSION['userData']['lname'] = $_POST['lname'];
@@ -248,8 +250,13 @@ class Registration extends PL_Common_Action {
             //Yii::app()->setFlashMessage($clang->gT("Error in mail send"));
             //$this->_redirectToIndex();
         }
+        $cmp_id = '';
+        if(isset($_COOKIE["cmp_id"]))
+        {   
+            $cmp_id = $_COOKIE["cmp_id"]; 
+        }    
 
-        $NewPanellist = PL::model()->insertPanellist($email_address, $spwd, $lname, $fname);
+        $NewPanellist = PL::model()->insertPanellist($email_address, $spwd, $lname, $fname, $cmp_id);
 
         if ($NewPanellist) {
             $quelist = Question(get_question_categoryid('Registration'), '', true, false);

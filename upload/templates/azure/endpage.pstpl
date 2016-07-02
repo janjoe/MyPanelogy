@@ -42,6 +42,61 @@ $( document ).ready(function() {
 	unset($_SESSION['errorMSG']);
 	}
 	?>
+
+
+	<?php
+		$visitorcokkie = 0;
+		
+		if(isset($_COOKIE["visited"]))
+		{	
+			$visitorcokkie = $_COOKIE["visited"]; 
+			
+
+		}
+		//$pagename = $_GET['pagename'];
+		if (isset($_GET['cmp']))
+		 { 
+		 	$cmpid = base64_decode($_GET['cmp']);
+		 	setcookie('cmp_id', $cmpid, time() + (86400 * 30), "/"); 
+		 	
+		 }
+		 else
+		 { 
+		 	$cmpid = 1;
+		 } 
+		
+		if($visitorcokkie != 1 ){
+			$cookie_name = "visited";
+			$cookie_value = "1";
+			setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
+	?>
+			var base_url =  '<?php echo Yii::app()->createUrl("/visitor"); ?>';
+			var cmp_id = '<?php echo  $cmpid; ?>';
+			
+					$.ajax({
+                         type: "GET",
+                         cache: false,
+                         url: base_url,
+                        data: {
+                         ajax: true,
+                         cmp : cmp_id,
+                         
+                      },
+                      beforeSend: function () {
+                      },
+                      success: function (data) {
+                      	
+                         if(data.success === true){
+                             
+                                        
+                               
+                              }
+                                                       
+                         }
+                      
+            });
+
+            <?php } ?>
 	
 	
 });
