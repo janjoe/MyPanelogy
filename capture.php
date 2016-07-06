@@ -145,10 +145,10 @@ numErrored = total_errors
             $query = "SELECT * FROM $tbl_panellist_project WHERE status = 'A' and project_id = $proj_id and panellist_id =  $pl_id ";
             $resPP = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
             if (mysqli_num_rows($resPP) > 0) {
-                $query = "Update  $tbl_panellist_project set status = 'R' Where status = 'A' and project_id = $proj_id and panellist_id =  $pl_id ";
-                $reslt = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
-                $query = "Update  $tbl_panellist_mst set no_redirected = no_redirected +1  Where  panel_list_id =  $pl_id ";
-                $reslt = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
+                //$query = "Update  $tbl_panellist_project set status = 'R' Where status = 'A' and project_id = $proj_id and panellist_id =  $pl_id ";
+                //$reslt = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
+               // $query = "Update  $tbl_panellist_mst set no_redirected = no_redirected +1  Where  panel_list_id =  $pl_id ";
+                // $reslt = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
             }
         } else {
             $gid = ( isset($_GET['gid'])) ? $_GET['gid'] : "0";
@@ -297,6 +297,7 @@ numErrored = total_errors
             $DataOnRedirect.=$POSTAge . ";";
             $DataOnRedirect.=$POSTGender . ";";
         }
+
 
         //Step 4 pre-screenner form
 
@@ -447,6 +448,7 @@ numErrored = total_errors
 //End change by gaurang 2014-05-27
 //Step 5 cehcking the max_redirect values
 //$QFullURL = str_replace("{{FOREIGNID}}", $proj_id, $QFullURL);
+   
     $QuotaFull_URL = str_replace("{{panellist_id}}", $project_id, $QuotaFull_URL);
 //VENDOR's max redirect validation
 //if (( $vnumRedirected >= $vMaxRedirects) && ($vMaxRedirects > 0)) {
@@ -468,6 +470,7 @@ numErrored = total_errors
         $result = mysqli_query($dblink, $query) or die(mysql_error($query));
         UpdateErrors($project_id, $vp_id);
         mysqli_close($dblink);
+
         header('Refresh:5; URL=' . $QuotaFull_URL);
         exit();
     }
@@ -492,6 +495,7 @@ numErrored = total_errors
         $result = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
         UpdateErrors($project_id, $vp_id);
         mysqli_close($dblink);
+
         header('Refresh:5; URL=' . $QuotaFull_URL);
         exit();
     }
@@ -502,6 +506,7 @@ numErrored = total_errors
         //$body = "Max Completed for Project " . $ClientRedirectID . " has been met and new panellists will be redirected to QF.";
         $body = "Max Completed for Project " . $project_id . " has been met and new panellists will be redirected to QF.";
         SendMessage($subject, $body, $project_id, $sales_user_id, $manager_user_id);
+
         header('Refresh:5; URL=' . $QuotaFull_URL);
         echo '<h1 class="wrn">Thank you for your interest in the study however the study is no longer accepting additional responses. We look forward to your input on the other opportunities.</h1>';
 //        $query = 'INSERT INTO bloackedredirects
@@ -638,7 +643,10 @@ numErrored = total_errors
     $client_link = str_replace("{{ID}}", $lastid, $client_link);
 
     //header("location:" . $client_link);
-
+    $cookie_name = "pl";
+    $cookie_value = urlencode(base64_encode($panellist_id));
+    setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+   
     echo "<script>window.location ='" . $client_link . "';</script>";
 
 //} //(isset($_GET['redirect']))

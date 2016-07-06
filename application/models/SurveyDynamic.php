@@ -83,6 +83,16 @@ class SurveyDynamic extends LSActiveRecord
      */
     public function insertRecords($data)
     {
+        $gelcolumn = "SHOW COLUMNS FROM {{survey_".self::$sid."}} LIKE 'pl_id'";
+        $qrydetail = Yii::app()->db->createCommand($gelcolumn)->query()->readAll();
+        
+        if(empty($qrydetail))
+        {
+            $addcolumnquery = "ALTER TABLE {{survey_".self::$sid."}} ADD COLUMN pl_id int(11)";
+            $qrydetail = Yii::app()->db->createCommand($addcolumnquery)->query();
+        }
+
+        
         $record = new self;
         foreach ($data as $k => $v)
         {

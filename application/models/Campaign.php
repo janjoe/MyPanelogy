@@ -49,8 +49,35 @@ class Campaign extends LSActiveRecord {
                 ->leftJoin('lime_users u', 'c.created_by=u.uid')
                 ->leftJoin('lime_cms_page_master cp', 'c.page_id=cp.page_id')
                 ->queryAll();
+ 
+            foreach($results as $keyCmp=>$cmp){
+                $users = $this->getcampaignuser($cmp['id']);
+               // print_r($users); exit;
+                $total_first_survey_sent_users = 0;    
+                if(count($users))
+                { 
+                    $query_user_str = implode(",",$users);
+                    $quesql = "Select date_format(created_date,'%Y%m%d%H%i%s') AS sent_date,COUNT(*) AS cnt from {{query_send_details}} where 1=1 ";
+                    $quesql .= " And panellist_id in(".$query_user_str.") GROUP BY sent_date ORDER BY sent_date ASC LIMIT 1"; //filter not to send originally send 
+                      
+                    $qrydetail = Yii::app()->db->createCommand($quesql)->query()->readAll();
+              
+                    if(isset($qrydetail[0]["sent_date"]) && isset($qrydetail[0]["cnt"]) && $qrydetail[0]["cnt"] > 0){
+                        $total_first_survey_sent_users = $qrydetail[0]["cnt"];        
+                    }
+                }
+                
+                $percentChange = 0;
+                if(count($users) != 0){ 
+                    $percentChange = ($total_first_survey_sent_users * 100 ) / count($users);
+                    $percentChange = number_format($percentChange, 0);
+                 }   
+
+                $results[$keyCmp]["total_first_survey_sent_users"] = $percentChange;
 
 
+            }
+          
            /* $criteria = new CDbCriteria;
             $criteria->select = 't.*, tu.* ';
             $criteria->join = ' LEFT JOIN `lime_campaign_status` AS `tu` ON t.campaign_status = tu.cs_id';
@@ -66,6 +93,19 @@ class Campaign extends LSActiveRecord {
         $command = $this->getCommandBuilder()->createFindCommand($this->getTableSchema(), $criteria);
         $results = $command->queryAll();*/
         return $results;
+    }
+    function getcampaignuser($cmp_id)
+    {
+        $results = Yii::app()->db->createCommand()
+                ->select('plm.panel_list_id')
+                ->from('lime_panel_list_master plm')
+                ->where('cmp_id=:id', array(':id'=>$cmp_id))
+                ->queryAll();
+
+                foreach ($results as $key => $value) {
+                        $res[$key] = $value['panel_list_id'];
+                    }    
+                return $res;
     }
 
     function getsingleRecord($id) {

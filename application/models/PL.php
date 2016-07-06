@@ -40,7 +40,7 @@ class PL extends LSActiveRecord {
         return 'panel_list_id';
     }
 
-    public static function insertPanellist($email_address, $spwd, $lname, $fname,$cmp_id) {
+    public static function insertPanellist($email_address, $spwd, $lname, $fname,$cmp_id,$per_id) {
         //return '1';
         $oUser = new self;
         $oUser->email = $email_address;
@@ -49,6 +49,7 @@ class PL extends LSActiveRecord {
         $oUser->last_name = $lname;
         $oUser->status = 'R';
         $oUser->cmp_id = $cmp_id;
+        $oUser->per_id = $per_id;
         $oUser->remote_ip = $_SERVER['REMOTE_ADDR'];
         if ($oUser->save()) {
             return $oUser->panel_list_id;

@@ -26,6 +26,8 @@ $(document).ready(function(){
             <th><?php $clang->eT("Create Date"); ?></th>
             <th><?php $clang->eT("Unique Hit"); ?></th>
             <th><?php $clang->eT("Share Link"); ?></th>
+            <th><?php $clang->eT("Invited to 1st survey"); ?></th>
+
             
         </tr>
     </thead>
@@ -68,6 +70,15 @@ $(document).ready(function(){
                         }    
                  ?>
                 <td><a href='<?php echo Yii::app()->getBaseUrl()."/index.php/?pagename=".$pagejoin."&cmp=".base64_encode($usr['id']); ?>' target='_blank'>Link</a></td>
+                <td>
+                <?php 
+                    if(isset($usr['total_first_survey_sent_users'])) 
+                        { 
+                            echo $usr['total_first_survey_sent_users'].'%'; 
+                        }
+                     ?>
+                            
+                </td>
                 
             </tr>
             <?php $row++;

@@ -5184,8 +5184,12 @@
                 {
                     $sdata['refurl'] = getenv("HTTP_REFERER");
                 }
+                if(isset($_COOKIE['pl'])){
+                    $sdata['pl_id'] = base64_decode(urldecode($_COOKIE['pl']));
+                }
 
                 $sdata = array_filter($sdata);
+               
                 SurveyDynamic::sid($this->sid);
                 $oSurvey = new SurveyDynamic;
                 
@@ -5346,7 +5350,7 @@
                             }
                             else
                             {
-                                $sQuery .= dbQuoteID('submitdate') . "=" . dbQuoteAll(date("Y-m-d H:i:s",mktime(0,0,0,1,1,1980)));
+                                $sQuery .= dbQuoteID('submitdate') . "=" . dbQuoteAll(dateShift(date("Y-m-d H:i:s"), "Y-m-d H:i:s", $this->surveyOptions['timeadjust']));
                             }
                             $sQuery .= " WHERE ID=".$_SESSION[$this->sessid]['srid'];
                             dbExecuteAssoc($sQuery);   // Checked

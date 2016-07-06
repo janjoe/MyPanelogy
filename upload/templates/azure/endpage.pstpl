@@ -54,6 +54,12 @@ $( document ).ready(function() {
 
 		}
 		//$pagename = $_GET['pagename'];
+		if (isset($_GET['per_id']))
+		 { 
+		 	$per_id = $_GET['per_id'];
+		 	setcookie('per_id', $per_id, time() + (86400 * 30), "/"); 
+		 	
+		 }
 		if (isset($_GET['cmp']))
 		 { 
 		 	$cmpid = base64_decode($_GET['cmp']);

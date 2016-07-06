@@ -254,9 +254,14 @@ class Registration extends PL_Common_Action {
         if(isset($_COOKIE["cmp_id"]))
         {   
             $cmp_id = $_COOKIE["cmp_id"]; 
-        }    
+        }
+        $per_id = '';
+        if(isset($_COOKIE["per_id"]))
+        {   
+            $per_id = $_COOKIE["per_id"]; 
+        }       
 
-        $NewPanellist = PL::model()->insertPanellist($email_address, $spwd, $lname, $fname, $cmp_id);
+        $NewPanellist = PL::model()->insertPanellist($email_address, $spwd, $lname, $fname, $cmp_id,$per_id);
 
         if ($NewPanellist) {
             $quelist = Question(get_question_categoryid('Registration'), '', true, false);
