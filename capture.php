@@ -145,10 +145,10 @@ numErrored = total_errors
             $query = "SELECT * FROM $tbl_panellist_project WHERE status = 'A' and project_id = $proj_id and panellist_id =  $pl_id ";
             $resPP = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
             if (mysqli_num_rows($resPP) > 0) {
-                //$query = "Update  $tbl_panellist_project set status = 'R' Where status = 'A' and project_id = $proj_id and panellist_id =  $pl_id ";
-                //$reslt = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
-               // $query = "Update  $tbl_panellist_mst set no_redirected = no_redirected +1  Where  panel_list_id =  $pl_id ";
-                // $reslt = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
+                $query = "Update  $tbl_panellist_project set status = 'R' Where status = 'A' and project_id = $proj_id and panellist_id =  $pl_id ";
+                $reslt = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
+                $query = "Update  $tbl_panellist_mst set no_redirected = no_redirected +1  Where  panel_list_id =  $pl_id ";
+                $reslt = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
             }
         } else {
             $gid = ( isset($_GET['gid'])) ? $_GET['gid'] : "0";
