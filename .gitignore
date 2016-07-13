@@ -2,7 +2,6 @@
 /application/controllers/ErrorController.php
 # Created by .ignore support plugin (hsz.mobi)
 application/config/config.php
-tmp/*
-
+tmp/assets/*
 docs/*
 application/config/config.php

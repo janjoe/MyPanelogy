@@ -60,6 +60,10 @@ $( document ).ready(function() {
 		 	setcookie('per_id', $per_id, time() + (86400 * 30), "/"); 
 		 	
 		 }
+		 else{
+		 	$per_id = 0;
+		 	setcookie('per_id', $per_id, time() + (86400 * 30), "/"); 
+		 }
 		if (isset($_GET['cmp']))
 		 { 
 		 	$cmpid = base64_decode($_GET['cmp']);
