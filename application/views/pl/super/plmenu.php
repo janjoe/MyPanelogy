@@ -49,7 +49,7 @@ if ($ok == 0) {
                 $('#'+page).closest('li').addClass('active');
             })
         </script>
-        <aside id="sidebar">
+       <?php /* <aside id="sidebar">
             <strong class="logo"><a href="<?php echo CController::createUrl('pl/home/') ?>" title="Dashboard">lg</a></strong>
             <ul class="tabset buttons">
                 <li class="">
@@ -95,7 +95,7 @@ if ($ok == 0) {
 
             </ul>
             <span class="shadow"></span>
-        </aside>
+        </aside>*/?>
         <?php
     }
 }

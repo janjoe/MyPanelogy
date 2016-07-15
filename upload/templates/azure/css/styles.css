@@ -450,6 +450,7 @@ button, input[type="button"]:hover, input[type="reset"]:hover, input[type="submi
 .logo {
 	float: left;
 	margin: 0px;
+	width: 44px;
 	padding: 0px;
 	-webkit-transition: all 0.4s ease;
 	transition: all 0.4s ease;
