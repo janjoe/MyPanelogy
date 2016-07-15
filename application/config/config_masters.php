@@ -50,12 +50,14 @@ function status_to_define() {
     global $tblPrefix, $iscapture;
     // setting project status
    $sql = "select stg_value from " . $tblPrefix . "settings_global where stg_name like 'project_status_%' order by stg_name ";
+   
     if ($iscapture) {
 		
         $result = mysqli_query($dblink, $sql) or die(mysqli_error() . $sql);
     } else {
         //to be changed by gaurang
-        $result = Yii::app()->db->createCommand($uquery)->query()->readAll();
+        $result = mysqli_query($dblink, $sql) or die(mysqli_error() . $sql);
+        //$result = Yii::app()->db->createCommand($sql)->query()->readAll();
     }
     
    // $row = mysqli_fetch_array($result);
@@ -78,8 +80,10 @@ function status_to_define() {
 
     // setting redirect status
     $sql = "select stg_value from " . $tblPrefix . "settings_global where stg_name like 'redirect_status_%' order by stg_name ";
+    
     $result = mysqli_query($dblink, $sql) or die(mysqli_error() . $sql);
-	//$row = mysqli_fetch_row($result);
+	$row = mysqli_fetch_row($result);
+
     if (mysqli_num_rows($result) > 0) {
         define('STATUS_REDIRECT_COMPLETED', mysqli_result($result, 0));
         define('STATUS_REDIRECT_DISQUALIFIED', mysqli_result($result, 1));

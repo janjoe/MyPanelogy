@@ -553,6 +553,131 @@ class SurveyRuntimeHelper {
 
                     $_SESSION[$LEMsessid]['finished'] = true;
                     $_SESSION[$LEMsessid]['sid'] = $surveyid;
+                    //print_r($thissurvey); exit();
+                    //start code for servery complete
+                    DEFINE("ISCAPTURE", true);
+                    require_once 'application/config/config_masters.php';
+                        $dblink = connectdb();
+                        $tbl_panellist_project = $tblPrefix . 'panellist_project';
+                        $view_proj_mst = $tblPrefix . 'view_project_master';
+                        $view_ven_proj_mst = $tblPrefix . 'view_project_master_vendors';  //these is vendor_redirects view
+                        $view_pnl_red = $tblPrefix . 'view_panellist_redirects'; //these is panelistredirects view
+                        $view_pnl_graph = $tblPrefix . 'view_panellist_graph'; //these is panelistgraph view
+
+                        $view_rel_red = $tblPrefix . 'view_relevant_redirects'; //these is relevantredirects view
+                        $view_blo_red = $tblPrefix . 'view_blocked_redirects'; //these is bloackedredirects view
+                        $view_cli_cd = $tblPrefix . 'view_client_code'; //these is bloackedredirects view
+
+                        $tbl_proj_mst = $tblPrefix . 'panellist_project';
+                        $tbl_proj_mst = $tblPrefix . 'project_master';
+                        $tbl_ven_proj_mst = $tblPrefix . 'project_master_vendors';
+                        $tbl_panellist_mst = $tblPrefix . 'panel_list_master';
+                        $tbl_pnl_red = $tblPrefix . 'panellist_redirects'; //these is panelistredirects table
+                        $tbl_blo_red = $tblPrefix . 'blocked_redirects'; //these is bloackedredirects table
+                        $tbl_rel_red = $tblPrefix . 'relevant_redirects'; //these is relevantredirects view
+                        $tbl_cli_cd = $tblPrefix . 'client_code'; //these is bloackedredirects table
+                        $tbl_pnl_graph = $tblPrefix . 'panellist_graph'; //these is panelistgraph table
+
+
+                        $Linktype = "completed_link";
+                        $newStatus = 6;
+                        $incFieldC = "total_completed";
+                        $incFieldV = "total_completed";
+                        $instatus = 'PC'; //pending completed
+                        $panellist_master_field = "no_completed";
+                        $message = "Thanks for your time. We will review your input.";
+                        
+                        $query = "SELECT redirect_status_id, StartIP, project_id, vendor_project_id, panellist_id, foreign_misc, created_datetime, vendor_id , project_status  FROM $view_pnl_red WHERE panellist_redirect_id =" . $_COOKIE['GWSID']; //20/06/06/2014 Add By Hari
+                       $result = mysqli_query($dblink, $query) or die(mysqli_error());
+                        extract(mysqli_fetch_assoc($result));
+                        
+
+                        if ($project_status <> STATUS_PROJECT_TESTING) {
+                    
+                            if (( $redirect_status_id == STATUS_REDIRECT_REDIRECTED) AND ($StartIP == $_SERVER['REMOTE_ADDR'])) 
+                            {
+                                $query = 'UPDATE ' . $tbl_pnl_red . '
+                                SET 
+                                EndIP = "' . $_SERVER['REMOTE_ADDR'] . '",
+                                redirect_status_id = "' . $newStatus . '",
+                                CompletedOn = NOW() 
+                                WHERE panellist_redirect_id =' . $_COOKIE['GWSID'];
+                                //dbExecuteAssoc($query);
+                                $result = mysqli_query($dblink, $query) or die(mysqli_error());
+
+                                //calculating and fetching LOS
+                                $query = 'SELECT (TIME_TO_SEC(TIMEDIFF(CompletedOn, created_datetime))/60) as LOS FROM ' . $tbl_pnl_red . ' WHERE panellist_redirect_id =' . $_COOKIE['GWSID'];
+                                $result = mysqli_query($dblink, $query) or die(mysqli_error());
+                                extract(mysqli_fetch_assoc($result));
+
+                                $query = 'UPDATE ' . $tbl_pnl_red . ' 
+                                    SET 
+                                    LOS = ' . $LOS . '
+                                    WHERE panellist_redirect_id =' . $_COOKIE['GWSID'];
+
+                                $result = mysqli_query($dblink, $query) or die(mysqli_error());
+                        
+                                $query = 'UPDATE ' . $tbl_proj_mst . ' SET 
+                                       ' . $incFieldC . ' = ' . $incFieldC . ' +1 , 
+                                        total_los = total_los + ' . $LOS . '
+                                        WHERE project_id =' . $project_id;
+                        
+                                $result = mysqli_query($dblink, $query) or die(mysqli_error());
+
+
+                                $query = 'UPDATE ' . $tbl_ven_proj_mst . ' SET 
+                                        ' . $incFieldV . ' = ' . $incFieldV . ' +1
+                                        WHERE vendor_project_id =' . $vendor_project_id;
+                                $result = mysqli_query($dblink, $query) or die(mysqli_error());
+
+                                //check if internal company (own vendor) 
+                                $sql = 'SELECT * FROM ' . $tblPrefix . 'settings_global WHERE stg_name like "Own_Panel"';
+                                $result = mysqli_query($dblink, $sql) or die(mysqli_error());
+                                extract(mysqli_fetch_assoc($result));
+                                if ($vendor_id == $stg_value) 
+                                {
+
+                                    $sql_update = 'update ' . $tblPrefix . 'panellist_project set 
+                                    status = "' . $instatus . '"
+                                    Where  panellist_id  = "' . $panellist_id . '" and
+                                    project_id  = "' . $_COOKIE['PROJECTID'] . '"
+                                    and status = "R"';
+
+                                    $result = mysqli_query($dblink, $sql_update) or die(mysqli_error());
+
+                                    $query = "Update  $tbl_panellist_mst set 
+                                    $panellist_master_field = $panellist_master_field +1  Where  panel_list_id ='  $panellist_id '";
+                                    $reslt = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
+
+                                    //echo $message;
+                                } 
+                                else
+                                {
+
+                                    $query = 'SELECT ' . $Linktype . ' as EndLink FROM ' . $tbl_ven_proj_mst . ' WHERE vendor_project_id =' . $vendor_project_id;
+                                    $result = mysqli_query($dblink, $query) or die(mysqli_error());
+                                    extract(mysqli_fetch_assoc($result));
+
+                                    //$EndLink = str_replace("{{FOREIGNID}}", $panellist_id, $EndLink);//18/06/2014 Remove
+                                    $EndLink = str_replace("{{panellist_id}}", $panellist_id, $EndLink); //18/062014 Add
+                                    $EndLink = str_replace("{{PASSTHRU}}", $foreign_misc, $EndLink);
+
+                                    //ForeignMISC
+                                    ?>
+                                    <script type="text/javascript">
+                                        location.href = "<?php echo $EndLink; ?>";
+                                    </script>
+                                    <?php
+                                }
+                            } 
+                            else 
+                            {
+                                exit('<h1 class="wrn">ERROR: 300 Parameters are not set properly.</h1><br/><h2>300 means:- Already Redirected and Same IP Found</h2>');
+                            }//End If
+                        }    
+                    
+
+
 
                     sendCacheHeaders();
                     if (isset($thissurvey['autoredirect']) && $thissurvey['autoredirect'] == "Y" && $thissurvey['surveyls_url']) {
