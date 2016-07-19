@@ -68,7 +68,7 @@ hr{
 img {
     border: 0;
 }
-.maintitle img, .footer img{width: 44px;}
+.maintitle img, .footer img{/*width: 44px;*/}
 
 a {
     color: #45415f;

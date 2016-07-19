@@ -27,7 +27,7 @@ foreach ($quelist as $key => $value) {
 }
 ?>
 <div id="tab-1">
-    <section class="container w100_per">
+    <section class="container w100_per111">
         <div class="box w43_per effect7">
             <h3>Available Surveys</h3>
             <p style="display: inline-block">

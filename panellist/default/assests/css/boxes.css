@@ -6,12 +6,14 @@
 
 /*Container*/
 .container{
-    margin-left:100px;
+    /*margin-left:100px;*/
     padding:5px;
-    min-height:400px;
+    /*min-height:400px;*/
     height:auto;
     /* border: 1px solid red; */
     z-index: 99;
+    width: 1170PX;
+    margin: 0 auto;
 }
 .container h2 { margin-top:30px;}
 
@@ -20,12 +22,18 @@
     height:auto;
     text-align: left;
     background:#FFF;
-    margin:40px auto;
+    margin:20px auto 20px;/*40px auto;*/
     display:inline-block;
 }
-.box h3 {border-bottom: 1px solid #d6d6d6; color:#7a7a7a;background: url(../images/bg-controls.png); padding-left: 15px;}
+.box h3 {
+    border-bottom: 1px solid #d6d6d6;
+    color:#fff;
+    background:#033882; /*url(../images/bg-controls.png);*/
+    padding-left: 15px;
+    font-size: 24px;
+}
 .box h3:before {
-    content: "";
+    /*content: "";
     height: 10px;
     width: 10px;
     border: 1px solid #D6D6D6;
@@ -38,15 +46,15 @@
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
-    border-radius: 50%;
+    border-radius: 50%;*/
 }
 
 .w25_per{width:25%;}
-.w43_per{width:43%;}
+.w43_per{width:49%;/*width:43%;*/}
 .w45_per{width:45%;}
-.w90_per{width:90%;}
+.w90_per{/*width:90%;*/}
 .w95_per{width:95%;}
-.w98_per{width:98%;}
+.w98_per{width:100%;/*width:98%;*/}
 .w100_per{width:100%;}
 
 .w200_px{width:200px;}
@@ -242,13 +250,16 @@
 .effect7
 {
     position:relative;       
-    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    -webkit-box-shadow:0 0px 0px rgba(0, 0, 0, 0.3), 0 0 8px rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow:0 0px 0px rgba(0, 0, 0, 0.3), 0 0 8px rgba(0, 0, 0, 0.1) inset;
+    box-shadow:0 0px 0px rgba(0, 0, 0, 0.3), 0 0 8px rgba(0, 0, 0, 0.1) inset;
+    /*-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
     -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;*/
 }
 .effect7:before, .effect7:after
 {
-    content:"";
+    /*content:"";
     position:absolute; 
     z-index:-1;
     -webkit-box-shadow:0 0 20px rgba(0,0,0,0.8);
@@ -259,7 +270,7 @@
     left:10px;
     right:10px;
     -moz-border-radius:100px / 10px;
-    border-radius:100px / 10px;
+    border-radius:100px / 10px;*/
 } 
 .effect7:after
 {
@@ -316,3 +327,11 @@ h3 { font-size: 30px; }
 h4 { font-size: 22px;  font-weight: normal;  padding-bottom: 10px;}
 h5 { font-size: 14px;}
 h6 {}
+
+/*@media screen and (min-width: 800px)
+{
+
+    .accordion_example{column-count: 1 !important;}
+    .accordion_example li{    width: 80% !important;
+    min-width: 80% !important;}
+}*/
