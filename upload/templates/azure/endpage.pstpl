@@ -80,7 +80,7 @@
 $(document).ready(function() {
 
         $('#usergroupform').validationEngine();
-      });
+     
 
 
 	//var tab_alert_hook = false;
