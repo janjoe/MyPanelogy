@@ -80,8 +80,10 @@
 $(document).ready(function() {
 
         $('#usergroupform').validationEngine();
+     
+});
 
-	   //var tab_alert_hook = false;
+	//var tab_alert_hook = false;
        /* window.onbeforeunload = function() {
             if (tab_alert_hook) {
                 var popup_content = $(document).find('[data-poptrigger="close"]').find('.visi-pop-pro-modal');
@@ -126,13 +128,13 @@ $(document).ready(function() {
                   }  
                 }
             });
-            
+        });
+            <?php } ?>
             /*document.onmouseenter=function(){
             	
                 tab_alert_hook = false;
             };*/
-        });
-        <?php } ?>
+        
 </script>
 
 <script>
@@ -147,7 +149,7 @@ $( document ).ready(function() {
 	
 	$('.errorMSG').html('<?php echo $_SESSION['errorMSG']; ?>');
 	<?php if(isset($_SESSION['errorMSG'])){
-	   unset($_SESSION['errorMSG']);
+	unset($_SESSION['errorMSG']);
 	}
 	?>
 
@@ -182,35 +184,41 @@ $( document ).ready(function() {
 			$cookie_name = "visited";
 			$cookie_value = "1";
 			setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
-           ?>
+	?>
 			var base_url =  '<?php echo Yii::app()->createUrl("/visitor"); ?>';
 			var cmp_id = '<?php echo  $cmpid; ?>';
 			
-			$.ajax({
-                type: "GET",
-                cache: false,
-                url: base_url,
-                data: {
-                ajax: true,
-                cmp : cmp_id,
-                },
-                beforeSend: function () {
-                
-                },
-                success: function (data) {
-                    if(data.success === true){
-                    }
-                }
+					$.ajax({
+                         type: "GET",
+                         cache: false,
+                         url: base_url,
+                        data: {
+                         ajax: true,
+                         cmp : cmp_id,
+                         
+                      },
+                      beforeSend: function () {
+                      },
+                      success: function (data) {
+                      	
+                         if(data.success === true){
+                             
+                                        
+                               
+                              }
+                                                       
+                         }
                       
             });
 
-        <?php } ?>
-        <?php if(isset($_GET['type']) && $_GET['type'] == 'agenthrough' && isset($_GET['rec']) && $_GET['rec'] != ''){  
-            $agent_id = base64_decode($_GET['rec']);
-            ?>
+            <?php } ?>
+<?php if(isset($_GET['type']) && $_GET['type'] == 'agenthrough' && isset($_GET['rec']) && $_GET['rec'] != ''){  
+  $agent_id = base64_decode($_GET['rec']);
+  ?>
 
-            var agent_id =  '<?php echo  $agent_id; ?>';
-            var varifyurl = '<?php echo Yii::app()->createUrl("/pl/registration/sa/agentsave/?agent_id='+agent_id+'"); ?>';
+            
+            	var agent_id =  '<?php echo  $agent_id; ?>';
+             	var varifyurl = '<?php echo Yii::app()->createUrl("/pl/registration/sa/agentsave/?agent_id='+agent_id+'"); ?>';
              	$.ajax({
                     type: "GET",
                     cache: false,
@@ -226,10 +234,10 @@ $( document ).ready(function() {
                     }
                 });
 
-        <?php } ?>
-        <?php if(isset($_GET['resucess'])){ ?>
-             alert('Email send successfully! Please check you mail.');
-        <?php } ?>
+            <?php } ?>
+            <?php if(isset($_GET['resucess'])){ ?>
+	             alert('Email send successfully! Please check you mail.');
+	           <?php } ?>
 });
 var password = document.getElementById("email_address")
   , confirm_password = document.getElementById("cemail_address");
