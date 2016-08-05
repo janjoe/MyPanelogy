@@ -39,8 +39,67 @@ class Campaign extends LSActiveRecord {
 
     function getRecords($condition=FALSE,  $params = array()) {
 
+        if(!empty($params))
+        {
+            
+            $filterquery = "SELECT `c`.*, `cs`.`status_name`, `st`.`name`, `s`.`source_name`, `u`.`full_name`, `cp`.`page_name` FROM lime_campaign as c LEFT JOIN `lime_campaign_status` `cs` ON c.campaign_status = cs.cs_id LEFT JOIN `lime_campaign_source_type` `st` ON c.campaign_cst_id=st.cst_id LEFT JOIN `lime_campaign_sources` `s` ON c.campaign_src_id=s.cmp_id LEFT JOIN `lime_users` `u` ON c.created_by=u.uid LEFT JOIN `lime_cms_page_master` `cp` ON c.page_id=cp.page_id WHERE 1=1";
+                if (isset($params['source']) && $params['source'] != '')
+                {
+                    $filterquery .= " AND c.campaign_src_id=".$params['source'];
+                }
+                if(isset($params['sourcetype']) && $params['sourcetype'] != '')
+                {
+                    $filterquery .= " AND c.campaign_cst_id=".$params['sourcetype'];
+                }
+                if(isset($params['status']) && $params['status'] != '')
+                {
+                    $filterquery .= " AND c.campaign_status=".$params['status'];
+                }
+                if(isset($params['campaign']) && $params['campaign'] != '')
+                {
+                    $filterquery .= " AND c.id=".$params['campaign'];
+                }
+                if(isset($params['from'], $params['to']) && $params['from'] != '' && $params['to'] != '')
+                {
+                    $filterquery .= " AND STR_TO_DATE(c.created_date , '%Y-%m-%d') BETWEEN STR_TO_DATE('".$params['from']."', '%Y-%m-%d') 
+                    AND STR_TO_DATE('".$params['to']."', '%Y-%m-%d')";
+                }
+                if(isset($params['uniquehit']) && $params['uniquehit'] != '')
+                {
+                    $filterquery .= " AND c.unique_hit >= ".$params['uniquehit'];
+                }
+            /* $results = Yii::app()->db->createCommand();
+                $results->select('c.*, cs.status_name, st.name, s.source_name, u.full_name, cp.page_name');
+                $results->from('lime_campaign c');
+                $results->leftJoin('lime_campaign_status cs', 'c.campaign_status=cs.cs_id');
+                $results->leftJoin('lime_campaign_source_type st', 'c.campaign_cst_id=st.cst_id');
+                $results->leftJoin('lime_campaign_sources s', 'c.campaign_src_id=s.cmp_id');
+                $results->leftJoin('lime_users u', 'c.created_by=u.uid');
+                $results->leftJoin('lime_cms_page_master cp', 'c.page_id=cp.page_id');
+                
+                if (isset($params['source']) && $params['source'] != '')
+                {
+                     $results->andwhere('c.campaign_src_id=:csid', array(':csid'=>$params['source']));
+                }
+                if(isset($params['sourcetype']) && $params['sourcetype'] != '')
+                {
+                     $results->andwhere('c.campaign_cst_id=:cstid', array(':cstid'=>$params['sourcetype']));
+                }
+                if(isset($params['status']) && $params['status'] != '')
+                {
+                     $results->andwhere('c.campaign_status=:csttid', array(':csttid'=>$params['status']));
+                }
+                if(isset($params['campaign']) && $params['campaign'] != '')
+                {
+                     $results->andwhere('c.id=:cid', array(':cid'=>$params['campaign']));
+                }
+                 $results->queryAll();*/
+                 $results = Yii::app()->db->createCommand($filterquery)->query()->readAll();
+        }
+        else
+        {
 
-        $results = Yii::app()->db->createCommand()
+            $results = Yii::app()->db->createCommand()
                 ->select('c.*, cs.status_name, st.name, s.source_name, u.full_name, cp.page_name')
                 ->from('lime_campaign c')
                 ->leftJoin('lime_campaign_status cs', 'c.campaign_status=cs.cs_id')
@@ -49,50 +108,165 @@ class Campaign extends LSActiveRecord {
                 ->leftJoin('lime_users u', 'c.created_by=u.uid')
                 ->leftJoin('lime_cms_page_master cp', 'c.page_id=cp.page_id')
                 ->queryAll();
- 
-            foreach($results as $keyCmp=>$cmp){
+        } 
+        if(!empty($results)){
+            foreach($results as $keyCmp=>$cmp)
+            {
+                $users = array();
                 $users = $this->getcampaignuser($cmp['id']);
-               // print_r($users); exit;
-                $total_first_survey_sent_users = 0;    
+                $total_servey_complete_by_campaign = 0;
+                $total_first_survey_sent_users = 0;  
+                $total_first_servey_complete_by_campaign = 0;
+                $total_invite_users_per_campaign = 0;
+                $total_servey_response_by_campaign_user = 0; 
+                    
                 if(count($users))
                 { 
                     $query_user_str = implode(",",$users);
-                    $quesql = "Select date_format(created_date,'%Y%m%d%H%i%s') AS sent_date,COUNT(*) AS cnt from {{query_send_details}} where 1=1 ";
-                    $quesql .= " And panellist_id in(".$query_user_str.") GROUP BY sent_date ORDER BY sent_date ASC LIMIT 1"; //filter not to send originally send 
+                    $quesql = "Select GROUP_CONCAT(project_id) as project_ids, GROUP_CONCAT(panellist_id) as panellist_ids,created_date, date_format(created_date,'%Y%m%d%H%i%s') AS sent_date,COUNT(*) AS cnt from {{query_send_details}} where 1=1 ";
+                     $quesql .= " And panellist_id in(".$query_user_str.") GROUP BY sent_date ORDER BY sent_date ASC LIMIT 1"; //filter not to send originally send 
                       
                     $qrydetail = Yii::app()->db->createCommand($quesql)->query()->readAll();
               
                     if(isset($qrydetail[0]["sent_date"]) && isset($qrydetail[0]["cnt"]) && $qrydetail[0]["cnt"] > 0){
                         $total_first_survey_sent_users = $qrydetail[0]["cnt"];        
                     }
+                        
+                    // for complete 1st invite servey
+                    if(isset($qrydetail[0]["project_ids"]) && isset($qrydetail[0]["panellist_ids"])){
+                        $paliid = $qrydetail[0]['panellist_ids'];
+                        $prjiid = $qrydetail[0]['project_ids'];
+                                
+                        $querevsql1 = "Select COUNT(*) AS totalfirstcompletecnt from {{panellist_redirects}} where 1=1 ";
+                        $querevsql1 .= " And panellist_id in(".$paliid.") AND project_id in(".$prjiid.") AND redirect_status_id = '6'";
+                        $qryrevdetail1 = Yii::app()->db->createCommand($querevsql1)->query()->readAll();
+                    
+                        if(isset($qryrevdetail1[0]["totalfirstcompletecnt"]) && $qryrevdetail1[0]["totalfirstcompletecnt"] > 0){
+                            $total_first_servey_complete_by_campaign = $qryrevdetail1[0]["totalfirstcompletecnt"];        
+                        }        
+                    }
+                    // end complete 1st servey
+
+                    // for revenue cost per complete servey and total complete servey
+                    $querevsql = "Select COUNT(*) AS totalcompletecnt from {{panellist_redirects}} where 1=1 ";
+                    $querevsql .= " And panellist_id in(".$query_user_str.") AND redirect_status_id = '6'"; //filter not to send originally send 
+                              
+                    $qryrevdetail = Yii::app()->db->createCommand($querevsql)->query()->readAll();
+                                               
+                    if(isset($qryrevdetail[0]["totalcompletecnt"]) && $qryrevdetail[0]["totalcompletecnt"] > 0){
+                        $total_servey_complete_by_campaign = $qryrevdetail[0]["totalcompletecnt"];        
+                    }
+                    // end revenue cost per complete and total servey
+
+                        
+                    // response rate from total invites and click on servey link any status
+                    $quesql_total_invite = "Select GROUP_CONCAT(project_id) as project_ids, GROUP_CONCAT(panellist_id) as panellist_ids, COUNT(*) AS total_invite_cnt from {{query_send_details}} where 1=1 ";
+                    $quesql_total_invite .= " And panellist_id in(".$query_user_str.")"; //filter not to send originally send 
+                              
+                    $qrydetail_total_invite = Yii::app()->db->createCommand($quesql_total_invite)->query()->readAll();
+            
+                    if(isset($qrydetail_total_invite[0]["total_invite_cnt"]) && $qrydetail_total_invite[0]["total_invite_cnt"] > 0){
+                        $total_invite_users_per_campaign = $qrydetail_total_invite[0]["total_invite_cnt"];        
+                    }
+
+                    if(isset($qrydetail_total_invite[0]["project_ids"]) && isset($qrydetail_total_invite[0]["panellist_ids"])){
+                        $paliid = $qrydetail_total_invite[0]['panellist_ids'];
+                        $prjiid = $qrydetail_total_invite[0]['project_ids'];
+                                
+                        $querevsql_total_responses = "Select * from {{panellist_redirects}} where 1=1 ";
+                        $querevsql_total_responses .= " And panellist_id in(".$paliid.") AND project_id in(".$prjiid.") GROUP BY panellist_id, project_id";
+                             
+                        $qryrevdetail_total_responses_per_campaign = Yii::app()->db->createCommand($querevsql_total_responses)->query()->readAll();
+                            //echo '<pre>';
+                            //print_r($qryrevdetail_total_responses_per_campaign);           
+                        if(count($qryrevdetail_total_responses_per_campaign)){
+                            $total_servey_response_by_campaign_user = count($qryrevdetail_total_responses_per_campaign);        
+                        }        
+                    }
+                        //end of response rate 
                 }
-                
+                    
                 $percentChange = 0;
                 if(count($users) != 0){ 
                     $percentChange = ($total_first_survey_sent_users * 100 ) / count($users);
                     $percentChange = number_format($percentChange, 0);
-                 }   
+                }   
 
-                $results[$keyCmp]["total_first_survey_sent_users"] = $percentChange;
-
-
+                $results[$keyCmp]["total_first_survey_sent_users"] = $total_first_survey_sent_users;
+                //$results[$keyCmp]["total_first_survey_sent_users_per"] = $percentChange;
+                $results[$keyCmp]["total_first_survey_sent_users_complete"] = $total_first_servey_complete_by_campaign;
+                $results[$keyCmp]["total_revenue"] = $total_servey_complete_by_campaign;
+                $results[$keyCmp]["total_invite_users_per_campaign"] = $total_invite_users_per_campaign;
+                $results[$keyCmp]["total_servey_response_by_campaign_user"] = $total_servey_response_by_campaign_user;
+                $results[$keyCmp]["initregcomplete"] = $this->getcompletedreguser($cmp['id'],'R');
+                $results[$keyCmp]["complete"] = $this->getcompletedreguser($cmp['id'],'E');
+                $results[$keyCmp]["cancle_account_user"] = $this->getcompletedreguser($cmp['id'],'C');
+                $results[$keyCmp]["frod_user"] = $this->getfroduser($cmp['id']);
+               //echo '<pre>'; 
+                //print_r($params); 
+               //exit;
+                if(!empty($params))
+                {
+                    $finalrevenue = intval($results[$keyCmp]['cost'] * $total_servey_complete_by_campaign);
+                    $finalroi = $finalrevenue - intval($results[$keyCmp]['cost']);
+                    if (isset($params['revenue']) && $params['revenue'] != '')
+                    {
+                        if($finalrevenue <  intval($params['revenue']))
+                        {
+                            unset($results[$keyCmp]);
+                        }
+                    }
+                    if (isset($params['roi']) && $params['roi'] != '')
+                    {
+                        if($finalroi <  intval($params['roi']))
+                        {
+                            unset($results[$keyCmp]);
+                        }
+                    }
+                    if (isset($params['initreg']) && $params['initreg'] != '')
+                    {
+                        if($results[$keyCmp]["initregcomplete"] <  intval($params['initreg']))
+                        {
+                            unset($results[$keyCmp]);
+                        }
+                    }
+                }
             }
-          
-           /* $criteria = new CDbCriteria;
-            $criteria->select = 't.*, tu.* ';
-            $criteria->join = ' LEFT JOIN `lime_campaign_status` AS `tu` ON t.campaign_status = tu.cs_id';
-            //$criteria->addCondition("display_name LIKE '%a%' and blocked_by='76'");
-            $resultSet    =    Campaign::model()->findAll($criteria);
-            //$arr=$resultSet->attributes;
-            foreach ($resultSet as $value) {
-               $new[] = $value->attributes;
-            }*/
+        }//exit;
            
-       /* $criteria = $this->getCommandBuilder()->createCriteria($condition, $params);
-        $this->applyScopes($criteria);
-        $command = $this->getCommandBuilder()->createFindCommand($this->getTableSchema(), $criteria);
-        $results = $command->queryAll();*/
         return $results;
+    }
+    function getagentRecords($cmp_id) {
+        $results = Yii::app()->db->createCommand()
+                ->select('*')
+                ->from('lime_panel_list_agetnt_master c')
+                ->where('cmp_id=:id', array(':id'=>$cmp_id))
+                ->queryAll();
+        return $results;        
+    }
+    function getfroduser($cmp_id)
+    {
+        $results = Yii::app()->db->createCommand()
+                ->select('count(*) as initcnt')
+                ->from('lime_panel_list_master plm')
+                ->where('cmp_id=:id', array(':id'=>$cmp_id))
+                ->andwhere('is_fraud=:sid', array(':sid'=>1))
+                ->queryAll();
+
+              
+                return $results[0]['initcnt'];
+    }
+    function getcompletedreguser($cmp_id,$status)
+    {
+        $results = Yii::app()->db->createCommand()
+                ->select('count(*) as initcnt')
+                ->from('lime_panel_list_master plm')
+                ->where('cmp_id=:id', array(':id'=>$cmp_id))
+                ->andwhere('status=:sid', array(':sid'=>$status))
+                ->queryAll();
+
+              
+                return $results[0]['initcnt'];
     }
     function getcampaignuser($cmp_id)
     {
@@ -124,7 +298,7 @@ class Campaign extends LSActiveRecord {
         $oUser = new self;
         $oUser->campaign_name = (isset($data['campaign_name'])) ? $data['campaign_name'] : '';
         $oUser->cost = (isset($data['cost'])) ? number_format($data['cost'], 2, '.', '') : '';
-        $oUser->campaign_code = (isset($data['campaign_code'])) ? $data['campaign_code'] : '';
+        //$oUser->campaign_code = (isset($data['campaign_code'])) ? $data['campaign_code'] : '';
         $oUser->campaign_src_id = (isset($data['campaign_src_id'])) ? $data['campaign_src_id'] : '';
         $oUser->campaign_cst_id = (isset($data['campaign_cst_id'])) ? $data['campaign_cst_id'] : '';
         $oUser->campaign_status = (isset($data['campaign_status'])) ? $data['campaign_status'] : '';

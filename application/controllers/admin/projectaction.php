@@ -606,6 +606,7 @@ class Projectaction extends Survey_Common_Action {
         if (Permission::model()->hasGlobalPermission('projects', 'create')) {
 
             if ($action == "addproject") {
+
                 // Project details
                 $project_name = flattenText($_POST['project_name'], false, true, 'UTF-8', true);
                 $project_friendly_name = flattenText($_POST['project_friendly_name'], false, true, 'UTF-8', true);
@@ -633,6 +634,7 @@ class Projectaction extends Survey_Common_Action {
                 $points = flattenText($_POST['points'], false, true, 'UTF-8', true);
                 $surveylink = flattenText($_POST['surveylink'], false, true, 'UTF-8', true);
                 $notes = flattenText($_POST['notes'], false, true, 'UTF-8', true);
+                $prjdefault = flattenText($_POST['prj-default'], false, true, 'UTF-8', true);
                 $status = (int) Yii::app()->request->getPost("status");
                 $RIDCheck = "Yes";
                 $result = Yii::app()->db->createCommand("SELECT count(*) AS cnt FROM {{contact_master}} WHERE 
@@ -654,7 +656,7 @@ class Projectaction extends Survey_Common_Action {
                 } else {
                     $NewProject = Project::model()->instProject($project_name, $project_friendly_name, $parent_project
                                     , $client, $client_contact, $project_manager, $sales_person, $country, $quota
-                                    , $QuotaBufferAmnt, $RIDCheck, $cpc, $los, $ir, $points, $surveylink, $notes, $status);
+                                    , $QuotaBufferAmnt, $RIDCheck, $cpc, $los, $ir, $points, $surveylink, $notes, $status,$prjdefault);
                     if ($NewProject) {
                         // create own panel
 
@@ -810,6 +812,7 @@ class Projectaction extends Survey_Common_Action {
                 $points = flattenText($_POST['points'], false, true, 'UTF-8', true);
                 $surveylink = flattenText($_POST['surveylink'], false, true, 'UTF-8', true);
                 $notes = flattenText($_POST['notes'], false, true, 'UTF-8', true);
+                $prjdefault = flattenText($_POST['prj-default'], false, true, 'UTF-8', true);
                 $status = (int) getGlobalSetting('project_status_test');
                 //$status = (int) Yii::app()->request->getPost("status");
                 $RIDCheck = "Yes";
@@ -832,7 +835,7 @@ class Projectaction extends Survey_Common_Action {
                   } */ else {
                     $NewProject = Project::model()->instProject($project_name, $project_friendly_name, $parent_project
                                     , $client, $client_contact, $project_manager, $sales_person, $country, $quota
-                                    , $QuotaBufferAmnt, $RIDCheck, $cpc, $los, $ir, $points, $surveylink, $notes, $status);
+                                    , $QuotaBufferAmnt, $RIDCheck, $cpc, $los, $ir, $points, $surveylink, $notes, $status,$prjdefault);
                     if ($NewProject) {
                         // create own panel
                         $newvendor = Project_vendor::model()->instvendor($NewProject, $internal_company, $internal_company, $status, 'Own Panel'
@@ -887,6 +890,7 @@ class Projectaction extends Survey_Common_Action {
                 $points = flattenText($_POST['points'], false, true, 'UTF-8', true);
                 $surveylink = flattenText($_POST['surveylink'], false, true, 'UTF-8', true);
                 $notes = flattenText($_POST['notes'], false, true, 'UTF-8', true);
+                $prjdefault = flattenText($_POST['prj-default'], false, true, 'UTF-8', true);
                 $status = (int) Yii::app()->request->getPost("status");
                 $old_status = (int) Yii::app()->request->getPost("old_status");
                 //$RIDCheck = flattenText($_POST['RIDCheck'], false, true, 'UTF-8', true);
@@ -922,6 +926,7 @@ class Projectaction extends Survey_Common_Action {
                         $oRecord->reward_points = $points;
                         $oRecord->client_link = $surveylink;
                         $oRecord->notes = $notes;
+                        $oRecord->is_default = $prjdefault;
                         //$oRecord->RIDCheck = $RIDCheck;
                         $oRecord->project_status_id = $status;
                         if (isset($_POST['cleanedup'])) {

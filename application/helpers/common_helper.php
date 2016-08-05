@@ -1177,6 +1177,7 @@ function getGroupListLang($gid, $language, $surveyid) {
 define('EMAIL_POINT_Admin_Edit_Password', 1);
 define('EMAIL_POINT_InquiryDetail', 2);
 define('EMAIL_POINT_QueryPullSend', 3);
+define('EMAIL_POINT_PL_agent_Registration', 100);
 define('EMAIL_POINT_PL_Registration', 101);
 define('EMAIL_POINT_PL_ForgotPassword', 102);
 define('EMAIL_POINT_PL_EditEmail', 103);
@@ -1375,9 +1376,13 @@ function get_answer($answer_id, $que_id) {
     }
 }
 
-function CreateUi($que_id, $que_title, $que_fieldtype, $style) {
+function CreateUi($que_id, $que_title, $que_fieldtype, $style,$cat_id="") {
     $html = '';
-    
+    if($cat_id == 1)
+        $require = 'class="validate[required]"';
+    else
+        $require = 'required="required"';
+
     $que_title = '<div class="qTitle">'.$que_title.'</div>';
     
     $sql = "SELECT * FROM {{profile_answer}} WHERE question_id = '$que_id' AND IsActive = 1 ORDER BY sorder";
@@ -1388,7 +1393,7 @@ function CreateUi($que_id, $que_title, $que_fieldtype, $style) {
         </tr>
         <tr>
             <td ' . $style . '>
-                <input type="text" name="' . $que_id . '" id="' . $que_id . '" required="required" />
+                <input type="text" name="' . $que_id . '" id="' . $que_id . '" '.$require.'  />
             </td>
         </tr>';
     }
@@ -1455,7 +1460,7 @@ changeMonth: true,
     <td ' . $style . '>' . $que_title . '</td>
 </tr>
 <tr>
-    <td ' . $style . '><select name="' . $que_id . '" id="' . $que_id . '" required="required">
+    <td ' . $style . '><select name="' . $que_id . '" id="' . $que_id . '" '.$require.'>
             <option value="">Please Provide Answer</option>';
         foreach ($que_ans as $value) {
             if ($value['title'] == '[[COUNTRY]]') {
@@ -1510,7 +1515,7 @@ function Question($cat_id, $style='', $quetype=false, $quelist=FALSE) {
         if ($quelist) {
             $question_list[$value['id']] = $value['title'];
         }
-        $test .= CreateUi($value['id'], $value['title'], $value['field_type'], $style);
+        $test .= CreateUi($value['id'], $value['title'], $value['field_type'], $style,$cat_id);
     }
     if ($quetype) {
         return $question_type;
@@ -1566,6 +1571,7 @@ function GetEmailUseInArray() {
         , EMAIL_POINT_InquiryDetail => 'Inquiry Detail'
         , EMAIL_POINT_QueryPullSend => 'Query, Pull Send'
         , EMAIL_POINT_PL_Registration => 'Panel list Registration'
+        , EMAIL_POINT_PL_agent_Registration => 'Panel list agent Registration'
         , EMAIL_POINT_PL_ForgotPassword => 'Panel list Forgot Password'
         , EMAIL_POINT_PL_EditEmail => 'Panel list, Edit Email Address'
         , EMAIL_POINT_PL_EditPassword => 'Panel list, Edit Password'
@@ -1643,6 +1649,17 @@ function getCompanyDetail($company_id = null) {
 function projectview($project_id = null) {
     $clang = Yii::app()->lang;
 
+    $is_default = 0;
+    $uquery = "SELECT is_default FROM {{project_master}}";
+    if ($project_id) {
+        $uquery .= " WHERE project_id = " . $project_id;
+    }
+    $uresult = Yii::app()->db->createCommand($uquery)->query()->readAll(); //Checked
+    $userlist = array();
+    foreach ($uresult as $srow) {
+        $is_default = $srow["is_default"];
+    }
+
     $uquery = "SELECT * FROM {{view_project_master}}";
     if ($project_id) {
         $uquery .= " WHERE project_id = " . $project_id;
@@ -1651,6 +1668,7 @@ function projectview($project_id = null) {
     $uresult = Yii::app()->db->createCommand($uquery)->query()->readAll(); //Checked
     $userlist = array();
     foreach ($uresult as $srow) {
+        $srow["is_default"] = $is_default;
         $userlist[] = $srow;
     }
     return $userlist;

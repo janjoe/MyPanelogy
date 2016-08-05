@@ -71,7 +71,7 @@ if (!empty($mur)) {
             <input type='text' maxlength="100" id='campaign_name' value="<?php echo $mur['campaign_name'] ?>" name='campaign_name' autofocus="autofocus" required="required" />
             <input type='hidden' id='cp_id' name='cp_id' value="<?php echo $mur['id']; ?>" />
         </td>
-
+<?php /*
         <td align="right" style="text-align: right;">
             <label for='campaign_code'><?php $clang->eT("Campaign Code* : "); ?></label>
         </td>
@@ -79,7 +79,7 @@ if (!empty($mur)) {
         <td>
             <input type='text' maxlength="200" id='campaign_code' name='campaign_code' required="required" value="<?php echo $mur['campaign_code'] ?>" />
         </td>
-        
+        */?>
     </tr>
 
     <tr>

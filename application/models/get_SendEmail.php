@@ -168,6 +168,16 @@ class get_SendEmail extends LSActiveRecord {
                //echo $content;exit;
                 
                 break;
+                case EMAIL_POINT_PL_agent_Registration:
+    
+                $name = $parm['name'];
+                $content = str_replace('[[full_name]]', $name, $content);
+                $content = str_replace('[[ACTIVATE_ACCOUNT_LINK]]', $parm['activation_link'], $content);
+                $content = str_replace('[[email]]', $parm['email'], $content);
+                
+               //echo $content;exit;
+                
+                break; 
             case EMAIL_POINT_PL_ForgotPassword:
                 $sql = "SELECT * FROM {{view_panel_list_master}} WHERE panel_list_id = '$ID'";
                 $result = Yii::app()->db->createCommand($sql)->queryRow();

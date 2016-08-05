@@ -395,6 +395,12 @@ foreach ($mur as $mrw) {
                         ?>
                         <input type="hidden" name="old_status" value="<?php echo $mrw['project_status_id']; ?>"/>
                     </td>
+                    <td style="text-align: right;">
+                        <label for='status'><?php $clang->eT("Default? : "); ?></label>
+                    </td>
+                    <td>
+                        <input type="checkbox" <?php if($mrw['is_default'] == 'default' ) echo 'checked'; ?> name="prj-default" value="default">
+                    </td>
                 </tr>
             </table>
 

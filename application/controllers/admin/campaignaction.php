@@ -513,6 +513,62 @@ class Campaignaction extends Survey_Common_Action {
     */
 
 
+    public function campaignreport() {
+
+        $clang = Yii::app()->lang;
+        if (!Permission::model()->hasGlobalPermission('superadmin', 'read') && !Permission::model()->hasGlobalPermission('Campaign', 'read')) {
+            Yii::app()->setFlashMessage($clang->gT("You do not have sufficient rights to access page."), 'error');
+            $this->getController()->redirect(array("admin/index"));
+        }
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('styleurl') . "jquery.dataTables.css");
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('adminscripts') . 'jquery.dataTables.min.js');
+        
+        if(isset($_POST) && !empty($_POST) && isset($_POST['filter']))
+        {
+            $userlist = Campaign::model()->getRecords('',$_POST);
+        }
+        else
+        {
+            $userlist = Campaign::model()->getRecords();
+        }
+        $Campaignsource = Campaignsource::model()->getRecords();
+        $Campaignsourcetype = Campaignsourcetype::model()->getRecords();
+        $Campaignstatus = Campaignstatus::model()->getRecords();
+        
+        $aData['row'] = 0;
+        $aData['cmp_source'] = $Campaignsource;
+        $aData['cmp_source_type'] = $Campaignsourcetype;
+        $aData['cmp_status'] = $Campaignstatus;
+        $aData['usr_arr'] = $userlist;
+        $aData['imageurl'] = Yii::app()->getConfig("adminimageurl");
+
+         //echo '<pre>'; print_r($aData['cmp_source']); exit;
+
+        $this->_renderWrappedTemplate('campaign/campaign', 'view_campaign_report', $aData);
+    }
+
+    public function agentusers() {
+        if(isset($_GET['cmpid'])){
+            $clang = Yii::app()->lang;
+            if (!Permission::model()->hasGlobalPermission('superadmin', 'read') && !Permission::model()->hasGlobalPermission('Campaign', 'read')) {
+                Yii::app()->setFlashMessage($clang->gT("You do not have sufficient rights to access page."), 'error');
+                $this->getController()->redirect(array("admin/index"));
+            }
+            App()->getClientScript()->registerCssFile(Yii::app()->getConfig('styleurl') . "jquery.dataTables.css");
+            App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('adminscripts') . 'jquery.dataTables.min.js');
+            $userlist = Campaign::model()->getagentRecords($_GET['cmpid']);
+             //echo '<pre>'; print_r($userlist); exit;
+            $aData['row'] = 0;
+            $aData['cmpname'] = $_GET['name'];
+            $aData['usr_arr'] = $userlist;
+            $aData['imageurl'] = Yii::app()->getConfig("adminimageurl");
+            $this->_renderWrappedTemplate('campaign/campaign', 'view_campaign_agent', $aData);
+            //Yii::app()->getController()->renderPartial('/admin/campaign/campaign/view_campaign_agent', $aData);
+        }    
+    }
+
+
+
     /**
      * Usergroups::delete()
      * Function responsible to delete a user group.

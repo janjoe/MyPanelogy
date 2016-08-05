@@ -45,6 +45,9 @@ class Authentication extends PL_Common_Action {
                 Yii::app()->session['plemail'] = $sresult[0]['email'];
                 Yii::app()->session['pluser'] = $sresult[0]['first_name'];
                 Yii::app()->session['session_hash'] = hash('sha256', getGlobalSetting('SessionName') . $sresult[0]['first_name'] . $sresult[0]['panel_list_id']);
+                $cookie_name = "loginregister";
+                $cookie_value = "1";
+                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
                 $this->_doRedirect();
             } elseif ($sresult[0]['status'] == 'C') {
                 $message = $clang->gT('Your Account Is canceled');

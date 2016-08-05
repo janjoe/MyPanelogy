@@ -34,18 +34,6 @@ PrepareEditorScript(true, $this);
         <td>
             <input type='text' maxlength="100" id='campaign_name' name='campaign_name' autofocus="autofocus" required="required" />
         </td>
-
-        <td align="right" style="text-align: right;">
-            <label for='campaign_code'><?php $clang->eT("Campaign Code* : "); ?></label>
-        </td>
-            
-        <td>
-            <input type='text' maxlength="200" id='campaign_code' name='campaign_code' required="required" value="" />
-        </td>
-        
-    </tr>
-
-    <tr>
         <td align="right" style="text-align: right;">
             <label for='campaign_src_id'><?php $clang->eT("Campaign Source* : "); ?></label>
         </td>
@@ -64,6 +52,19 @@ PrepareEditorScript(true, $this);
                <?php } ?>     
             </select>
         </td>
+
+        <!-- <td align="right" style="text-align: right;">
+            <label for='campaign_code'><?php //$clang->eT("Campaign Code* : "); ?></label>
+        </td>
+            
+        <td>
+            <input type='text' maxlength="200" id='campaign_code' name='campaign_code' required="required" value="" />
+        </td> -->
+        
+    </tr>
+
+    <tr>
+        
 
         <td align="right" style="text-align: right;">
             <label for='campaign_cst_id'><?php $clang->eT("Campaign Source Type* : "); ?></label>

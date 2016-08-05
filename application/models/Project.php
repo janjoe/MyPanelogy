@@ -60,7 +60,7 @@ class Project extends LSActiveRecord {
 
     public static function instProject($project_name, $project_friendly_name, $parent_project
     , $client, $client_contact, $project_manager, $sales_person, $country, $quota
-    , $QuotaBufferAmnt, $RIDCheck, $cpc, $los, $ir, $points, $surveylink, $notes, $status) {
+    , $QuotaBufferAmnt, $RIDCheck, $cpc, $los, $ir, $points, $surveylink, $notes, $status,$prjdefault) {
 
         $oUser = new self;
         $oUser->project_name = $project_name;
@@ -88,6 +88,7 @@ class Project extends LSActiveRecord {
         $oUser->extra_completes = 0;
         $oUser->total_errors = 0;
         $oUser->notes = $notes;
+        $oUser->is_default = $prjdefault;
         $oUser->RIDCheck = $RIDCheck;
         $oUser->project_status_id = $status;
         if ($oUser->save()) {

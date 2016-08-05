@@ -15,6 +15,71 @@ class Registration extends PL_Common_Action {
             $sa = '';
             
        
+       if($sa == 'checkmail')
+       {
+            $email_address = $_GET['fieldValue'];
+            $data =array();
+            if (PL::model()->find("email=:email", array(':email' => $email_address))) {
+                //echo ''; exit;
+                echo '["email_address12",false]';
+            }
+            else
+            {
+               echo '["email_address12",true]';
+            }
+            exit;
+       }
+
+       if($sa == 'agentsave')
+       {
+            if(isset($_GET['agent_id']) && $_GET['agent_id'] != '')
+            {
+                $data = array();
+                $sql_query_insert = "UPDATE {{panel_list_agetnt_master}} SET status='1' where id=".$_GET['agent_id'];
+                $result = Yii::app()->db->createCommand($sql_query_insert)->query();
+                if($result)
+                    $data =  array('sucess' => true );
+
+                echo json_encode($data);
+                exit();
+            }
+
+            $email_address = $_POST['email_address'];
+            $fname = $_POST['fname'];
+            $lname = $_POST['lname'];
+            if(isset($_COOKIE["cmp_id"]))
+            {   
+                $cmp_id = base64_encode($_COOKIE["cmp_id"]); 
+            }
+            $per_id = '';
+            if(isset($_COOKIE["per_id"]))
+            {   
+                $per_id = $_COOKIE["per_id"]; 
+            }
+
+            $sql_query_insert = "INSERT INTO {{panel_list_agetnt_master}} (cmp_id,per_id, first_name,last_name,email,status)
+                        VALUES(".$_COOKIE['cmp_id'].",'".$per_id."','".$fname."','".$lname."','".$email_address."','0')";
+            $result = Yii::app()->db->createCommand($sql_query_insert)->query();
+            $lastinsert = Yii::app()->db->lastInsertID;
+
+            if($result){
+                $activation_link = Yii::app()->getBaseUrl(true).'/?pagename=JOIN%20NOW&fname=' . $fname . '&lname=' . $lname.'&email='.$email_address.'&cmp='.$cmp_id.'&per_id='.$per_id.'&type=agenthrough&rec='.base64_encode($lastinsert);
+
+                $send = get_SendEmail::model()->SendEmailByTemplate($email_address, EMAIL_POINT_PL_agent_Registration, '', array('activation_link' => "$activation_link",'name'=> "$fname $lname", 'email'=>"$email_address" ));
+
+                if (!$send) {
+                    echo 'Error';
+                    Yii::app()->setFlashMessage($clang->gT("Error in mail send"));
+                }
+                else{
+                   // Yii::app()->setFlashMessage($clang->gT("Email send successfully check your mail"));
+                }
+
+                $redirectlink = Yii::app()->getBaseUrl(true).'/?pagename=AGENT REGISTER&resucess=true';
+                $this->getController()->redirect($redirectlink);
+            }    
+
+       }
             
 		if(!empty($_POST) && @$_POST['first_step_register']=='1'){
 
@@ -25,11 +90,10 @@ class Registration extends PL_Common_Action {
 			$_SESSION['userData']['pwd'] = $_POST['pwd'];
 
 			$this->getController()->redirect(array('/' . '?pagename=JOIN NOW'));
-			
 		}
         else if ($sa == 'save') {
 
-            if (!is_null(App()->getRequest()->getPost('signup'))) {
+            if (!empty($_POST)) {
 				
                 $this->DoRegistration();
                 
@@ -45,7 +109,8 @@ class Registration extends PL_Common_Action {
                 //$this->_redirectToIndex();
                 $this->getController()->redirect(array('/' . '?pagename=JOIN NOW'));
             }
-        } else {
+        } 
+        else {
             $asMessage = array(
                 $clang->gT('Warning'),
                 $clang->gT("No proper parameters passed to registration.")
@@ -60,6 +125,32 @@ class Registration extends PL_Common_Action {
         
     }
 
+    public function assigndefaultproject($panel_list_id)
+    {
+        $uquery = "SELECT project_id FROM {{project_master}}";
+        $uquery .= " WHERE is_default ='default'";
+        $uresult = Yii::app()->db->createCommand($uquery)->query()->readAll();
+        if(!empty($uresult))
+        {
+            $query_id = 0;
+            $panel_list_id = (int) $panel_list_id;
+            $user_id = Yii::app()->user->id;
+            $created_date = Date('y-m-d h:i:s');
+            $send_date = Date('y-m-d h:i:s');
+            $sid = getmaxsendid() + 1;
+            $subjectid = 1;
+            //$template_id = 1;
+            $template_id = EMAIL_POINT_QueryPullSend;
+            $is_send = 1;
+            foreach ($uresult as $key) {
+                $pid = (int) $key['project_id'];
+
+                $sql_insert = "insert into {{query_send_details}} (send_id,query_id,project_id,subjectt_id,template_id,panellist_id,send,userid,created_date,send_date) values
+                ($sid,$query_id,$pid,$subjectid,$template_id,$panel_list_id, $is_send,$user_id,'$created_date','$send_date')";
+                $rString = Yii::app()->db->createCommand($sql_insert)->execute();
+            }
+        }
+    }
     function activate() {
         $code_id = explode('*', $_GET['c']);
         $aData['Error'] = false;
@@ -67,7 +158,7 @@ class Registration extends PL_Common_Action {
         $aData['display'] = false;
         $code = $code_id[1];
         $panellist_id = $code_id[0];
-        
+        //$this->assigndefaultproject($panellist_id);
         //echo '<pre>';print_r($code_id);exit;
         
         if ($code != '' && $panellist_id != '') {
@@ -89,6 +180,7 @@ class Registration extends PL_Common_Action {
                         $oRecord->remote_ip = $_SERVER['REMOTE_ADDR'];
                         $Panel_id = $oRecord->save();
 
+
                         $sql = "SELECT * FROM {{view_panel_list_master}} WHERE panel_list_id = '$panellist_id'";
                         $sresult = Yii::app()->db->createCommand($sql)->query()->readAll();
 
@@ -100,6 +192,9 @@ class Registration extends PL_Common_Action {
 
                         $update_temp = "update {{activation_temp}} set IsActive = '0' where panelllist_id = '" . $panellist_id . "' and activation_type = 'reg'";
                         $result = Yii::app()->db->createCommand($update_temp)->query();
+                         //assign default project
+                            $this->assigndefaultproject($panellist_id);
+                        //end assign default project
                         $aData['Sucess'] = true;
                     } elseif ($data[0]['activation_type'] == 'forget_pass') {
                         $aData['Panel_list_id'] = $panellist_id;
@@ -236,20 +331,35 @@ class Registration extends PL_Common_Action {
         $clang = Yii::app()->lang;
         $email_address = $_POST['email_address'];
         $pwd = $_POST['pwd'];
-//$spwd = hash('sha256', $pwd);
+        //$spwd = hash('sha256', $pwd);
         $spwd = urlencode(base64_encode($pwd));
         $fname = $_POST['fname'];
         $lname = $_POST['lname'];
         $aData['display'] = false;
         $aViewUrls = array();
+        $varifycontent = '';
+        $varifycontent = file_get_contents('https://api.kickbox.io/v2/verify?email='.$email_address.'&apikey=KICKBOX_TEST');
+        $varifycontent = json_decode($varifycontent);
+        
+        if(!empty($varifycontent)){
+
+            if($varifycontent->result != 'deliverable' &&  $varifycontent->reason != 'accepted_email' )
+            {
+                $aViewUrls['mboxwithredirect'][] = $this->_messageBoxWithRedirect($clang->gT("Failed to add Panellist"), $clang->gT("The Panellist Email is invalid"), "warningheader", "", $this->getController()->createUrl('/'), $clang->gT("Back"));//17/06/2014 Add By Hari
+                $this->_renderWrappedTemplate('', $aViewUrls, $aData);
+                exit;
+            }    
+        }
+        
         if (PL::model()->find("email=:email", array(':email' => $email_address))) {
-//            Yii::app()->setFlashMessage($clang->gT("Error in mail send"));
+            //Yii::app()->setFlashMessage($clang->gT("Error in mail send"));
             //$aViewUrls['mboxwithredirect'][] = $this->_messageBoxWithRedirect($clang->gT("Failed to add Panellist"), $clang->gT("The Panellist Email already exists"), "warningheader", $clang->gT("The Panellist Email already exists"), $this->getController()->createUrl('/'), $clang->gT("Back"));//17/06/2014 Remove By Hari
             $aViewUrls['mboxwithredirect'][] = $this->_messageBoxWithRedirect($clang->gT("Failed to add Panellist"), $clang->gT("The Panellist Email already exists"), "warningheader", "", $this->getController()->createUrl('/'), $clang->gT("Back"));//17/06/2014 Add By Hari
             $this->_renderWrappedTemplate('', $aViewUrls, $aData);
             //Yii::app()->setFlashMessage($clang->gT("Error in mail send"));
             //$this->_redirectToIndex();
         }
+       
         $cmp_id = '';
         if(isset($_COOKIE["cmp_id"]))
         {   
@@ -260,8 +370,16 @@ class Registration extends PL_Common_Action {
         {   
             $per_id = $_COOKIE["per_id"]; 
         }       
-
-        $NewPanellist = PL::model()->insertPanellist($email_address, $spwd, $lname, $fname, $cmp_id,$per_id);
+        
+        if(isset($_POST['register_for']) && $_POST['register_for'] == 'agenthrough')
+        {
+            $staus = 'E';
+        }
+        else
+        {
+            $staus = 'R';
+        }
+        $NewPanellist = PL::model()->insertPanellist($email_address, $spwd, $lname, $fname, $cmp_id,$per_id,$staus);
 
         if ($NewPanellist) {
             $quelist = Question(get_question_categoryid('Registration'), '', true, false);
@@ -279,32 +397,65 @@ class Registration extends PL_Common_Action {
             }
             $result = Yii::app()->db->createCommand($sql)->query();
 
-            $activation_id = generate_random(20);
-            //$activation_link = Yii::app()->getBaseUrl(true) . '/index.php/pl/registration/sa/activate/c/' . $NewPanellist . '*' . $activation_id;
-            $activation_link = Yii::app()->createAbsoluteUrl('pl/registration/sa/activate/c/' . $NewPanellist . '*' . $activation_id);
-            $sql_code = "INSERT INTO {{activation_temp}}
-                    (panelllist_id,code,activation_type)
-                    VALUES('$NewPanellist','$activation_id','reg')";
-            $result = Yii::app()->db->createCommand($sql_code)->query();
-            $whitelist = array(
-                '127.0.0.1',
-                '::1'
-            );
-            if (!in_array($_SERVER['REMOTE_ADDR'], $whitelist)) {
-                $send = get_SendEmail::model()->SendEmailByTemplate($email_address, EMAIL_POINT_PL_Registration, $NewPanellist, array('pwd' => "$pwd", 'activation_link' => "$activation_link"));
-            } else {
-                $send = get_SendEmail::model()->SendEmailByTemplate($email_address, EMAIL_POINT_PL_Registration, $NewPanellist, array('pwd' => "$pwd", 'activation_link' => "$activation_link"));
-                //exit;
+            if(isset($_POST['register_for']) && $_POST['register_for'] == '')
+            {
+
+                $activation_id = generate_random(20);
+                //$activation_link = Yii::app()->getBaseUrl(true) . '/index.php/pl/registration/sa/activate/c/' . $NewPanellist . '*' . $activation_id;
+                $activation_link = Yii::app()->createAbsoluteUrl('pl/registration/sa/activate/c/' . $NewPanellist . '*' . $activation_id);
+                $sql_code = "INSERT INTO {{activation_temp}}
+                        (panelllist_id,code,activation_type)
+                        VALUES('$NewPanellist','$activation_id','reg')";
+                $result = Yii::app()->db->createCommand($sql_code)->query();
+                $whitelist = array(
+                    '127.0.0.1',
+                    '::1'
+                );
+                if (!in_array($_SERVER['REMOTE_ADDR'], $whitelist)) {
+                    $send = get_SendEmail::model()->SendEmailByTemplate($email_address, EMAIL_POINT_PL_Registration, $NewPanellist, array('pwd' => "$pwd", 'activation_link' => "$activation_link"));
+                } else {
+                    $send = get_SendEmail::model()->SendEmailByTemplate($email_address, EMAIL_POINT_PL_Registration, $NewPanellist, array('pwd' => "$pwd", 'activation_link' => "$activation_link"));
+                    //exit;
+                }
+                //$send = get_SendEmail::model()->SendEmailByTemplate($email_address, EMAIL_POINT_PL_Registration, $NewPanellist, array('pwd' => "$pwd", 'activation_link' => "$activation_link"));
+                if (!$send) {
+                    echo 'Error';
+                    Yii::app()->setFlashMessage($clang->gT("Error in mail send"));
+                }
             }
-            //$send = get_SendEmail::model()->SendEmailByTemplate($email_address, EMAIL_POINT_PL_Registration, $NewPanellist, array('pwd' => "$pwd", 'activation_link' => "$activation_link"));
-            if (!$send) {
-                echo 'Error';
-                Yii::app()->setFlashMessage($clang->gT("Error in mail send"));
+            else{
+                        $reg_no = 'EM-' . $NewPanellist;
+                        $todayDate = date("Y-m-d");
+                        $oRecord = PL::model()->findByPk($NewPanellist);
+                        $oRecord->reg_no = $reg_no;
+                        $oRecord->reg_date = $todayDate;
+                        $oRecord->status = 'E';
+                        $oRecord->remote_ip = $_SERVER['REMOTE_ADDR'];
+                        $Panel_id = $oRecord->save();
+                        $this->assigndefaultproject($NewPanellist);
+             } 
+
+             $cookie_name = "loginregister";
+             $cookie_value = "1";
+             setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+
+            if(isset($_POST['register_for']) && $_POST['register_for'] == 'agenthrough')
+            {
+   
+                $this->getController()->redirect(array("pl/registration/sa/agentprocess"));
             }
-            $this->getController()->redirect(array("pl/registration/sa/process"));
+            else{
+                    $this->getController()->redirect(array("pl/registration/sa/process"));
+               }   
         }
     }
+    function agentprocess(){
 
+        $aData = array();
+        $aData['display'] = true;
+        $this->_renderWrappedTemplate('', 'view_agent_registration', $aData);
+
+    }
     function process() {
         $aData = array();
         $clang = Yii::app()->lang;
@@ -355,14 +506,14 @@ class Registration extends PL_Common_Action {
             $oRecord->password = $spwd;
             $Panel_id = $oRecord->save();
 
-//            $sql = "SELECT * FROM {{view_panel_list_master}} WHERE panel_list_id = '$panellist_id'";
-//            $sresult = Yii::app()->db->createCommand($sql)->query()->readAll();
-//
-//            Yii::app()->session['plid'] = $sresult[0]['panel_list_id'];
-//            Yii::app()->session['plname'] = $sresult[0]['full_name'];
-//            Yii::app()->session['plemail'] = $sresult[0]['email'];
-//            Yii::app()->session['pluser'] = $sresult[0]['first_name'];
-//            Yii::app()->session['session_hash'] = hash('sha256', getGlobalSetting('SessionName') . $sresult[0]['first_name'] . $sresult[0]['panel_list_id']);
+            //            $sql = "SELECT * FROM {{view_panel_list_master}} WHERE panel_list_id = '$panellist_id'";
+            //            $sresult = Yii::app()->db->createCommand($sql)->query()->readAll();
+            //
+            //            Yii::app()->session['plid'] = $sresult[0]['panel_list_id'];
+            //            Yii::app()->session['plname'] = $sresult[0]['full_name'];
+            //            Yii::app()->session['plemail'] = $sresult[0]['email'];
+            //            Yii::app()->session['pluser'] = $sresult[0]['first_name'];
+            //            Yii::app()->session['session_hash'] = hash('sha256', getGlobalSetting('SessionName') . $sresult[0]['first_name'] . $sresult[0]['panel_list_id']);
             //$this->_doRedirect();
             $this->_redirectToLoginForm();
         }

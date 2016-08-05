@@ -1,3 +1,9 @@
+<div style="display: none;">
+		<a id="trigger" href="#popup">&nbsp;</a>
+		<div id="popup" style="width: 250px; height: 400px;">
+			<p>This would be an aweber form.</p>
+		</div>
+</div>
 <div class="footer">
 	<div class="container">
     	<div class="social">
@@ -16,6 +22,39 @@
         </div>
     </div>
 </div>
+<div data-visi-type="visi-pop-pro" data-poptrigger="close" data-step="1" data-mouse_speed="5" data-scroll_id="" data-timer_seconds="5" data-trigger_times="0" class="visi-pop-pro-container" id="visi-pop-pro-22497" style="">
+	<div data-visi-type="visi-pop-pro-modal" class="visi-pop-pro-modal visi-hide" id="visi-pop-pro-modal-22497">
+		<div class="visi-pop-pro-step" style="display: block;">
+      <div class="innercontent">
+  <div class="header-main">
+    <div class="container">
+      <h4 class="poptitle">
+        Leaving so soon?</h4><div class="footerlogo"><img src="{TEMPLATEURL}images/logo.png"></div>
+    </div>
+  </div>
+  <div class="innerpadtop">
+    <div class="container">
+      <div class="col1">
+       <p> We ask you to reconsider.  Did you know that –</p>
+       <ul>
+          <li>Registration is simple and always free?</li>
+          <li>We are currently offering $10 for completing an initial survey?</li>
+          <li>Your opinions really matter?</li>
+          <li>You’ll never receive spam?</li>
+        </ul>  
+          <p> Want to know more – <a href="<?php echo Yii::app()->baseUrl;?>?pagename=FAQ">Click here.</a></p> 
+
+      </div>
+      <div class="col2">
+        <img src="{TEMPLATEURL}images/popup-image.png">
+      </div>
+    </div>
+  </div>
+</div>
+
+		</div>
+	</div>
+</div>
 
 <script src="{TEMPLATEURL}js/jquery.1.11.2.js"></script>
 <script src="{TEMPLATEURL}js/modernizer.js"></script>
@@ -27,6 +66,76 @@
 <script src="{TEMPLATEURL}js/modalEffects.js"></script>
 <script src="{TEMPLATEURL}js/smk-accordion.js"></script>
 <script src="{TEMPLATEURL}js/formValidation.js"></script>
+<!-- <script type="text/javascript" src="{TEMPLATEURL}js/popup/jquery13.js"></script> -->
+<link rel="stylesheet" type="text/css" href="{TEMPLATEURL}js/popup/magnific-popup.css">
+<script src="{TEMPLATEURL}js/popup/jquery.magnific-popup.min.js"></script>
+
+<script type="text/javascript">var mainurl = '<?php echo Yii::app()->createUrl("/pl/registration/sa/checkmail/"); ?>';</script>
+<link rel="stylesheet" type="text/css" href="{TEMPLATEURL}css/validationEngine.jquery.css">
+<script src="{TEMPLATEURL}js/jquery.validationEngine-en.js"></script>
+<script src="{TEMPLATEURL}js/jquery.validationEngine.js"></script>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+        $('#usergroupform').validationEngine();
+      });
+
+
+	//var tab_alert_hook = false;
+       /* window.onbeforeunload = function() {
+            if (tab_alert_hook) {
+                var popup_content = $(document).find('[data-poptrigger="close"]').find('.visi-pop-pro-modal');
+				$.magnificPopup.open({
+						items: {
+							src: popup_content, // can be a HTML string, jQuery object, or CSS selector
+						    type: 'inline'
+						}
+					});
+		
+		return "Would you like to join our mailing list for other offers?"; 
+            }
+        }*/
+        <?php if(!isset($_COOKIE["loginregister"]) && !isset($_COOKIE["cmp_id"]) && !isset($_COOKIE["per_id"]))
+        {  ?>
+        function addBrEvent(obj, evt, fn) {
+            if (obj.addEventListener) {
+                obj.addEventListener(evt, fn, false);
+            }
+            else if (obj.attachEvent) {
+                obj.attachEvent("on" + evt, fn);
+            }
+        }
+        addBrEvent(window,"load",function(e) {
+            addBrEvent(document, "mouseout", function(e) {
+
+                e = e ? e : window.event;
+                var from = e.relatedTarget || e.toElement;
+                if (!from) {
+                	//alert('test');
+                   //tab_alert_hook = true;
+                  if($.magnificPopup.instance.isOpen){
+                   
+                  }else{
+                    var popup_content = $(document).find('[data-poptrigger="close"]').find('.visi-pop-pro-modal');
+                    $.magnificPopup.open({
+                        items: {
+                          src: popup_content, // can be a HTML string, jQuery object, or CSS selector
+                            type: 'inline'
+                        }
+                    });
+                  }  
+                }
+            });
+            <?php } ?>
+            /*document.onmouseenter=function(){
+            	
+                tab_alert_hook = false;
+            };*/
+        });
+</script>
+
 <script>
 $( document ).ready(function() {
 	var token =$('meta[name="YII_CSRF_TOKEN"]').attr('content');
@@ -50,8 +159,6 @@ $( document ).ready(function() {
 		if(isset($_COOKIE["visited"]))
 		{	
 			$visitorcokkie = $_COOKIE["visited"]; 
-			
-
 		}
 		//$pagename = $_GET['pagename'];
 		if (isset($_GET['per_id']))
@@ -104,8 +211,57 @@ $( document ).ready(function() {
             });
 
             <?php } ?>
-	
-	
+<?php if(isset($_GET['type']) && $_GET['type'] == 'agenthrough' && isset($_GET['rec']) && $_GET['rec'] != ''){  
+  $agent_id = base64_decode($_GET['rec']);
+  ?>
+
+            
+            	var agent_id =  '<?php echo  $agent_id; ?>';
+             	var varifyurl = '<?php echo Yii::app()->createUrl("/pl/registration/sa/agentsave/?agent_id='+agent_id+'"); ?>';
+             	$.ajax({
+                    type: "GET",
+                    cache: false,
+                    url: varifyurl,
+                    dataType:"json",
+                    beforeSend: function () {
+                    },
+                    success: function (data) {
+                    	
+                    	if(data.sucess == true){
+                    		
+                       }
+                    }
+                });
+
+            <?php } ?>
+            <?php if(isset($_GET['resucess'])){ ?>
+	             alert('Email send successfully! Please check you mail.');
+	           <?php } ?>
 });
+var password = document.getElementById("email_address")
+  , confirm_password = document.getElementById("cemail_address");
+
+function validateemail(set,msg)
+{
+	if(set == 1){
+		
+		password.setCustomValidity(msg);
+	}
+	else
+	{
+		password.setCustomValidity('');
+	}
+}
+/*function validatePassword(){
+  if(password.value != confirm_password.value) {
+    confirm_password.setCustomValidity("Email address don't match.Please review.");
+  } else {
+    confirm_password.setCustomValidity('');
+  }
+}
+password.onchange = validatePassword;
+password.onkeyup = validatePassword;
+confirm_password.onkeyup = validatePassword;
+confirm_password.onchange = validatePassword;*/
 </script>  
 </body>

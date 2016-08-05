@@ -307,33 +307,39 @@
                     ?>
                     <li>
                         <a href="<?php echo $this->createUrl("admin/campaign/index"); ?>" >
-                            <img src='<?php echo $sImageURL; ?>icon-cms.png' alt='<?php $clang->eT("Campaign Management"); ?>' width='<?php echo $iconsize; ?>' height='<?php echo $iconsize; ?>'/></a>
+                            <img src='<?php echo $sImageURL; ?>icon-campaign.png' alt='<?php $clang->eT("Campaign Management"); ?>' width='<?php echo $iconsize; ?>' height='<?php echo $iconsize; ?>'/></a>
                         <ul>
                             <li>
                                 <a href="<?php echo $this->createUrl("admin/campaign/index"); ?>">
-                                    <img src='<?php echo $sImageURL; ?>cms-page.png' alt='<?php $clang->eT("Manage Campaign"); ?>' name='Manage Campaign' />
+                                    <img src='<?php echo $sImageURL; ?>icon-campaign.png' alt='<?php $clang->eT("Manage Campaign"); ?>' name='Manage Campaign' />
                                     <img src='<?php echo $sImageURL; ?>separator.gif' class='separator' alt='' />
                                 </a>
                             </li>
 
                             <li>
                                 <a href="<?php echo $this->createUrl("admin/campaign/campaignsource"); ?>">
-                                    <img src='<?php echo $sImageURL; ?>cms-page.png' alt='<?php $clang->eT("Manage Campaign Sources"); ?>' name='Manage Campaign Source' />
+                                    <img src='<?php echo $sImageURL; ?>network.png' alt='<?php $clang->eT("Manage Campaign Sources"); ?>' name='Manage Campaign Source' />
                                     <img src='<?php echo $sImageURL; ?>separator.gif' class='separator' alt='' />
                                 </a>
                             </li>
                             <li>
                                 <a href="<?php echo $this->createUrl("admin/campaign/campaignsourcetype"); ?>">
-                                    <img src='<?php echo $sImageURL; ?>cms-template.png' alt='<?php $clang->eT("Manage Source Type"); ?>' name='Manage Source Type' />
+                                    <img src='<?php echo $sImageURL; ?>icon-promoting.png' alt='<?php $clang->eT("Manage Source Type"); ?>' name='Manage Source Type' />
                                     <img src='<?php echo $sImageURL; ?>separator.gif' class='separator' alt='' />
                                 </a>
                             </li>
                             <li>
                                 <a href="<?php echo $this->createUrl("admin/campaign/campaignstatus"); ?>">
-                                    <img src='<?php echo $sImageURL; ?>cms-template.png' alt='<?php $clang->eT("Manage Campaign Status"); ?>' name='Manage Source Stauts' />
+                                    <img src='<?php echo $sImageURL; ?>icon-switch-off.png' alt='<?php $clang->eT("Manage Campaign Status"); ?>' name='Manage Source Stauts' />
                                     <img src='<?php echo $sImageURL; ?>separator.gif' class='separator' alt='' />
                                 </a>
-                            </li> 
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->createUrl("admin/campaign/campaignreport"); ?>">
+                                    <img src='<?php echo $sImageURL; ?>presentation.png' alt='<?php $clang->eT("Manage Campaign Reports"); ?>' name='Manage Campaign Reports' />
+                                    <img src='<?php echo $sImageURL; ?>separator.gif' class='separator' alt='' />
+                                </a>
+                            </li>  
                         </ul>
                         <img src='<?php echo $sImageURL; ?>separator.gif' id='separator1' class='separator' alt='' />
                     </li>

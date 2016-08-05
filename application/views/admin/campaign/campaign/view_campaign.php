@@ -1,9 +1,22 @@
 <div class='header ui-widget-header'><?php $clang->eT("Manage Campaigns"); ?></div><br />
+<style type="text/css">.popover {min-width: 300px;}</style>
 <script>
-    
+     function reloadpage(){
+        return true;
+    }
     $(document).ready(function() {
         $('#listContactGroup').dataTable({"sPaginationType": "full_numbers"});
-    } );
+
+        $('html').on('click', function(e) {
+          if (typeof $(e.target).data('original-title') == 'undefined' &&
+             !$(e.target).parents().is('.popover.in')) {
+            $('[data-original-title]').popover('hide');
+          }
+        });
+
+    });
+
+    
 </script>
 <script>
 $(document).ready(function(){
@@ -17,7 +30,7 @@ $(document).ready(function(){
 <!--            <th><?php $clang->eT("Delete"); ?></th>-->
             <th><?php $clang->eT("ID"); ?></th>
             <th><?php $clang->eT("Campaign Name"); ?></th>
-            <th><?php $clang->eT("Campaign Code"); ?></th>
+            
             <th><?php $clang->eT("Cost"); ?></th>
             <th><?php $clang->eT("Campaign source"); ?></th>
             <th><?php $clang->eT("Source Type"); ?></th>
@@ -26,13 +39,14 @@ $(document).ready(function(){
             <th><?php $clang->eT("Create Date"); ?></th>
             <th><?php $clang->eT("Unique Hit"); ?></th>
             <th><?php $clang->eT("Share Link"); ?></th>
-            <th><?php $clang->eT("Invited to 1st survey"); ?></th>
+            <th><?php $clang->eT("Panelists"); ?></th>
 
             
         </tr>
     </thead>
     <tbody>
         <?php
+        
         for ($i = 0; $i < count($usr_arr); $i++) {
             $usr = $usr_arr[$i];
             ?>
@@ -54,7 +68,7 @@ $(document).ready(function(){
                 </td> */?>
                 <td><?php echo $usr['id']; ?></td>
                 <td><a href="#"  data-html="true" data-toggle="popover" data-trigger="hover" data-content="<?php echo htmlspecialchars($usr['notes']); ?>"><?php echo htmlspecialchars($usr['campaign_name']); ?></a></td>
-                <td><?php echo htmlspecialchars($usr['campaign_code']); ?></td>
+                <?php /* <td><?php echo htmlspecialchars($usr['campaign_code']); ?></td>*/?>
                 <td><?php echo $usr['cost']; ?></td>
                 <td><?php echo htmlspecialchars($usr['source_name']); ?></td>
                 <td><?php echo htmlspecialchars($usr['name']); ?></td>
@@ -67,18 +81,27 @@ $(document).ready(function(){
                      if (isset ($usr['page_name']) && !empty($usr['page_name']) ) 
                         {  
                             $pagejoin = $usr['page_name'];
-                        }    
-                 ?>
-                <td><a href='<?php echo Yii::app()->getBaseUrl()."/index.php/?pagename=".$pagejoin."&cmp=".base64_encode($usr['id']); ?>' target='_blank'>Link</a></td>
-                <td>
-                <?php 
-                    if(isset($usr['total_first_survey_sent_users'])) 
-                        { 
-                            echo $usr['total_first_survey_sent_users'].'%'; 
                         }
-                     ?>
-                            
-                </td>
+                        $contentlink =  '<strong>General Registration</strong> '.Yii::app()->getBaseUrl(true).'/index.php/?pagename='.$pagejoin.'&cmp='.base64_encode($usr['id']).'&per_id=<br/> <strong>Agent Registration: </strong>'.Yii::app()->getBaseUrl(true).'/index.php/?pagename=AGENT REGISTER&cmp='.base64_encode($usr['id']).'&per_id=';  
+                 ?>
+                <td><a data-html="true"  data-toggle="popover" data-placement="bottom" data-trigger="click"  href='javascripit:' data-content="<?php echo $contentlink; ?>" >Link</a></td>
+
+                <td><a href="<?php echo $this->createUrl("admin/campaign/agentusers/?cmpid=".$usr['id']."&name=".$usr['campaign_name']); ?>"/>view</a></td>
+               <?php /* <td  style="padding:3px; width:25px">
+                    <?php
+                    //17/06/2014 Add By Parth-Hari
+                    echo "<div id='your-form-block-id'>";
+                    echo CHtml::beginForm();
+                    //echo CHtml::link($row['panel_list_id'], array('admin/panellist/PanellistInfo/panel_list_id/' . $row['panel_list_id']), array('class' => 'class-link'));
+                    echo CHtml::link("<img src='" . $imageurl . "icon-view.png' width='24px;' alt='View Panel List Profile Details'/>", array('admin/campaign/agentusers/?cmpid='.$usr['id'].'&name='.$usr['campaign_name']), array('class' => 'class-link'));
+                    echo CHtml::endForm();
+                    echo "</div>";
+                    //17/06/2014 End
+                    ?> 
+                </td> */?>
+
+
+                
                 
             </tr>
             <?php $row++;

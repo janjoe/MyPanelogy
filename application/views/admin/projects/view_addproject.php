@@ -312,6 +312,12 @@
             echo CHtml::dropDownList('status', '', $project_status_list);
             ?>
         </td>
+        <td style="text-align: right;">
+            <label for='status'><?php $clang->eT("Default? : "); ?></label>
+        </td>
+        <td>
+            <input type="checkbox" name="prj-default" value="default">
+        </td>
     </tr>
 </table>
 <p  style="padding-top: 1em;">

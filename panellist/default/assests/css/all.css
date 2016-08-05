@@ -361,13 +361,14 @@ form,fieldset{
 }
 
 table.InfoForm {
-    border: 1px solid #999;
-    background: none repeat scroll 0% 0% #dff4ff; /*#E5E5E5;*/
+    /*border: 1px solid #999;*/
+    background: none repeat scroll 0% 0% ; /*#E5E5E5;*/
     border-radius: 4px;
     padding: 10px;
-    border-collapse: initial;
+   /* border-collapse: initial;*/
     border-spacing: 1px;
 }
+table.InfoForm tr{border-bottom: solid 1px #ddd; }
 table.InfoForm tr.odd td {
     background: none repeat scroll 0% 0% #FFF; /*#f6fce1;*/
     padding: 5px;
@@ -379,14 +380,18 @@ table.InfoForm tr.even td {
 
 
 /* tool tips css */
+.box h3 .bittooltip { color:#fff;}
+
 .bittooltip {
     border-bottom: 1px dotted #000000; color: #000000; outline: none;
     cursor: help; text-decoration: none;
     position: relative;
 }
 .bittooltip span {
+	    color: #000;
     margin-left: -999em;
     position: absolute;
+    width: 220px !important;
 }
 .bittooltip:hover span {
     border-radius: 5px 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; 
@@ -406,7 +411,7 @@ table.InfoForm tr.even td {
 .classic, .critical { padding: 0.8em 1em; }
 .custom { padding: 0.5em 0.8em 0.8em 2em; }
 * html a:hover { background: transparent; }
-.classic {background: #FFFFAA; border: 1px solid #FFAD33; }
+.classic {background: #FFF; border: 1px solid #0095e0; }
 .critical { background: #FFCCAA; border: 1px solid #FF3334;}
 /* .cirtical:before {content:'*';background-image: url('critical.png');display:block; height:32px; width:32px;} */
 .help { background: #9FDAEE; border: 1px solid #2BB0D7;	}

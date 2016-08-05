@@ -635,6 +635,11 @@ EOD;
     $coreReplacements['content'] = (isset($_REQUEST['pagename']) ? getPageContent($_REQUEST['pagename']) : getPageContent('home'));
     $coreReplacements['php'] = getphpcode();
 
+    $coreReplacements['PL_FIRSTNAME'] = (isset($_REQUEST['fname']) ? $_REQUEST['fname'] : '');
+    $coreReplacements['PL_LASTNAME'] = (isset($_REQUEST['lname']) ? $_REQUEST['lname'] : '');
+    $coreReplacements['PL_EMAIL'] = (isset($_REQUEST['email']) ? $_REQUEST['email'] : '');
+    $coreReplacements['PL_REGISTER_FOR'] = (isset($_REQUEST['type']) ? $_REQUEST['type'] : '');
+
     if (!is_null($replacements) && is_array($replacements)) {
         $doTheseReplacements = array_merge($coreReplacements, $replacements);   // so $replacements overrides core values
     } else {
