@@ -127,14 +127,15 @@ class Registration extends PL_Common_Action {
 
     public function assigndefaultproject($panel_list_id)
     {
-        $uquery = "SELECT project_id FROM {{project_master}}";
-        $uquery .= " WHERE is_default ='default'";
+        $uquery = "SELECT project_id FROM {{campaign}} as cmp JOIN {{panel_list_master}} as pl ON cmp.id=pl.cmp_id";
+        $uquery .= " WHERE pl.panel_list_id =".$panel_list_id;
         $uresult = Yii::app()->db->createCommand($uquery)->query()->readAll();
+        
         if(!empty($uresult))
         {
             $query_id = 0;
             $panel_list_id = (int) $panel_list_id;
-            $user_id = Yii::app()->user->id;
+            $user_id = '';
             $created_date = Date('y-m-d h:i:s');
             $send_date = Date('y-m-d h:i:s');
             $sid = getmaxsendid() + 1;
@@ -144,10 +145,12 @@ class Registration extends PL_Common_Action {
             $is_send = 1;
             foreach ($uresult as $key) {
                 $pid = (int) $key['project_id'];
-
-                $sql_insert = "insert into {{query_send_details}} (send_id,query_id,project_id,subjectt_id,template_id,panellist_id,send,userid,created_date,send_date) values
-                ($sid,$query_id,$pid,$subjectid,$template_id,$panel_list_id, $is_send,$user_id,'$created_date','$send_date')";
-                $rString = Yii::app()->db->createCommand($sql_insert)->execute();
+                if($pid != 0){
+                     $sql_insert = "insert into {{query_send_details}} (send_id,query_id,project_id,subjectt_id,template_id,panellist_id,send,created_date,send_date) values
+                    ($sid,$query_id,$pid,$subjectid,$template_id,$panel_list_id, $is_send,'$created_date','$send_date')";
+                    
+                    $rString = Yii::app()->db->createCommand($sql_insert)->execute();
+                }
             }
         }
     }
@@ -159,7 +162,7 @@ class Registration extends PL_Common_Action {
         $code = $code_id[1];
         $panellist_id = $code_id[0];
         //$this->assigndefaultproject($panellist_id);
-        //echo '<pre>';print_r($code_id);exit;
+        
         
         if ($code != '' && $panellist_id != '') {
             if ($code == '') {

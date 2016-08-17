@@ -341,6 +341,8 @@ if (getGlobalSetting('Own_Panel') == $vendor_arr_single[0]['vendor_id']) {
                 <th><?php $clang->eT("ID"); ?></th>
                 <th><?php $clang->eT("Name"); ?></th>
                 <th><?php $clang->eT("Project"); ?></th>
+                <th><?php $clang->eT("Response Rate"); ?></th>
+                <th><?php $clang->eT("Est.Completes:"); ?></th>
                 <th><?php $clang->eT("Sending"); ?></th>
             </tr>
         </thead>
@@ -363,12 +365,45 @@ if (getGlobalSetting('Own_Panel') == $vendor_arr_single[0]['vendor_id']) {
                         <td><?php echo $usr['id']; ?></td>              
                         <td><?php echo htmlspecialchars($usr['name']); ?></td>
                         <td><?php echo $project[0]['project_name'] . ' [' . $usr['project_id'] . ']'; ?></td>
+                        
 
+
+                        <?php $quesql_total_invite = "Select GROUP_CONCAT(panellist_id) as panellist_ids, COUNT(*) AS total_invite_cnt from {{query_send_details}} where 1=1 ";
+                            $quesql_total_invite .= " And query_id=".$usr['id']; //filter not to send originally send 
+                                      
+                            $qrydetail_total_invite = Yii::app()->db->createCommand($quesql_total_invite)->query()->readAll();
+                            // /echo '<pre>';
+                            //print_r($qrydetail_total_invite); exit();
+                            if(isset($qrydetail_total_invite[0]["total_invite_cnt"]) && $qrydetail_total_invite[0]["total_invite_cnt"] > 0){
+                                $total_invite_users_per_query = $qrydetail_total_invite[0]["total_invite_cnt"];        
+                            }
+                            if(isset($qrydetail_total_invite[0]["panellist_ids"])){
+                                $paliid = $qrydetail_total_invite[0]['panellist_ids'];
+                                $prjiid = $usr['project_id'];
+                                        
+                                $querevsql_total_responses = "Select * from {{panellist_redirects}} where 1=1 ";
+                                $querevsql_total_responses .= " And panellist_id in(".$paliid.") AND project_id =".$prjiid." GROUP BY panellist_id";
+                                     
+                                $qryrevdetail_total_responses_per_campaign = Yii::app()->db->createCommand($querevsql_total_responses)->query()->readAll();
+                                           
+                                if(count($qryrevdetail_total_responses_per_campaign)){
+                                    $total_servey_response_by_query_user = count($qryrevdetail_total_responses_per_campaign);        
+                                }        
+                            }
+                        $totalresponse = 0;    
+                        if($total_invite_users_per_query != 0){    
+                            $totalresponse = ($total_servey_response_by_query_user * 100 ) / $total_invite_users_per_query;
+                            $totalresponse = number_format($totalresponse, 0);
+                        }
+                        ?>
+                        <td><?php echo $totalresponse.'%'; ?></td>
+                        <td><?php echo $mur[0]['IR']; ?></td>
+                        
                         <td>
                             <?php
                             echo "<div id='your-form-block-id'>";
                             echo CHtml::beginForm();
-                            echo CHtml::link('Send Invitations', array('admin/pquery/sa/send/id/' . $usr['id'] . '/prjid/' . $usr['project_id'] . '/qname/' . $usr['name'] . '/vid/' . $vendor_project_id), array('class' => 'class-link'));
+                            echo CHtml::link('Send Invitations', array('admin/pquery/sa/send/id/' . $usr['id'] . '/prjid/' . $usr['project_id'] . '/qname/' . $usr['name'] . '/vid/' . $vendor_project_id.'/res/'.$totalresponse.'/est/'.$mur[0]["IR"]), array('class' => 'class-link'));
                             echo " | ";
                             echo CHtml::link('Reminder', array('admin/pquery/sa/send/id/' . $usr['id'] . '/prjid/' . $usr['project_id'] . '/resend/1/qname/' . $usr['name'] . '/vid/' . $vendor_project_id), array('class' => 'class-link'));
                             echo " | ";

@@ -75,7 +75,10 @@ N : <input type="text" name="stack" id="stack" required>
 <input type="hidden" value="<?php echo $total_r; ?>" name="total_r" id="total_r"> &nbsp; Balance: 
 <input type="hidden" value="<?php echo $st; ?>" name="st" id="st"/>
 <span id="dispr" class="trues"><?php echo $total_r; ?></span>
-&nbsp; &nbsp; &nbsp;<span  style="background:blue; color:white; padding:2px 4px; cursor:pointer;"  onclick="saveQuery();">Send</span>                
+&nbsp; &nbsp; &nbsp;<span  style="background:blue; color:white; padding:2px 4px; cursor:pointer;"  onclick="saveQuery();">Send</span>
+<?php if(isset($res)) {?>
+<div>Response Rate: <?php echo $res.'%'; ?> Est.Completes: <?php echo $est; ?></div>   
+<?php } ?>             
 <input type='hidden' name='action' value='<?php echo $type; ?>' />
 <input type="hidden" name="query_id" value="<?php echo $query_id; ?>" id="query_id" />
 <input type="hidden" name="project_id" value="<?php echo $project_id; ?>" id="project_id" />

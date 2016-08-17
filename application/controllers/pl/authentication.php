@@ -48,6 +48,13 @@ class Authentication extends PL_Common_Action {
                 $cookie_name = "loginregister";
                 $cookie_value = "1";
                 setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+
+                        $todayDate = date("Y-m-d H:i:s");
+                        $oRecord = PL::model()->findByPk($sresult[0]['panel_list_id']);
+                        $oRecord->last_login = $todayDate;
+                        $Panel_id = $oRecord->save();
+
+
                 $this->_doRedirect();
             } elseif ($sresult[0]['status'] == 'C') {
                 $message = $clang->gT('Your Account Is canceled');

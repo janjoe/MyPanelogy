@@ -21,7 +21,11 @@
 <script>
 $(document).ready(function(){
     $('[data-toggle="popover"]').popover();
+    $('a[data-toggle="popover"]').click(function(){
+    $('a[data-toggle=popover]').not(this).popover('hide'); //all but this
 });
+});
+
 </script>
 <table id="listContactGroup" style="width:100%">
     <thead>
@@ -67,7 +71,7 @@ $(document).ready(function(){
                     </form>
                 </td> */?>
                 <td><?php echo $usr['id']; ?></td>
-                <td><a href="#"  data-html="true" data-toggle="popover" data-trigger="hover" data-content="<?php echo htmlspecialchars($usr['notes']); ?>"><?php echo htmlspecialchars($usr['campaign_name']); ?></a></td>
+                <td><a href="javascript:void(0);"  data-html="true" data-toggle="popover" data-trigger="hover" data-content="<?php echo htmlspecialchars($usr['notes']); ?>"><?php echo htmlspecialchars($usr['campaign_name']); ?></a></td>
                 <?php /* <td><?php echo htmlspecialchars($usr['campaign_code']); ?></td>*/?>
                 <td><?php echo $usr['cost']; ?></td>
                 <td><?php echo htmlspecialchars($usr['source_name']); ?></td>
@@ -84,7 +88,7 @@ $(document).ready(function(){
                         }
                         $contentlink =  '<strong>General Registration</strong> '.Yii::app()->getBaseUrl(true).'/index.php/?pagename='.$pagejoin.'&cmp='.base64_encode($usr['id']).'&per_id=<br/> <strong>Agent Registration: </strong>'.Yii::app()->getBaseUrl(true).'/index.php/?pagename=AGENT REGISTER&cmp='.base64_encode($usr['id']).'&per_id=';  
                  ?>
-                <td><a data-html="true"  data-toggle="popover" data-placement="bottom" data-trigger="click"  href='javascripit:' data-content="<?php echo $contentlink; ?>" >Link</a></td>
+                <td><a data-html="true"  data-toggle="popover" data-placement="bottom" data-trigger="click"  href="javascript:void(0);" data-content="<?php echo $contentlink; ?>" >Link</a></td>
 
                 <td><a href="<?php echo $this->createUrl("admin/campaign/agentusers/?cmpid=".$usr['id']."&name=".$usr['campaign_name']); ?>"/>view</a></td>
                <?php /* <td  style="padding:3px; width:25px">

@@ -159,6 +159,27 @@ $(document).ready(function(){
 	            	<td>Completed Initial registration</td>
 	            	<td><input type="number" name="initreg" id="initreg" value="<?php echo  isset($_POST['initreg']) ? $_POST['initreg'] : ''; ?>"></td>
 	        	</tr>
+                <tr>
+                    <td>Completed page 2 registration</td>
+                    <td><input type="number" name="completereg" id="completereg" value="<?php echo  isset($_POST['completereg']) ? $_POST['completereg'] : ''; ?>"></td>
+                    <td>Invited to 1st survey</td>
+                    <td><input type="number" name="invitetofirst" id="invitetofirst" value="<?php echo  isset($_POST['invitetofirst']) ? $_POST['invitetofirst'] : ''; ?>"></td>
+                    <td>Completed 1st survey</td>
+                    <td><input type="number" name="completefirstservery" id="completefirstservery" value="<?php echo  isset($_POST['completefirstservery']) ? $_POST['completefirstservery'] : ''; ?>"></td>
+                    <td>Surveys completed</td>
+                    <td><input type="number" name="totalcompleteservery" id="totalcompleteservery" value="<?php echo  isset($_POST['totalcompleteservery']) ? $_POST['totalcompleteservery'] : ''; ?>"></td>
+                </tr>
+                <tr>
+                    <td>Response rate</td>
+                    <td><input type="number" name="responserate" id="responserate" value="<?php echo  isset($_POST['responserate']) ? $_POST['responserate'] : ''; ?>"></td>
+                    <td>Fraud Status</td>
+                    <td><input type="number" name="fraud" id="fraud" value="<?php echo  isset($_POST['fraud']) ? $_POST['fraud'] : ''; ?>"></td>
+
+                    <td>Member Cancelled Membership</td>
+                    <td><input type="number" name="canclemembership" id="canclemembership" value="<?php echo  isset($_POST['canclemembership']) ? $_POST['canclemembership'] : ''; ?>"></td>
+
+                </tr>
+
 	        	<tr><td><input type="submit" name="filter" value="Filter Result"></td><td><input type="button" onclick="javascript:window.location.href='<?php echo $this->createUrl('admin/campaign/campaignreport'); ?>';" name="reset" value="Reset Filter"></td></tr>
 	    </tbody>
 	</form>    

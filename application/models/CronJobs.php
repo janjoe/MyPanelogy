@@ -102,8 +102,8 @@ class CronJobs extends CActiveRecord {
                 ));
     }
 
-    public function getQue() {
-        return Yii::app()->db->createCommand("select * from " . $this->viewName() . " order by ord,occur_day,occur_time ")->query();
+    public function getQue($where= 'sendqueryemails') {
+        return Yii::app()->db->createCommand("select * from " . $this->viewName() . " where cron_command = '".$where."' order by ord,occur_day,occur_time ")->query();
     }
 
     public function updateLastExecution($id, $rmk) {

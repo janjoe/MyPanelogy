@@ -23,7 +23,8 @@
         <?php $this->widget('ext.LimeScript.LimeScript'); ?>
         <?php $this->widget('ext.LimeDebug.LimeDebug'); ?>
         <link rel="shortcut icon" href="<?php echo App()->baseUrl; ?>/styles/favicon.png" type="image/x-icon" /><!-- 16/06/2014 Add By Hari -->
-        <link rel="icon" href="<?php echo App()->baseUrl; ?>/styles/favicon.png" type="image/x-icon" /><!-- 16/06/2014 Add By Hari -->       
+        <link rel="icon" href="<?php echo App()->baseUrl; ?>/styles/favicon.png" type="image/x-icon" /><!-- 16/06/2014 Add By Hari -->  
+        <style type="text/css">.ui-notify-message-style p{ color: #666!important; }</style>     
     </head>
     <body>
         <?php if (isset($formatdata)) { ?>

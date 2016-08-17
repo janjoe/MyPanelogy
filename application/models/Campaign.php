@@ -20,8 +20,6 @@ class Campaign extends LSActiveRecord {
     public function rules() {
         return array(
             array('campaign_name', 'required'),
-            array('campaign_code', 'required'),
-            
         );
     }
 
@@ -177,8 +175,7 @@ class Campaign extends LSActiveRecord {
                         $querevsql_total_responses .= " And panellist_id in(".$paliid.") AND project_id in(".$prjiid.") GROUP BY panellist_id, project_id";
                              
                         $qryrevdetail_total_responses_per_campaign = Yii::app()->db->createCommand($querevsql_total_responses)->query()->readAll();
-                            //echo '<pre>';
-                            //print_r($qryrevdetail_total_responses_per_campaign);           
+                                   
                         if(count($qryrevdetail_total_responses_per_campaign)){
                             $total_servey_response_by_campaign_user = count($qryrevdetail_total_responses_per_campaign);        
                         }        
@@ -226,6 +223,55 @@ class Campaign extends LSActiveRecord {
                     if (isset($params['initreg']) && $params['initreg'] != '')
                     {
                         if($results[$keyCmp]["initregcomplete"] <  intval($params['initreg']))
+                        {
+                            unset($results[$keyCmp]);
+                        }
+                    }
+                    if (isset($params['completereg']) && $params['completereg'] != '')
+                    {
+                        if($results[$keyCmp]["complete"] <  intval($params['completereg']))
+                        {
+                            unset($results[$keyCmp]);
+                        }
+                    }
+                    if (isset($params['invitetofirst']) && $params['invitetofirst'] != '')
+                    {
+                        if($results[$keyCmp]["total_first_survey_sent_users"] <  intval($params['invitetofirst']))
+                        {
+                            unset($results[$keyCmp]);
+                        }
+                    }
+                    if (isset($params['completefirstservery']) && $params['completefirstservery'] != '')
+                    {
+                        if($results[$keyCmp]["total_first_survey_sent_users_complete"] <  intval($params['completefirstservery']))
+                        {
+                            unset($results[$keyCmp]);
+                        }
+                    }
+                    if (isset($params['totalcompleteservery']) && $params['totalcompleteservery'] != '')
+                    {
+                        if($results[$keyCmp]["total_revenue"] <  intval($params['totalcompleteservery']))
+                        {
+                            unset($results[$keyCmp]);
+                        }
+                    }
+                    if (isset($params['responserate']) && $params['responserate'] != '')
+                    {
+                        if($results[$keyCmp]["total_servey_response_by_campaign_user"] <  intval($params['responserate']))
+                        {
+                            unset($results[$keyCmp]);
+                        }
+                    }
+                    if (isset($params['fraud']) && $params['fraud'] != '')
+                    {
+                        if($results[$keyCmp]["frod_user"] <  intval($params['fraud']))
+                        {
+                            unset($results[$keyCmp]);
+                        }
+                    }
+                    if (isset($params['canclemembership']) && $params['canclemembership'] != '')
+                    {
+                        if($results[$keyCmp]["cancle_account_user"] <  intval($params['canclemembership']))
                         {
                             unset($results[$keyCmp]);
                         }
@@ -298,7 +344,7 @@ class Campaign extends LSActiveRecord {
         $oUser = new self;
         $oUser->campaign_name = (isset($data['campaign_name'])) ? $data['campaign_name'] : '';
         $oUser->cost = (isset($data['cost'])) ? number_format($data['cost'], 2, '.', '') : '';
-        //$oUser->campaign_code = (isset($data['campaign_code'])) ? $data['campaign_code'] : '';
+        
         $oUser->campaign_src_id = (isset($data['campaign_src_id'])) ? $data['campaign_src_id'] : '';
         $oUser->campaign_cst_id = (isset($data['campaign_cst_id'])) ? $data['campaign_cst_id'] : '';
         $oUser->campaign_status = (isset($data['campaign_status'])) ? $data['campaign_status'] : '';
@@ -306,9 +352,12 @@ class Campaign extends LSActiveRecord {
         $oUser->created_by = $data['add_id'];
         $oUser->created_date = date('Y/m/d h:i:s');
         $oUser->page_id = (isset($data['page_id'])) ? $data['page_id'] : '';
+        $oUser->project_id = (isset($data['project_id'])) ? $data['project_id'] : '';
+       //echo print_r($oUser); exit();
         if ($oUser->save()) {
             return $oUser->id;
         } else {
+            
             return false;
         }
     }
@@ -320,12 +369,13 @@ class Campaign extends LSActiveRecord {
             $oUser = Campaign::findByPk($id);
             $oUser->campaign_name = (isset($data['campaign_name'])) ? $data['campaign_name'] : '';
             $oUser->cost = (isset($data['cost'])) ? number_format($data['cost'], 2, '.', '') : '';
-            $oUser->campaign_code = (isset($data['campaign_code'])) ? $data['campaign_code'] : '';
+            
             $oUser->campaign_src_id = (isset($data['campaign_src_id'])) ? $data['campaign_src_id'] : '';
             $oUser->campaign_cst_id = (isset($data['campaign_cst_id'])) ? $data['campaign_cst_id'] : '';
             $oUser->campaign_status = (isset($data['campaign_status'])) ? $data['campaign_status'] : '';
             $oUser->notes = (isset($data['notes'])) ? $data['notes'] : '';
             $oUser->page_id = (isset($data['page_id'])) ? $data['page_id'] : '';
+            $oUser->project_id = (isset($data['project_id'])) ? $data['project_id'] : '';
            
             $oUser->update();
            

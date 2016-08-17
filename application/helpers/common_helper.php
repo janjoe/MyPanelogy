@@ -1185,6 +1185,7 @@ define('EMAIL_POINT_PL_EditPassword', 104);
 define('EMAIL_POINT_PL_RegistrationReSend', 105);
 define('EMAIL_POINT_PL_RewardRequest', 106);
 define('EMAIL_POINT_PL_RewardIssued', 107);
+define('EMAIL_POINT_PL_remember_paused_account', 108);
 
 function generate_random($len) {
     $arr = str_split('A1B2C3DEF4GHI5JKL6MNO7PQR8STU9VWX0YZ'); // get all the characters into an array
@@ -1334,7 +1335,7 @@ function get_edit_answer($que_id, $que_fieldtype, $pl_value) {
                 if ($value['id'] == $pl_value) {
                     $selected = 'selected = "selected"';
                 }
-                $html .= '<option ' . $selected . ' value="' . $value['id'] . '">' . $value['title'] . '</option>';
+                $html .= '<option class="bittooltip" title="'.$value['title'].'" ' . $selected . ' value="' . $value['id'] . '">' . $value['title'] . '</option>';
             }
             //$html .= '<option ' . $selected . ' value="' . $value['id'] . '">' . $value['title'] . '</option>';
         }
@@ -1578,6 +1579,7 @@ function GetEmailUseInArray() {
         , EMAIL_POINT_PL_RegistrationReSend => 'Panel list Registration, Activation Re-Send'
         , EMAIL_POINT_PL_RewardRequest => 'Panel list, Reward Request'
         , EMAIL_POINT_PL_RewardIssued => 'Panel list, Reward Issued'
+        , EMAIL_POINT_PL_remember_paused_account => 'Remember paused account'
     );
 }
 
@@ -1649,17 +1651,7 @@ function getCompanyDetail($company_id = null) {
 function projectview($project_id = null) {
     $clang = Yii::app()->lang;
 
-    $is_default = 0;
-    $uquery = "SELECT is_default FROM {{project_master}}";
-    if ($project_id) {
-        $uquery .= " WHERE project_id = " . $project_id;
-    }
-    $uresult = Yii::app()->db->createCommand($uquery)->query()->readAll(); //Checked
-    $userlist = array();
-    foreach ($uresult as $srow) {
-        $is_default = $srow["is_default"];
-    }
-
+    
     $uquery = "SELECT * FROM {{view_project_master}}";
     if ($project_id) {
         $uquery .= " WHERE project_id = " . $project_id;
@@ -1668,7 +1660,6 @@ function projectview($project_id = null) {
     $uresult = Yii::app()->db->createCommand($uquery)->query()->readAll(); //Checked
     $userlist = array();
     foreach ($uresult as $srow) {
-        $srow["is_default"] = $is_default;
         $userlist[] = $srow;
     }
     return $userlist;

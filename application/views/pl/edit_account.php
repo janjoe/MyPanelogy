@@ -1,3 +1,11 @@
+<style type="text/css">.btn-default {
+    padding: 4px 30px 5px 30px;
+    background-color: #1d88c7;
+    color: #fff;
+    font-weight: 400;
+    font-size: 18px;
+    display: inline-block;
+}</style>
 <?php echo CHtml::form(array('pl/home/sa/edit_profile'), 'post', array('id' => 'loginform', 'name' => 'loginform')); ?>
 <div id="tab-2">
     <!--    <div style="float:right;">
@@ -108,10 +116,31 @@
             <input type="hidden" name="panellist_id" value="<?php echo $_SESSION['plid']; ?>"/>
             <br>
             <br>
-            <input type="submit" value="Save">
+            <input class="btn-default" type="submit" value="Save">
         </div>
 
     </section>
 </div>
 
 <?php echo CHtml::endForm(); ?>
+
+<script type="text/javascript">
+<?php if(isset($_GET['profile']) && $_GET['profile'] == 'success'){ ?>
+    $(document).ready(function(){
+        window.setTimeout(function() {
+             window.location.href = '<?php echo Yii::app()->createAbsoluteUrl("pl/home"); ?>';
+        }, 4000);
+    });
+<?php } ?> 
+
+
+$('#18 option').each(function()
+{
+    var myStr = $(this).text();
+    if(myStr.length > 45){
+        var otext = myStr.substring(0,45)+'...';
+        $(this).text(otext);
+    }
+});
+
+</script>

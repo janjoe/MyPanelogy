@@ -28,7 +28,7 @@
             <th>Email</th>
             
             <th>Status</th>
-            
+            <th>Created date</th>
         </tr>
     </thead>
     <tbody>
@@ -63,11 +63,13 @@
                     }
                     ?> 
                 </td>
-                <td><?php echo $usr['id']; ?></td>
+                <td><?php //echo $usr['id']; 
+                 if(!empty($dr) && $dr[0]['panel_list_id'] != ''){ echo $dr[0]['panel_list_id']; } ?></td>
                 <td><?php echo $usr['first_name']; ?></td>
                 <td><?php echo htmlspecialchars($usr['last_name']); ?></td>
                 <td><?php echo htmlspecialchars($usr['email']); ?></td>
-                <td><?php if($usr['status'] == 0) echo 'Email send'; else echo 'Email send and response sucessfully'; ?></td>
+                <td><?php if($usr['status'] == 0) echo 'Email sent'; else echo 'Email sent and successfully responded'; ?></td>
+                <td><?php echo $usr['create_date']; ?></td>
                 
                 
             </tr>

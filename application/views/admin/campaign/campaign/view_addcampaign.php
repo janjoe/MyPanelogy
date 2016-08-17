@@ -107,25 +107,17 @@ PrepareEditorScript(true, $this);
             <input type='text' maxlength="100" id='cost' name='cost' autofocus="autofocus" required="required" />
         </td>
 
-
-       
-        <td align="right" style="text-align: right;">
-            <label for='campaign_status'><?php $clang->eT("Campaign Status : "); ?></label>
-        </td>
+        <td ><label>Auto project : </label></td>  
         <td>
-            <select style='min-width:220px;' id='campaign_status' name='campaign_status'>
                 <?php
-                if(isset($campaign_status) && !empty($campaign_status))
-                {
-                    foreach ($campaign_status as $cskey => $csval) {
-                        ?>
-                        <option <?php if($csval['status_code'] == 'E') echo 'selected';?> id='<?php echo $csval['cs_id']; ?>' value='<?php echo $csval['cs_id']; ?>'>
-                            <?php echo $csval['status_name']; ?>
-                        </option>
-                    <?php } ?>
-               <?php } ?>     
-            </select>
-        </td>
+                $qpro = "SELECT project_id,CONCAT(project_id,'-',LEFT(project_name,20)) as pr_name FROM {{project_master}} WHERE (trueup IS NULL or trueup='' or trueup='0000-00-00 00:00:00') AND (project_status_id=1 or project_status_id=2 ) order by project_id ASC";
+                $r_project = Yii::app()->db->createCommand($qpro)->query();
+                $projectlist = CHtml::listData($r_project, 'project_id', 'pr_name');
+                echo CHtml::dropDownList('project_id', $prjid, $projectlist, array('prompt' => 'Select Project','title' => 'List of Projects which are not rectified'));
+                ?>
+                
+        </td >
+
 
     </tr>
     <tr>
@@ -142,6 +134,24 @@ PrepareEditorScript(true, $this);
                         ?>
                         <option  id='<?php echo $csval['page_id']; ?>' value='<?php echo $csval['page_id']; ?>'>
                             <?php echo $csval['page_name']; ?>
+                        </option>
+                    <?php } ?>
+               <?php } ?>     
+            </select>
+        </td>
+
+        <td align="right" style="text-align: right;">
+            <label for='campaign_status'><?php $clang->eT("Campaign Status : "); ?></label>
+        </td>
+        <td>
+            <select style='min-width:220px;' id='campaign_status' name='campaign_status'>
+                <?php
+                if(isset($campaign_status) && !empty($campaign_status))
+                {
+                    foreach ($campaign_status as $cskey => $csval) {
+                        ?>
+                        <option <?php if($csval['status_code'] == 'E') echo 'selected';?> id='<?php echo $csval['cs_id']; ?>' value='<?php echo $csval['cs_id']; ?>'>
+                            <?php echo $csval['status_name']; ?>
                         </option>
                     <?php } ?>
                <?php } ?>     

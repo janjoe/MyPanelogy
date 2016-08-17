@@ -129,9 +129,10 @@ class PLHome_Action extends PL_Common_Action {
                 }
                 $sql .= " where panellist_id = '" . $panellist_id . "' ";
                 $result = Yii::app()->db->createCommand($sql)->query();
-                $message = $clang->gT('Data submitted Successfully');
+                //$message = $clang->gT('Data submitted Successfully');
+                $message = $clang->gT('Thank you for updating your profile. You will now be taken you to your Dashbord.');
                 App()->user->setFlash('Error', $message);
-                $this->getController()->redirect(array('/pl/home/sa/edit_profile'));
+                $this->getController()->redirect(array('/pl/home/sa/edit_profile/profile/success'));
             }
         }
         $this->_renderWrappedTemplate('', 'edit_account', $aData);

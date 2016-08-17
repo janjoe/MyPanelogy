@@ -206,7 +206,7 @@ numErrored = total_errors
                         $panellist_master_field = $panellist_master_field +1  Where  panel_list_id ='  $panellist_id '";
                             $reslt = mysqli_query($dblink, $query) or die(mysqli_error() . $query);
 
-                            echo $message;
+                            echo '<div style="border: 5px solid black; width: 800px; margin-left: 25%;color: green; padding: 10px;">'.$message.'</div>';
                         } else {
 
                             $query = 'SELECT ' . $Linktype . ' as EndLink FROM ' . $tbl_ven_proj_mst . ' WHERE vendor_project_id =' . $vendor_project_id;

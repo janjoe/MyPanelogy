@@ -114,7 +114,7 @@ class get_SendEmail extends LSActiveRecord {
                 break;
 
             case EMAIL_POINT_QueryPullSend:
-                $sql = "SELECT pp.panellist_id,pp.project_id,pp.project_url,pp.points,pm.project_name,pm.friendly_name,
+                $sql = "SELECT pp.panellist_id,plm.email,pp.project_id,pp.project_url,pp.points,pm.project_name,pm.friendly_name,
                         pm.expected_los,plm.full_name
                         FROM {{panellist_project}} pp
                         LEFT JOIN {{project_master}} pm ON pm.project_id = pp.project_id
@@ -141,9 +141,6 @@ class get_SendEmail extends LSActiveRecord {
                 break;
 
             case EMAIL_POINT_PL_Registration:case EMAIL_POINT_PL_RegistrationReSend:
-            
-            
-            
             
                 $sql = "SELECT * FROM {{view_panel_list_master}} WHERE panel_list_id = '$ID'";
                 $result = Yii::app()->db->createCommand($sql)->queryRow();
@@ -177,7 +174,11 @@ class get_SendEmail extends LSActiveRecord {
                 
                //echo $content;exit;
                 
-                break; 
+                break;
+                case EMAIL_POINT_PL_remember_paused_account:
+                    $content = $content;
+                 break;
+            
             case EMAIL_POINT_PL_ForgotPassword:
                 $sql = "SELECT * FROM {{view_panel_list_master}} WHERE panel_list_id = '$ID'";
                 $result = Yii::app()->db->createCommand($sql)->queryRow();
@@ -194,6 +195,7 @@ class get_SendEmail extends LSActiveRecord {
                 }
                 $content = str_replace('[[ACTIVATE_PASSWORD_LINK]]', $parm['activation_link'], $content);
                 break;
+            
             case EMAIL_POINT_PL_EditEmail:
                 $sql = "SELECT * FROM {{view_panel_list_master}} WHERE panel_list_id = '$ID'";
                 $result = Yii::app()->db->createCommand($sql)->queryRow();
@@ -210,6 +212,7 @@ class get_SendEmail extends LSActiveRecord {
                 }
                 $content = str_replace('[[ACTIVATE_EMAIL_LINK]]', $parm['activate_email_link'], $content);
                 break;
+            
             case EMAIL_POINT_PL_EditPassword:
                 $sql = "SELECT * FROM {{view_panel_list_master}} WHERE panel_list_id = '$ID'";
                 $result = Yii::app()->db->createCommand($sql)->queryRow();
@@ -228,9 +231,11 @@ class get_SendEmail extends LSActiveRecord {
                 $content = str_replace('[[PASSWORD]]', $pwd, $content);
                 $content = str_replace('[[CONFIRM_PASSWORD_LINK]]', $parm['password_link'], $content);
                 break;
+            
             case EMAIL_POINT_PL_RewardRequest:
                 $content = '';
                 break;
+            
             case EMAIL_POINT_PL_RewardIssued:
                 $content = '';
                 break;

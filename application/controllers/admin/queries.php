@@ -104,6 +104,10 @@ class queries extends Survey_Common_Action {
         $aData['query_id'] = $_REQUEST['id'];
         $aData['project_id'] = $_REQUEST['prjid'];
         $aData['query_name'] = $_REQUEST['qname'];
+        if(isset($_REQUEST['res'])){
+            $aData['res'] = $_REQUEST['res'];
+            $aData['est'] = $_REQUEST['est'];
+        }
         if (isset($_REQUEST['resend']))
             $aData['type'] = 'Resend';
         else
@@ -475,10 +479,55 @@ class queries extends Survey_Common_Action {
         //14/06/2014 End
         $whr .= ' AND is_fraud=0 AND status =\'E\' ';
         $sql_return = "Select * from {{panellist_answer}} where status='E' $whr";
+
         //Echo $sql_return;
         $rString = Yii::app()->db->createCommand($sql_return)->query()->readAll();
+
+        $panalistids = '';
+        foreach ($rString as $pl) {
+            $panalistids .= $pl['panellist_id'].',' ;
+        }
+        
+        $ir = $total_invite_users_per_project = $total_servey_response_by_project_user = 0;
+        if(isset($_REQUEST['project_id']) && $_REQUEST['project_id'] != '')
+        {
+            $projectid = $_REQUEST['project_id'];
+            $sresult = projectview($projectid);
+            $ir = $sresult[0]['IR'];
+
+            if(!empty($panalistids))
+                $panalistids = rtrim($panalistids,',');
+
+
+            $quesql_total_invite = "Select COUNT(*) AS total_invite_cnt from {{query_send_details}} where 1=1 ";
+            $quesql_total_invite .= " And panellist_id in(".$panalistids.")  AND project_id =".$projectid; //filter not to send originally send 
+                              
+            $qrydetail_total_invite = Yii::app()->db->createCommand($quesql_total_invite)->query()->readAll();
+            
+            if(isset($qrydetail_total_invite[0]["total_invite_cnt"]) && $qrydetail_total_invite[0]["total_invite_cnt"] > 0){
+               $total_invite_users_per_project = $qrydetail_total_invite[0]["total_invite_cnt"];        
+            }
+
+            $querevsql_total_responses = "Select * from {{panellist_redirects}} where 1=1 ";
+            $querevsql_total_responses .= " And panellist_id in(".$panalistids.") AND project_id =".$projectid." GROUP BY panellist_id";
+                 
+            $qryrevdetail_total_responses_per_campaign = Yii::app()->db->createCommand($querevsql_total_responses)->query()->readAll();
+                       
+            if(count($qryrevdetail_total_responses_per_campaign)){
+                $total_servey_response_by_project_user = count($qryrevdetail_total_responses_per_campaign);        
+            }        
+            
+        } 
+
+        $totalresponse = 0;    
+        if($total_invite_users_per_project != 0){    
+            $totalresponse = ($total_servey_response_by_project_user * 100 ) / $total_invite_users_per_project;
+            $totalresponse = number_format($totalresponse, 0);
+        }
+
+        
         echo 'Total count for the selected filter is: <strong>' . count($rString);
-        echo '</strong><input type="hidden" name="total_panellists" id="total_panellists" value="' . count($rString) . '"><input type="hidden" name="query_sql" id="query_sql" value="' . $whr . '">';
+        echo '</strong><input type="hidden" name="total_panellists" id="total_panellists" value="' . count($rString) . '"> ('.$total_invite_users_per_project.') Average Response Rate: '.$totalresponse.'%  Estimated completes based on IR listed : '.$ir.' <input type="hidden" name="query_sql" id="query_sql" value="' . $whr . '">';
         echo $qarr;
     }
 

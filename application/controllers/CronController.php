@@ -57,6 +57,7 @@ class CronController extends LSYii_Controller {
             'execute' => 'index',
             'sendemail' => 'cmd',
             'cmd' => 'cmd',
+            'resendemail'=>'resendplemail'
         );
     }
 
