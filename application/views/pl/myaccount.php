@@ -1,3 +1,11 @@
+<style type="text/css">.btn-default {
+    padding: 4px 30px 5px 30px;
+    background-color: #1d88c7;
+    color: #fff;
+    font-weight: 400;
+    font-size: 18px;
+    display: inline-block;
+}</style>
 <div id="tab-2">
     <?php
     $pl_details = $plans_list = array();
@@ -15,7 +23,7 @@
         ?>
         <div style="float:right;">
             <a href="<?php echo CController::createUrl('pl/home/sa/edit_profile') ?>" class="nav-cta login">
-                <input type="button" value="Edit Profile">
+                <input class="btn-default" type="button" value="Edit Profile">
             </a>
             <!--    <a href="security_question" class="nav-cta login">Security Questions</span></a>-->
         </div>
