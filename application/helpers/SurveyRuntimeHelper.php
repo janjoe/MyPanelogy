@@ -605,6 +605,41 @@ class SurveyRuntimeHelper {
                                 //dbExecuteAssoc($query);
                                 $result = mysqli_query($dblink, $query) or die(mysqli_error());
 
+
+                                // assign point to panelist
+
+                                if($panellist_id != '')
+                                {
+                                    $defaultprojectid = '';
+                                    $uquery = "SELECT project_id FROM lime_campaign as cmp JOIN lime_panel_list_master as pl ON cmp.id=pl.cmp_id";
+                                    $uquery .= " WHERE pl.panel_list_id =".$panellist_id;
+                                    $uresult = mysqli_query($dblink, $uquery) or die(mysqli_error());
+                                    $uresult = mysqli_fetch_array($uresult);
+                                    
+                                    if(!empty($uresult)){
+                                        $defaultprojectid = $uresult['project_id'];
+                                    }
+                                    if($defaultprojectid == $project_id )
+                                    {  $status_pp = 'C';  
+                                        $update_pp = "update lime_panellist_project set 
+                                            status = '".$status_pp."' 
+                                            where panellist_id = '" . $panellist_id . "' and project_id ='" . $project_id . "' ";
+                                        $result = mysqli_query($dblink, $update_pp) or die(mysqli_error());
+                                        $select_pp = "select IFNULL(points,0) as points from lime_panellist_project where panellist_id = '" . $panellist_id . "' and  project_id = '" . $project_id . "'";
+                                        $qry_pp = mysqli_query($dblink, $select_pp) or die(mysqli_error());
+                                        $qry_pp = mysqli_fetch_array($qry_pp);
+                                        if ($status_pp == 'C') {
+                                            $update_pm = "update  lime_panel_list_master set 
+                                                earn_points = earn_points + " . $qry_pp['points'] . ",
+                                                balance_points = balance_points + " . $qry_pp['points'] . "
+                                                where panel_list_id = '" . $panellist_id . "' ";
+                                            $result = mysqli_query($dblink, $update_pm) or die(mysqli_error());
+                                        }
+                                    }    
+                                }
+
+                                //end 
+
                                 //calculating and fetching LOS
                                 $query = 'SELECT (TIME_TO_SEC(TIMEDIFF(CompletedOn, created_datetime))/60) as LOS FROM ' . $tbl_pnl_red . ' WHERE panellist_redirect_id =' . $_COOKIE['GWSID'];
                                 $result = mysqli_query($dblink, $query) or die(mysqli_error());
