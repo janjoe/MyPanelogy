@@ -236,7 +236,7 @@ $( document ).ready(function() {
 
             <?php } ?>
             <?php if(isset($_GET['resucess'])){ ?>
-	             alert('Email send successfully! Please check you mail.');
+	             alert('Email sent successfully! Please check your mail.');
 	           <?php } ?>
 });
 var password = document.getElementById("email_address")
