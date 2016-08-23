@@ -527,7 +527,7 @@ class queries extends Survey_Common_Action {
                                             (
                                                 Select COUNT(*) 
                                                 from {{query_send_details}} 
-                                                where panellist_id in(".$assigned_panellists." AND project_id =".$projectid.")
+                                                where panellist_id in(".$assigned_panellists.") AND project_id =".$projectid. "
                                             )) AS total_average"; 
                     $assigned_panellists_res = Yii::app()->db->createCommand($query_average_assigned)->query()->readAll();
                     if(isset($assigned_panellists_res[0]["total_average"]) && $assigned_panellists_res[0]["total_average"] > 0){
@@ -539,12 +539,12 @@ class queries extends Survey_Common_Action {
             $query_average_total = " select (((
                                         Select COUNT(*) 
                                         from {{panellist_redirects}} 
-                                        where panellist_id in(".$panalistids." AND project_id =".$projectid.")
+                                        where panellist_id in(".$panalistids.") AND project_id =".$projectid."
                                     )*100)/    
                                     (
                                         Select COUNT(*) 
                                         from {{query_send_details}} 
-                                        where panellist_id in(".$panalistids." AND project_id =".$projectid.")
+                                        where panellist_id in(".$panalistids.") AND project_id =".$projectid."
                                     )) AS total_average"; 
             
             $query_average_total_res = Yii::app()->db->createCommand($query_average_total)->query()->readAll();
