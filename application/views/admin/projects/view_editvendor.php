@@ -395,15 +395,16 @@ if (getGlobalSetting('Own_Panel') == $vendor_arr_single[0]['vendor_id']) {
                             $totalresponse = ($total_servey_response_by_query_user * 100 ) / $total_invite_users_per_query;
                             $totalresponse = number_format($totalresponse, 0);
                         }
+                        $total_estimation_completed = number_format($total_invite_users_per_query*($totalresponse/100)*($mur[0]['IR']/100), 3, '.', ''); 
                         ?>
                         <td><?php echo $totalresponse.'%'; ?></td>
-                        <td><?php echo $mur[0]['IR']; ?></td>
+                        <td><?php echo $total_estimation_completed ; ?></td>
                         
                         <td>
                             <?php
                             echo "<div id='your-form-block-id'>";
                             echo CHtml::beginForm();
-                            echo CHtml::link('Send Invitations', array('admin/pquery/sa/send/id/' . $usr['id'] . '/prjid/' . $usr['project_id'] . '/qname/' . $usr['name'] . '/vid/' . $vendor_project_id.'/res/'.$totalresponse.'/est/'.$mur[0]["IR"]), array('class' => 'class-link'));
+                            echo CHtml::link('Send Invitations', array('admin/pquery/sa/send/id/' . $usr['id'] . '/prjid/' . $usr['project_id'] . '/qname/' . $usr['name'] . '/vid/' . $vendor_project_id.'/res/'.$totalresponse.'/est/'.$total_estimation_completed), array('class' => 'class-link'));
                             echo " | ";
                             echo CHtml::link('Reminder', array('admin/pquery/sa/send/id/' . $usr['id'] . '/prjid/' . $usr['project_id'] . '/resend/1/qname/' . $usr['name'] . '/vid/' . $vendor_project_id), array('class' => 'class-link'));
                             echo " | ";
