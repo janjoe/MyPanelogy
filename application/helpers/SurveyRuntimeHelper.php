@@ -620,7 +620,29 @@ class SurveyRuntimeHelper {
                                         $defaultprojectid = $uresult['project_id'];
                                     }
                                     if($defaultprojectid == $project_id )
-                                    {  $status_pp = 'C';  
+                                    {  $status_pp = 'C';
+
+                                        $sql1 = "SELECT rectify_no FROM lime_rectify_redirects WHERE project_id = '".$project_id."'";
+                                            $result12 = mysqli_query($dblink, $sql1) or die(mysqli_error());
+                                            $qry_result12 = mysqli_fetch_array($result12);
+                                            if(isset($qry_result12['rectify_no']))
+                                                $rectify_no = $qry_result12['rectify_no'] + 1;
+                                            else
+                                                $rectify_no = 1;
+
+                                            $currentdate = date('Y-m-d');
+
+                                        $insert_sql = "INSERT INTO `lime_rectify_redirects` (`project_id`, `rectify_type`, `rectify_no`, `rectify_date`) VALUES (".$project_id.", '1', '".$rectify_no."','".$currentdate."')";
+                                        $result123 = mysqli_query($dblink, $insert_sql) or die(mysqli_error());  
+
+                                        $rectify_id = mysqli_insert_id ($dblink);
+
+                                        $update_redirect = "update lime_panellist_redirects set 
+                                                prev_redirect_status_id=redirect_status_id, 
+                                                rectify_id = ".$rectify_id."
+                                                where panellist_id = '" . $panellist_id . "' and project_id ='" . $project_id . "'";
+                                        $result = mysqli_query($dblink, $update_redirect) or die(mysqli_error());        
+
                                         $update_pp = "update lime_panellist_project set 
                                             status = '".$status_pp."' 
                                             where panellist_id = '" . $panellist_id . "' and project_id ='" . $project_id . "' ";

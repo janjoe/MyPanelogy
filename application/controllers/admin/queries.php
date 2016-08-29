@@ -501,7 +501,7 @@ class queries extends Survey_Common_Action {
             $ir = $sresult[0]['IR'];
 
             if(!empty($panalistids))
-                $panalistids = rtrim($panalistids,',');
+               $panalistids = rtrim($panalistids,',');
 
 
             $quesql_total_invite = "Select COUNT(*) AS total_invite_cnt, GROUP_CONCAT(panellist_id) AS assigned_panellists from {{query_send_details}} where 1=1 ";
@@ -513,21 +513,32 @@ class queries extends Survey_Common_Action {
                $total_invite_users_per_project = $qrydetail_total_invite[0]["total_invite_cnt"];        
             }
 
-            
+            $ar_panalistids = explode(',', $panalistids);
+            $ar_pen_panalistids = array();
+
+            $total_pending_users_per_project = 0;
             if(isset($qrydetail_total_invite[0]["assigned_panellists"]) && $qrydetail_total_invite[0]["assigned_panellists"] != ''){
                 $assigned_panellists = $qrydetail_total_invite[0]["assigned_panellists"];   
+                $ar_assigned_panalistids = explode(',', $assigned_panellists);
 
+                $arr_assigned_panellists = array_diff($ar_panalistids, $ar_assigned_panalistids);
+                $assigned_panellists = implode(",",$arr_assigned_panellists);
+
+                $total_invite_users_per_project = count($arr_assigned_panellists);
+
+                
+                    
                 if($assigned_panellists != "")
                 {  
                     $query_average_assigned = " select (((
                                                 Select COUNT(*) 
                                                 from {{panellist_redirects}} 
-                                                where panellist_id in(".$assigned_panellists.") AND project_id =".$projectid."
+                                                where panellist_id in('".str_replace(",","','",$assigned_panellists)."') 
                                             )*100)/    
                                             (
                                                 Select COUNT(*) 
                                                 from {{query_send_details}} 
-                                                where panellist_id in(".$assigned_panellists.") AND project_id =".$projectid. "
+                                                where panellist_id in('".str_replace(",","','",$assigned_panellists)."')
                                             )) AS total_average"; 
                     $assigned_panellists_res = Yii::app()->db->createCommand($query_average_assigned)->query()->readAll();
                     if(isset($assigned_panellists_res[0]["total_average"]) && $assigned_panellists_res[0]["total_average"] > 0){
@@ -536,15 +547,15 @@ class queries extends Survey_Common_Action {
                 }     
             }
 
-            $query_average_total = " select (((
+                $query_average_total = " select (((
                                         Select COUNT(*) 
                                         from {{panellist_redirects}} 
-                                        where panellist_id in(".$panalistids.") AND project_id =".$projectid."
+                                        where panellist_id in('".str_replace(",","','",$panalistids)."')
                                     )*100)/    
                                     (
                                         Select COUNT(*) 
                                         from {{query_send_details}} 
-                                        where panellist_id in(".$panalistids.") AND project_id =".$projectid."
+                                        where panellist_id in('".str_replace(",","','",$panalistids)."')
                                     )) AS total_average"; 
             
             $query_average_total_res = Yii::app()->db->createCommand($query_average_total)->query()->readAll();
