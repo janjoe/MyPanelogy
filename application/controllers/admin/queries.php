@@ -500,76 +500,80 @@ class queries extends Survey_Common_Action {
             $sresult = projectview($projectid);
             $ir = $sresult[0]['IR'];
 
-            if(!empty($panalistids))
+            if(!empty($panalistids)){
                $panalistids = rtrim($panalistids,',');
-
-
-            $quesql_total_invite = "Select COUNT(*) AS total_invite_cnt, GROUP_CONCAT(panellist_id) AS assigned_panellists from {{query_send_details}} where 1=1 ";
-            $quesql_total_invite .= " And panellist_id in(".$panalistids.")  AND project_id =".$projectid; //filter not to send originally send 
-                              
-            $qrydetail_total_invite = Yii::app()->db->createCommand($quesql_total_invite)->query()->readAll();
             
-            if(isset($qrydetail_total_invite[0]["total_invite_cnt"]) && $qrydetail_total_invite[0]["total_invite_cnt"] > 0){
-               $total_invite_users_per_project = $qrydetail_total_invite[0]["total_invite_cnt"];        
-            }
 
-            $ar_panalistids = explode(',', $panalistids);
-            $ar_pen_panalistids = array();
-
-            $total_pending_users_per_project = 0;
-            if(isset($qrydetail_total_invite[0]["assigned_panellists"]) && $qrydetail_total_invite[0]["assigned_panellists"] != ''){
-                $assigned_panellists = $qrydetail_total_invite[0]["assigned_panellists"];   
-                $ar_assigned_panalistids = explode(',', $assigned_panellists);
-
-                $arr_assigned_panellists = array_diff($ar_panalistids, $ar_assigned_panalistids);
-                $assigned_panellists = implode(",",$arr_assigned_panellists);
-
-                $total_invite_users_per_project = count($arr_assigned_panellists);
-
+                $quesql_total_invite = "Select COUNT(*) AS total_invite_cnt, GROUP_CONCAT(panellist_id) AS assigned_panellists from {{query_send_details}} where 1=1 ";
+                $quesql_total_invite .= " And panellist_id in(".$panalistids.")  AND project_id =".$projectid; //filter not to send originally send 
+                                  
+                $qrydetail_total_invite = Yii::app()->db->createCommand($quesql_total_invite)->query()->readAll();
                 
-                    
-                if($assigned_panellists != "")
-                {  
-                    $query_average_assigned = " select (((
-                                                Select COUNT(*) 
-                                                from {{panellist_redirects}} 
-                                                where panellist_id in('".str_replace(",","','",$assigned_panellists)."') 
-                                            )*100)/    
-                                            (
-                                                Select COUNT(*) 
-                                                from {{query_send_details}} 
-                                                where panellist_id in('".str_replace(",","','",$assigned_panellists)."')
-                                            )) AS total_average"; 
-                    $assigned_panellists_res = Yii::app()->db->createCommand($query_average_assigned)->query()->readAll();
-                    if(isset($assigned_panellists_res[0]["total_average"]) && $assigned_panellists_res[0]["total_average"] > 0){
-                        $assigned_panellists_average = round(round($assigned_panellists_res[0]["total_average"])/$total_invite_users_per_project);        
+                if(isset($qrydetail_total_invite[0]["total_invite_cnt"]) && $qrydetail_total_invite[0]["total_invite_cnt"] > 0){
+                   $total_invite_users_per_project = $qrydetail_total_invite[0]["total_invite_cnt"];        
+                }
+
+                $ar_panalistids = explode(',', $panalistids);
+                $ar_pen_panalistids = array();
+
+                $total_pending_users_per_project = 0;
+                if(isset($qrydetail_total_invite[0]["assigned_panellists"]) && $qrydetail_total_invite[0]["assigned_panellists"] != ''){
+                    $assigned_panellists = $qrydetail_total_invite[0]["assigned_panellists"];   
+                    $ar_assigned_panalistids = explode(',', $assigned_panellists);
+
+                    $arr_assigned_panellists = array_diff($ar_panalistids, $ar_assigned_panalistids);
+                    $assigned_panellists = implode(",",$arr_assigned_panellists);
+
+                    $total_invite_users_per_project = count($arr_assigned_panellists);
+
+                }else{
+                   $total_invite_users_per_project = count($rString);
+                   $assigned_panellists = $panalistids;
+                }    
+                        
+                    if($assigned_panellists != "")
+                    {  
+                        $query_average_assigned = " select (((
+                                                    Select COUNT(*) 
+                                                    from {{panellist_redirects}} 
+                                                    where panellist_id in('".str_replace(",","','",$assigned_panellists)."') 
+                                                )*100)/    
+                                                (
+                                                    Select COUNT(*) 
+                                                    from {{query_send_details}} 
+                                                    where panellist_id in('".str_replace(",","','",$assigned_panellists)."')
+                                                )) AS total_average"; 
+                        $assigned_panellists_res = Yii::app()->db->createCommand($query_average_assigned)->query()->readAll();
+                        if(isset($assigned_panellists_res[0]["total_average"]) && $assigned_panellists_res[0]["total_average"] > 0){
+                            $assigned_panellists_average = round(round($assigned_panellists_res[0]["total_average"])/$total_invite_users_per_project);        
+                        }     
                     }     
-                }     
+                
+
+                    $query_average_total = " select (((
+                                            Select COUNT(*) 
+                                            from {{panellist_redirects}} 
+                                            where panellist_id in('".str_replace(",","','",$panalistids)."')
+                                        )*100)/    
+                                        (
+                                            Select COUNT(*) 
+                                            from {{query_send_details}} 
+                                            where panellist_id in('".str_replace(",","','",$panalistids)."')
+                                        )) AS total_average"; 
+                
+                $query_average_total_res = Yii::app()->db->createCommand($query_average_total)->query()->readAll();
+                if(isset($query_average_total_res[0]["total_average"]) && $query_average_total_res[0]["total_average"] > 0){
+                    $total_panellists_average = round(round($query_average_total_res[0]["total_average"])/count($rString));        
+                }
             }
 
-                $query_average_total = " select (((
-                                        Select COUNT(*) 
-                                        from {{panellist_redirects}} 
-                                        where panellist_id in('".str_replace(",","','",$panalistids)."')
-                                    )*100)/    
-                                    (
-                                        Select COUNT(*) 
-                                        from {{query_send_details}} 
-                                        where panellist_id in('".str_replace(",","','",$panalistids)."')
-                                    )) AS total_average"; 
+            $totalresponse = 0;    
+            if($total_invite_users_per_project != 0){    
+                $totalresponse = ($total_servey_response_by_project_user * 100 ) / $total_invite_users_per_project;
+                $totalresponse = number_format($totalresponse, 0);
+            }
+        }
             
-            $query_average_total_res = Yii::app()->db->createCommand($query_average_total)->query()->readAll();
-            if(isset($query_average_total_res[0]["total_average"]) && $query_average_total_res[0]["total_average"] > 0){
-                $total_panellists_average = round(round($query_average_total_res[0]["total_average"])/count($rString));        
-            }
-        }
-
-        $totalresponse = 0;    
-        if($total_invite_users_per_project != 0){    
-            $totalresponse = ($total_servey_response_by_project_user * 100 ) / $total_invite_users_per_project;
-            $totalresponse = number_format($totalresponse, 0);
-        }
-
         $total_estimation_completed = number_format(count($rString)*($total_panellists_average/100)*($ir/100), 3, '.', '');      
         $assigned_estimation_completed = number_format($total_invite_users_per_project*($assigned_panellists_average/100)*($ir/100), 3, '.', ''); 
 

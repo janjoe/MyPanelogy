@@ -51,9 +51,8 @@ function print_pl_view_data($r) {
         <h2>General Information</h2>
         <?php
         $pl_details = $plans_list = array();
-        $sql = "SELECT * FROM {{view_panel_list_master}} WHERE panel_list_id = '" . $r['panel_list_id'] . "'";
+        $sql = "SELECT pl.*, cmp.campaign_name FROM {{panel_list_master}} as pl LEFT JOIN {{campaign}} as cmp ON cmp.id = pl.cmp_id WHERE panel_list_id = '" . $r['panel_list_id'] . "'";
         $pl_details = Yii::app()->db->createCommand($sql)->query()->readAll();
-
         $sql = "SELECT * FROM {{panellist_answer}} WHERE panellist_id = '" . $r['panel_list_id'] . "'";
         $pl_answer = Yii::app()->db->createCommand($sql)->query()->readAll();
         foreach ($pl_answer as $key => $value) {
@@ -69,7 +68,7 @@ function print_pl_view_data($r) {
             </tr>
             <tr class="odd">
                 <td>Name</td>
-                <td><?php echo $pl_details[0]['full_name'] ?></td>
+                <td><?php echo $pl_details[0]['first_name'].' '.$pl_details[0]['last_name']; ?></td>
             </tr>
             <tr class="even">
                 <td>Status</td>
@@ -103,15 +102,39 @@ function print_pl_view_data($r) {
                     ?>
                 </td>
             </tr>
+            <tr class="even">
+                <td>Registration date</td>
+                <td>
+                    <?php
+                        echo $pl_details[0]['reg_date'];
+                    ?>
+                </td>
+            </tr>
+            <tr class="odd">
+                <td>Remote IP</td>
+                <td>
+                    <?php
+                        echo $pl_details[0]['remote_ip'];
+                    ?>
+                </td>
+            </tr>
+            <tr class="even">
+                <td>Campaign</td>
+                <td>
+                    <?php
+                        echo $pl_details[0]['campaign_name'];
+                    ?>
+                </td>
+            </tr>
             <?php
             $odd = FALSE;
             $quelist = Question(get_question_categoryid('Registration'), '', false, true);
             $quetype = Question(get_question_categoryid('Registration'), '', true, false);
             foreach ($quelist as $key => $value) {
                 if ($odd) {
-                    $cls = 'class="odd"';
-                } else {
                     $cls = 'class="even"';
+                } else {
+                    $cls = 'class="odd"';
                 }
                 echo '<tr ' . $cls . '>
                         <td>' . $value . '</td>';
