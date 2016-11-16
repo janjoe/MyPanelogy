@@ -25,6 +25,15 @@ if (!defined('BASEPATH'))
   |
  */
 
+$dbname = 'panelogy';
+switch($_SERVER['HTTP_HOST']) {
+    case 'demo_panel_pm.completepanelpartners.com':
+        $dbname = 'panelogy_demo';
+        break;
+    case 'dev_panel_pm.completepanelpartners.com':
+        $dbname = 'panelogy_dev';
+        break;
+}
 
 
 return array(
@@ -37,7 +46,7 @@ return array(
     ),
     'components' => array(
          'db' => array(
-           'connectionString' => 'mysql:host=localhost;dbname=panelogy;',
+           'connectionString' => 'mysql:host=localhost;dbname='.$dbname.';',
            'emulatePrepare' => true,
            'username' => 'root',
            'password' => 'r00t',
