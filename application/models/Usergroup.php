@@ -15,7 +15,7 @@ if (!defined('BASEPATH'))
  *
  */
 
-class Usergroup extends LSActiveRecord {
+class UserGroup extends LSActiveRecord {
 
     /**
      * Returns the static model of Settings table
