@@ -28,10 +28,10 @@ if (!defined('BASEPATH'))
 $dbname = 'panelogy';
 switch($_SERVER['HTTP_HOST']) {
     case 'demo_panel_pm.completepanelpartners.com':
-        $dbname = 'panelogy_demo';
+        $dbname = 'cpp_demo';
         break;
     case 'dev_panel_pm.completepanelpartners.com':
-        $dbname = 'panelogy_dev';
+        $dbname = 'cpp_dev';
         break;
 }
 
