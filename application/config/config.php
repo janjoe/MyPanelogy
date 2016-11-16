@@ -36,13 +36,11 @@ return array(
         ),
     ),
     'components' => array(
-        
-          
          'db' => array(
            'connectionString' => 'mysql:host=localhost;dbname=panelogy;',
            'emulatePrepare' => true,
-           'username' => 'panelogy',
-           'password' => 'lsmcnQ6W7LVLhuYSkJp6',
+           'username' => 'root',
+           'password' => 'r00t',
            'charset' => 'utf8',
            'tablePrefix' => 'lime_',
        ),
