@@ -49,7 +49,7 @@ return array(
            'connectionString' => 'mysql:host=localhost;dbname='.$dbname.';',
            'emulatePrepare' => true,
            'username' => 'root',
-           'password' => 'r00t',
+           'password' => 'Ry@nH0rn3',
            'charset' => 'utf8',
            'tablePrefix' => 'lime_',
        ),
