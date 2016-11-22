@@ -46,10 +46,10 @@ return array(
     ),
     'components' => array(
          'db' => array(
-           'connectionString' => 'mysql:host=localhost;dbname='.$dbname.';',
+           'connectionString' => 'mysql:host=localhost;dbname=panelogy;',
            'emulatePrepare' => true,
-           'username' => 'root',
-           'password' => 'Ry@nH0rn3',
+           'username' => 'panelogy',
+           'password' => 'lsmcnQ6W7LVLhuYSkJp6',
            'charset' => 'utf8',
            'tablePrefix' => 'lime_',
        ),
