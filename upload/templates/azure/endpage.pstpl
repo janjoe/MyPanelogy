@@ -97,7 +97,7 @@ $(document).ready(function() {
 		return "Would you like to join our mailing list for other offers?"; 
             }
         }*/
-        <?php if(!isset($_COOKIE["loginregister"]) && !isset($_COOKIE["cmp_id"]) && !isset($_COOKIE["per_id"]))
+        <?php /*if(!isset($_COOKIE["loginregister"]) && !isset($_COOKIE["cmp_id"]) && !isset($_COOKIE["per_id"]))
         {  ?>
         function addBrEvent(obj, evt, fn) {
             if (obj.addEventListener) {
@@ -129,7 +129,7 @@ $(document).ready(function() {
                 }
             });
         });
-            <?php } ?>
+            <?php }*/ ?>
             /*document.onmouseenter=function(){
             	
                 tab_alert_hook = false;
